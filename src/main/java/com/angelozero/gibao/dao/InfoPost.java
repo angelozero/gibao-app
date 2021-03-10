@@ -31,4 +31,6 @@ public class InfoPost {
 
     @Lob
     private String text;
+
+
 }
