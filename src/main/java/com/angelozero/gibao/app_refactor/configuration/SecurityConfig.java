@@ -1,4 +1,4 @@
-package com.angelozero.gibao.configuration;
+package com.angelozero.gibao.app_refactor.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

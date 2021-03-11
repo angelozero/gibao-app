@@ -1,8 +1,8 @@
-package com.angelozero.gibao.controller;
+package com.angelozero.gibao.app_refactor.controller;
 
 
-import com.angelozero.gibao.dao.InfoPost;
-import com.angelozero.gibao.service.InfoPostService;
+import com.angelozero.gibao.app_refactor.dao.InfoPost;
+import com.angelozero.gibao.app_refactor.service.InfoPostService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;

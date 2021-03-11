@@ -1,6 +1,6 @@
-package com.angelozero.gibao.repository;
+package com.angelozero.gibao.app_refactor.repository;
 
-import com.angelozero.gibao.dao.InfoPost;
+import com.angelozero.gibao.app_refactor.dao.InfoPost;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

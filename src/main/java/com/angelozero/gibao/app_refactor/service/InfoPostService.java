@@ -1,7 +1,7 @@
-package com.angelozero.gibao.service;
+package com.angelozero.gibao.app_refactor.service;
 
-import com.angelozero.gibao.dao.InfoPost;
-import com.angelozero.gibao.repository.InfoPostRepository;
+import com.angelozero.gibao.app_refactor.dao.InfoPost;
+import com.angelozero.gibao.app_refactor.repository.InfoPostRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

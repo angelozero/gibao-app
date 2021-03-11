@@ -1,11 +1,10 @@
-package com.angelozero.gibao.utils;
+package com.angelozero.gibao.app_refactor.utils;
 
-import com.angelozero.gibao.dao.InfoPost;
-import com.angelozero.gibao.repository.InfoPostRepository;
+import com.angelozero.gibao.app_refactor.dao.InfoPost;
+import com.angelozero.gibao.app_refactor.repository.InfoPostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
