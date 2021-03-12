@@ -1,9 +1,6 @@
-package com.angelozero.gibao.app.domain;
-
+package com.angelozero.gibao.front.controller.rest;
 
 import lombok.*;
-
-import java.time.LocalDate;
 
 
 @ToString
@@ -12,15 +9,14 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostData {
+public class PostDataRequest {
 
     private Long id;
 
-    private Author author;
+    private AuthorRequest author;
 
     private String title;
 
     private String description;
 
-    private LocalDate date;
 }

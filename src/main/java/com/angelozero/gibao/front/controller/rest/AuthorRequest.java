@@ -1,4 +1,4 @@
-package com.angelozero.gibao.app.domain;
+package com.angelozero.gibao.front.controller.rest;
 
 import lombok.*;
 
@@ -9,7 +9,8 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Author {
+public class AuthorRequest {
 
     private String name;
+
 }

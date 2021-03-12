@@ -8,9 +8,9 @@ public interface PostDataGateway {
 
     void save(PostData postData);
 
-    void delete(PostData postData);
+    void delete(Long id);
 
     PostData findById(Long id);
 
-    List<PostData> findAllPostsData();
+    List<PostData> findAll();
 }
