@@ -1,11 +1,10 @@
 package com.angelozero.gibao.front.utils;
 
-import com.angelozero.gibao.app.gateway.postgres.model.PostDataModel;
-import com.angelozero.gibao.app.gateway.repository.PostDataRepository;
+import com.angelozero.gibao.app.gateway.db.postgres.model.PostDataModel;
+import com.angelozero.gibao.app.gateway.repository.PostDataJPARepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -15,7 +14,7 @@ import java.util.UUID;
 public class DummyData {
 
     @Autowired
-    PostDataRepository postDataRepository;
+    PostDataJPARepository postDataJPARepository;
 
     //@PostConstruct
     public void saveInfoPosts() {
@@ -26,6 +25,6 @@ public class DummyData {
                 PostDataModel.builder().date(LocalDate.now()).author("Flog").description(UUID.randomUUID().toString()).title("Title 3").build()
         );
 
-        postDataRepository.saveAll(infoPostList);
+        postDataJPARepository.saveAll(infoPostList);
     }
 }

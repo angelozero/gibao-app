@@ -1,4 +1,4 @@
-package com.angelozero.gibao.app.gateway.postgres.model;
+package com.angelozero.gibao.app.gateway.db.postgres.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

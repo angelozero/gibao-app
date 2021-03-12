@@ -1,10 +1,10 @@
-package com.angelozero.gibao.app.gateway.postgres;
+package com.angelozero.gibao.app.gateway.db.postgres;
 
 import com.angelozero.gibao.app.domain.PostData;
 import com.angelozero.gibao.app.gateway.PostDataGateway;
-import com.angelozero.gibao.app.gateway.postgres.mapper.PostDataModelMapper;
-import com.angelozero.gibao.app.gateway.postgres.model.PostDataModel;
-import com.angelozero.gibao.app.gateway.repository.PostDataRepository;
+import com.angelozero.gibao.app.gateway.db.postgres.mapper.PostDataModelMapper;
+import com.angelozero.gibao.app.gateway.db.postgres.model.PostDataModel;
+import com.angelozero.gibao.app.gateway.repository.PostDataJPARepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -15,28 +15,29 @@ import java.util.Optional;
 @AllArgsConstructor
 public class PostDataGatewayPostgresImpl implements PostDataGateway {
 
-    private PostDataRepository postDataRepository;
+    private final PostDataJPARepository postDataJPARepository;
 
     @Override
     public void save(PostData postData) {
-        postDataRepository.save(PostDataModelMapper.toPostDataModel(postData));
+
+        postDataJPARepository.save(PostDataModelMapper.toPostDataModel(postData));
     }
 
     @Override
     public void delete(Long id) {
-        postDataRepository.deleteById(id);
+        postDataJPARepository.deleteById(id);
     }
 
     @Override
     public PostData findById(Long id) {
         return PostDataModelMapper.toPostData(
-                Optional.of(postDataRepository.findById(id))
+                Optional.of(postDataJPARepository.findById(id))
                         .map(Optional::get)
                         .orElse(PostDataModel.builder().build()));
     }
 
     @Override
     public List<PostData> findAll() {
-        return PostDataModelMapper.toPostDataList(postDataRepository.findAll());
+        return PostDataModelMapper.toPostDataList(postDataJPARepository.findAll());
     }
 }

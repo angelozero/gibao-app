@@ -1,10 +1,10 @@
-package com.angelozero.gibao.app.gateway.postgres.mapper;
+package com.angelozero.gibao.app.gateway.db.postgres.mapper;
 
 import com.angelozero.gibao.app.config.error.Error;
 import com.angelozero.gibao.app.config.exception.MapperException;
 import com.angelozero.gibao.app.domain.Author;
 import com.angelozero.gibao.app.domain.PostData;
-import com.angelozero.gibao.app.gateway.postgres.model.PostDataModel;
+import com.angelozero.gibao.app.gateway.db.postgres.model.PostDataModel;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDate;
