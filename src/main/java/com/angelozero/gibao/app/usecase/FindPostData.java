@@ -14,7 +14,7 @@ import java.util.List;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class FindPostsData {
+public class FindPostData {
 
     private final PostDataGateway postDataGateway;
 

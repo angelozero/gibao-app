@@ -2,7 +2,7 @@ package com.angelozero.gibao.front.controller;
 
 
 import com.angelozero.gibao.app.usecase.DeletePostData;
-import com.angelozero.gibao.app.usecase.FindPostsData;
+import com.angelozero.gibao.app.usecase.FindPostData;
 import com.angelozero.gibao.app.usecase.SavePostData;
 import com.angelozero.gibao.front.controller.mapper.PostDataMapper;
 import com.angelozero.gibao.front.controller.rest.PostDataRequest;
@@ -22,7 +22,7 @@ public class PostDataController {
 
     private final SavePostData savePostData;
     private final DeletePostData deletePostData;
-    private final FindPostsData findPostsData;
+    private final FindPostData findPostData;
 
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -34,13 +34,13 @@ public class PostDataController {
     @RequestMapping(value = "/posts", method = RequestMethod.GET)
     public ModelAndView getInfoPost() {
         ModelAndView mv = new ModelAndView("infoPostView");
-        return mv.addObject("infoPostList", findPostsData.execute());
+        return mv.addObject("infoPostList", findPostData.execute());
     }
 
     @RequestMapping(value = "/posts/{id}", method = RequestMethod.GET)
     public ModelAndView getInfoPostDetail(@PathVariable("id") long id) {
         ModelAndView mv = new ModelAndView("infoPostDetailView");
-        return mv.addObject("infoPost", findPostsData.execute(id));
+        return mv.addObject("infoPost", findPostData.execute(id));
     }
 
     @RequestMapping(value = "/newpost", method = RequestMethod.GET)

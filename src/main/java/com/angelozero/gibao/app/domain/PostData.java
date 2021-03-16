@@ -1,10 +1,8 @@
 package com.angelozero.gibao.app.domain;
 
-
 import lombok.*;
 
 import java.time.LocalDate;
-
 
 @ToString
 @Builder

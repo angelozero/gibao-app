@@ -14,12 +14,16 @@ import org.springframework.stereotype.Service;
 public class DeletePostData {
 
     PostDataGateway postDataGateway;
+    FindPostData findPostData;
 
     public void execute(Long id) {
         try {
-            //TODO verificar antes de deletar se o post existe
-            log.info("[ INFO ] - Deleting post data {}", id);
-            postDataGateway.delete(id);
+            log.info("[ INFO ] - Checking if post data {} exists", id);
+            if (findPostData.execute(id) != null) {
+
+                log.info("[ INFO ] - Deleting post data {}", id);
+                postDataGateway.delete(id);
+            }
 
         } catch (Exception ex) {
             log.error("[ ERROR ] - Error to delete post data");
