@@ -28,11 +28,11 @@
 		<div class="card shadow-sm bg-white rounded" style="margin-top: 20px;" th:each="infoPost : ${infoPostList}">
 			<div class="card-body">
 				<p class="card-subtitle mb-2 text-muted" style="font-size: 0.8rem;">
-					<span th:text="${infoPost.author}"></span>
-					<span th:text="${infoPost.data}"></span>
+					<span th:text="${infoPost.author?.name}"></span>
+					<span th:text="${infoPost.date}"></span>
 				</p>
-				<a th:href="${(#mvc.url('IPC#getInfoPostDetail').arg(0, infoPost.id)).build()}"><h4 class="card-title" style="font-weight: bold; color: black; padding-top: 5px;"><span th:text="${infoPost.title}"></span></h4></a>
-				<p class="card-text"><span th:utext="${#strings.abbreviate(infoPost.text,400)} "></span></p>
+				<a th:href="${(#mvc.url('PDC#getInfoPostDetail').arg(0, infoPost.id)).build()}"><h4 class="card-title" style="font-weight: bold; color: black; padding-top: 5px;"><span th:text="${infoPost.title}"></span></h4></a>
+				<p class="card-text"><span th:utext="${#strings.abbreviate(infoPost.description,400)} "></span></p>
 				
 				<form action="#" th:action="@{/delete}"  method="post">
 					<div class="text-right" >

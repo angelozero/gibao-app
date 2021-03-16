@@ -1,5 +1,4 @@
-package com.angelozero.gibao.dao;
-
+package com.angelozero.gibao.app.gateway.db.postgres.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -10,27 +9,30 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDate;
 
+
 @Entity
-@Table(name = "TB_INFO_POST")
+@Table(name = "post_data")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class InfoPost {
+public class PostDataModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "title")
     private String title;
 
+    @Column(name = "author")
     private String author;
 
+    @Column(name = "date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    private LocalDate data;
+    private LocalDate date;
 
     @Lob
-    private String text;
-
-
+    @Column(name = "description")
+    private String description;
 }
