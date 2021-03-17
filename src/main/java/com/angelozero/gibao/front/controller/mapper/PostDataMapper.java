@@ -9,7 +9,10 @@ import com.angelozero.gibao.front.controller.rest.PostDataRequest;
 import com.angelozero.gibao.front.controller.rest.PostDataResponse;
 import org.springframework.http.HttpStatus;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class PostDataMapper {
 
@@ -47,11 +50,26 @@ public class PostDataMapper {
                                         .build())))
                         .title(post.getTitle())
                         .description(post.getDescription())
+                        .secretUser(post.getSecretUser())
                         .build())
                 .orElseThrow(() -> new MapperException(Error.builder()
                         .status(HttpStatus.BAD_REQUEST)
                         .identifier(postData)
                         .message("Error to convert a post data request to post data")
                         .build()));
+    }
+
+    public static List<PostDataResponse> toPostDataList(List<PostData> postDataList) {
+        return Optional.ofNullable(postDataList).map(dataList ->
+                dataList.stream().map(post ->
+                        PostDataResponse.builder()
+                                .id(post.getId())
+                                .title(post.getTitle())
+                                .description(post.getDescription())
+                                .date(post.getDate())
+                                .secretUser(post.getSecretUser())
+                                .build()
+                ).collect(Collectors.toList())
+        ).orElse(Collections.emptyList());
     }
 }

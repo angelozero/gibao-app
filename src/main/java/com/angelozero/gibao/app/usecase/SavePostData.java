@@ -23,12 +23,10 @@ public class SavePostData {
 
         try {
             log.info("[ INFO ] - Saving post data");
-            long id = postDataGateway.save(postData).getId();
+            PostData postDataSaved = postDataGateway.save(postData);
 
-            if (UserPostData.contains(postData.getAuthor().getName())) {
-                log.info("[ INFO ] - Deleting a post data by thread");
-                startDeletePostDataThread(id);
-            }
+            log.info("[ INFO ] - Validating and deleting a post data if wasn't created by a secret user");
+            deletePostDataThread.execute(postDataSaved);
 
         } catch (Exception ex) {
             log.error("[ ERROR ] - Error to save post data");
@@ -40,7 +38,5 @@ public class SavePostData {
         }
     }
 
-    private void startDeletePostDataThread(Long id) {
-        new Thread(() -> deletePostDataThread.execute(id)).start();
-    }
+
 }

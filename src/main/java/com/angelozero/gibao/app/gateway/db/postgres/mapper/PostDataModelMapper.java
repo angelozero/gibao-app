@@ -22,6 +22,7 @@ public class PostDataModelMapper {
                         .id(post.getId())
                         .title(post.getTitle())
                         .description(post.getDescription())
+                        .secretUser(post.getSecretUser())
                         .author(Optional.ofNullable(post.getAuthor())
                                 .map(Author::getName)
                                 .orElseThrow(() -> new MapperException(Error.builder()
@@ -45,6 +46,7 @@ public class PostDataModelMapper {
                         .title(post.getTitle())
                         .description(post.getDescription())
                         .date(post.getDate())
+                        .secretUser(post.getSecretUser())
                         .build())
                 .orElseThrow(() -> new MapperException(Error.builder()
                         .message("Error to convert post data to a post data model")
@@ -61,9 +63,9 @@ public class PostDataModelMapper {
                                 .title(post.getTitle())
                                 .description(post.getDescription())
                                 .date(post.getDate())
+                                .secretUser(post.getSecretUser())
                                 .build()
                 ).collect(Collectors.toList())
-
         ).orElse(Collections.emptyList());
     }
 }

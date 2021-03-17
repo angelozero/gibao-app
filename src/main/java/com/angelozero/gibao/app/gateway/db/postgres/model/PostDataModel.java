@@ -35,4 +35,7 @@ public class PostDataModel {
     @Lob
     @Column(name = "description")
     private String description;
+
+    @Column(name = "isSecretUser")
+    private Boolean secretUser;
 }

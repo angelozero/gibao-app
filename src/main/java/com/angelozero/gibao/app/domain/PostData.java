@@ -21,4 +21,6 @@ public class PostData {
     private String description;
 
     private LocalDate date;
+
+    private Boolean secretUser;
 }

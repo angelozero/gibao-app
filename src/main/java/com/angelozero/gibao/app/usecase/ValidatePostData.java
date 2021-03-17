@@ -23,5 +23,11 @@ public class ValidatePostData {
                         .identifier(postData)
                         .status(HttpStatus.BAD_REQUEST)
                         .build()));
+
+        setSecretUser(postData);
+    }
+
+    private void setSecretUser(PostData postData) {
+        postData.setSecretUser(UserPostData.contains(postData.getAuthor().getName().toLowerCase()));
     }
 }

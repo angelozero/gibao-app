@@ -34,13 +34,13 @@ public class PostDataController {
     @RequestMapping(value = "/posts", method = RequestMethod.GET)
     public ModelAndView getInfoPost() {
         ModelAndView mv = new ModelAndView("infoPostView");
-        return mv.addObject("infoPostList", findPostData.execute());
+        return mv.addObject("infoPostList", PostDataMapper.toPostDataList(findPostData.execute()));
     }
 
     @RequestMapping(value = "/posts/{id}", method = RequestMethod.GET)
     public ModelAndView getInfoPostDetail(@PathVariable("id") long id) {
         ModelAndView mv = new ModelAndView("infoPostDetailView");
-        return mv.addObject("infoPost", findPostData.execute(id));
+        return mv.addObject("infoPost", PostDataMapper.toPostDataResponse(findPostData.execute(id)));
     }
 
     @RequestMapping(value = "/newpost", method = RequestMethod.GET)
