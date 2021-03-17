@@ -18,9 +18,10 @@ public class PostDataGatewayPostgresImpl implements PostDataGateway {
     private final PostDataJPARepository postDataJPARepository;
 
     @Override
-    public void save(PostData postData) {
-
-        postDataJPARepository.save(PostDataModelMapper.toPostDataModel(postData));
+    public PostData save(PostData postData) {
+        return PostDataModelMapper.toPostData(
+                postDataJPARepository.save(PostDataModelMapper.toPostDataModel(postData))
+        );
     }
 
     @Override

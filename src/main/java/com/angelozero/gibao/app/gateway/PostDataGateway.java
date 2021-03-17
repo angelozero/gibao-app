@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface PostDataGateway {
 
-    void save(PostData postData);
+    PostData save(PostData postData);
 
     void delete(Long id);
 

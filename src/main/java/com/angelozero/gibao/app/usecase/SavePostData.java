@@ -14,16 +14,21 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class SavePostData {
 
-    PostDataGateway postDataGateway;
-    ValidatePostData validatePostData;
+    private final PostDataGateway postDataGateway;
+    private final ValidatePostData validatePostData;
+    private final DeletePostDataThread deletePostDataThread;
 
     public void execute(PostData postData) {
-
         validatePostData.execute(postData);
 
         try {
             log.info("[ INFO ] - Saving post data");
-            postDataGateway.save(postData);
+            long id = postDataGateway.save(postData).getId();
+
+            if (UserPostData.contains(postData.getAuthor().getName())) {
+                log.info("[ INFO ] - Deleting a post data by thread");
+                startDeletePostDataThread(id);
+            }
 
         } catch (Exception ex) {
             log.error("[ ERROR ] - Error to save post data");
@@ -33,5 +38,9 @@ public class SavePostData {
                     .status(HttpStatus.BAD_REQUEST)
                     .build(), ex);
         }
+    }
+
+    private void startDeletePostDataThread(Long id) {
+        new Thread(() -> deletePostDataThread.execute(id)).start();
     }
 }

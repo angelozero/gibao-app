@@ -17,10 +17,11 @@ public class ValidatePostData {
 
     public void execute(PostData postData) {
         log.info("[ INFO ] - Validating a post data");
-        Optional.ofNullable(postData).orElseThrow(() -> new PostDataServiceException(Error.builder()
-                .message("Error to validadte post data --- Invalid Post Data object")
-                .identifier(postData)
-                .status(HttpStatus.BAD_REQUEST)
-                .build()));
+        Optional.ofNullable(postData).map(data -> Optional.ofNullable(data.getAuthor()))
+                .orElseThrow(() -> new PostDataServiceException(Error.builder()
+                        .message("Error to validadte post data --- Invalid Post Data object")
+                        .identifier(postData)
+                        .status(HttpStatus.BAD_REQUEST)
+                        .build()));
     }
 }
