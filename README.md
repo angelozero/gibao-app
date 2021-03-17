@@ -22,3 +22,11 @@
  - ```\d countries ```
 
  #### For more examples ---> [10 Command-line Utilities in PostgreSQL](https://www.datacamp.com/community/tutorials/10-command-line-utilities-postgresql?utm_source=adwords_ppc&utm_campaignid=1455363063&utm_adgroupid=65083631748&utm_device=c&utm_keyword=&utm_matchtype=b&utm_network=g&utm_adpostion=&utm_creative=332602034361&utm_targetid=aud-392016246653:dsa-429603003980&utm_loc_interest_ms=&utm_loc_physical_ms=1001773&gclid=Cj0KCQiAnKeCBhDPARIsAFDTLTIrlsOiY9m31jKm5SeMNVmaG4bMojBbJlhKQAVyLgdV5ueb_xYd3cgaAvm-EALw_wcB)
+
+---
+
+ * Add some gifs
+
+ ![Octane](https://pa1.narvii.com/7219/3f6de78829849bb2c2425f764f9bde7ae52848e8r1-256-256_hq.gif)
+ ![Octane](https://pa1.narvii.com/7219/04dd0e9ac40347ac391d9ba6323f6b822f182831r1-256-256_hq.gif)
+ 
