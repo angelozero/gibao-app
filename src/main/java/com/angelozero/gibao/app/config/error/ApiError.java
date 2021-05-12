@@ -1,4 +1,4 @@
-package com.angelozero.gibao.front.configuration.exception.error;
+package com.angelozero.gibao.app.config.error;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
