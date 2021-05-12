@@ -1,4 +1,4 @@
-package com.angelozero.gibao.app.gateway.repository;
+package com.angelozero.gibao.app.gateway.db.repository;
 
 import com.angelozero.gibao.app.gateway.db.postgres.model.PostDataModel;
 import org.springframework.data.jpa.repository.JpaRepository;

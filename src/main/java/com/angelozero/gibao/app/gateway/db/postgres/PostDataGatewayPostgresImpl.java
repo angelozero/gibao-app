@@ -1,10 +1,10 @@
 package com.angelozero.gibao.app.gateway.db.postgres;
 
 import com.angelozero.gibao.app.domain.PostData;
-import com.angelozero.gibao.app.gateway.PostDataGateway;
+import com.angelozero.gibao.app.gateway.db.PostDataGateway;
 import com.angelozero.gibao.app.gateway.db.postgres.mapper.PostDataModelMapper;
 import com.angelozero.gibao.app.gateway.db.postgres.model.PostDataModel;
-import com.angelozero.gibao.app.gateway.repository.PostDataJPARepository;
+import com.angelozero.gibao.app.gateway.db.repository.PostDataJPARepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

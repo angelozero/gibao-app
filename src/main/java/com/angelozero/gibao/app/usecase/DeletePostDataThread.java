@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class DeletePostDataThread {
 
-    private static final long MINUTES = 60000;
+    private static final long ONE_MINUTE = 60000;
     private final DeletePostData deletePostData;
     private final ValidatePostData validatePostData;
 
@@ -34,8 +34,8 @@ public class DeletePostDataThread {
 
     private void delete(Long id) {
         try {
-            log.info("[ THREAD INFO ] - Starting thread with {} minutes", MINUTES);
-            Thread.sleep(MINUTES);
+            log.info("[ THREAD INFO ] - Starting thread with {} minutes", ONE_MINUTE);
+            Thread.sleep(ONE_MINUTE);
 
             log.info("[ THREAD INFO ] - Deleting post data by thread");
             deletePostData.execute(id);

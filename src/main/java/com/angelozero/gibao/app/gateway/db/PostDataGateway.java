@@ -1,4 +1,4 @@
-package com.angelozero.gibao.app.gateway;
+package com.angelozero.gibao.app.gateway.db;
 
 import com.angelozero.gibao.app.domain.PostData;
 

@@ -3,7 +3,7 @@ package com.angelozero.gibao.app.usecase;
 import com.angelozero.gibao.app.config.error.Error;
 import com.angelozero.gibao.app.config.exception.PostDataServiceException;
 import com.angelozero.gibao.app.domain.PostData;
-import com.angelozero.gibao.app.gateway.PostDataGateway;
+import com.angelozero.gibao.app.gateway.db.PostDataGateway;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

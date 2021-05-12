@@ -13,7 +13,7 @@ import java.util.Random;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class GetPokemon {
+public class GetPokemonByNumber {
 
     public static final int FIRST_SEASON = 150;
     private final PokemonApi pokemonApi;
@@ -22,14 +22,16 @@ public class GetPokemon {
         int pokemonNumber = getRandomNumber();
 
         try {
+            log.info("[ INFO ] - Calling PokeApi - by number {}", pokemonNumber);
             return pokemonApi.getImageByNumber(pokemonNumber).getSprites().getOther().getOfficialArtWork().getFrontDefault();
 
         } catch (Exception ex) {
+            log.error("[ ERROR ] - Error to call PokeApi");
             throw new PokemonApiException(Error.builder()
                     .status(HttpStatus.BAD_REQUEST)
                     .identifier(pokemonNumber)
                     .message("Failed to get pokemon image")
-                    .build());
+                    .build(), ex);
         }
     }
 

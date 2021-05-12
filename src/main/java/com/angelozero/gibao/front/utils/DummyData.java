@@ -1,10 +1,11 @@
 package com.angelozero.gibao.front.utils;
 
 import com.angelozero.gibao.app.gateway.db.postgres.model.PostDataModel;
-import com.angelozero.gibao.app.gateway.repository.PostDataJPARepository;
+import com.angelozero.gibao.app.gateway.db.repository.PostDataJPARepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +22,7 @@ public class DummyData {
 
         List<PostDataModel> infoPostList = Arrays.asList(
                 PostDataModel.builder().date(LocalDate.now()).author("Angelo").description(UUID.randomUUID().toString()).title("Title 1").build(),
-                PostDataModel.builder().date(LocalDate.now()).author("Jake").description(UUID.randomUUID().toString()).title("Title 2").build(),
+                PostDataModel.builder().date(LocalDate.now()).author("Bats").description(UUID.randomUUID().toString()).title("Title 2").build(),
                 PostDataModel.builder().date(LocalDate.now()).author("Flog").description(UUID.randomUUID().toString()).title("Title 3").build()
         );
 
