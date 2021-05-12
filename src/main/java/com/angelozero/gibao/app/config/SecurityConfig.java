@@ -1,4 +1,4 @@
-package com.angelozero.gibao.front.configuration;
+package com.angelozero.gibao.app.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -19,6 +19,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/posts",
             "/newpost",
             "/delete",
+            "/pokemon",
             "/posts/{id}"
     };
 

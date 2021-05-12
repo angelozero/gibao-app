@@ -25,6 +25,8 @@
 			</ol>
 		</nav>
 		
+		<img th:src="@{${pokemon}}" alt="Teste">
+		
 		<div class="card shadow-sm bg-white rounded" style="margin-top: 20px;" th:each="infoPost : ${infoPostList}">
 			<div class="card-body">
 				<p class="card-subtitle mb-2 text-muted" style="font-size: 0.8rem;">
