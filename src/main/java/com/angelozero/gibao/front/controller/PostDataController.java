@@ -3,6 +3,7 @@ package com.angelozero.gibao.front.controller;
 
 import com.angelozero.gibao.app.usecase.DeletePostData;
 import com.angelozero.gibao.app.usecase.FindPostData;
+import com.angelozero.gibao.app.usecase.GetPokemon;
 import com.angelozero.gibao.app.usecase.SavePostData;
 import com.angelozero.gibao.front.controller.mapper.PostDataMapper;
 import com.angelozero.gibao.front.controller.rest.PostDataRequest;
@@ -23,6 +24,7 @@ public class PostDataController {
     private final SavePostData savePostData;
     private final DeletePostData deletePostData;
     private final FindPostData findPostData;
+    private final GetPokemon getPokemon;
 
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -33,8 +35,10 @@ public class PostDataController {
     //@RequestMapping(value = {"/", "/posts"}, method = RequestMethod.GET)
     @RequestMapping(value = "/posts", method = RequestMethod.GET)
     public ModelAndView getInfoPost() {
-        ModelAndView mv = new ModelAndView("infoPostView");
-        return mv.addObject("infoPostList", PostDataMapper.toPostDataList(findPostData.execute()));
+        ModelAndView modelAndView = new ModelAndView("infoPostView");
+        modelAndView.addObject("pokemon", getPokemon.execute());
+        modelAndView.addObject("infoPostList", findPostData.execute());
+        return modelAndView;
     }
 
     @RequestMapping(value = "/posts/{id}", method = RequestMethod.GET)
