@@ -13,7 +13,7 @@ import java.util.Optional;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class ValidatePostData {
+public class ValidateDataPost {
 
     public void execute(DataPost dataPost) {
         log.info("[ INFO ] - Validating a post data");
@@ -28,6 +28,6 @@ public class ValidatePostData {
     }
 
     private void setSecretUser(DataPost dataPost) {
-        dataPost.setSecretUser(UserPostData.contains(dataPost.getAuthor().getName().toLowerCase()));
+        dataPost.setSecretUser(UserDataPost.contains(dataPost.getAuthor().getName().toLowerCase()));
     }
 }

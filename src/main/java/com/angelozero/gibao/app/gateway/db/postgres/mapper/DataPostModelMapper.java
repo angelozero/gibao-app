@@ -30,7 +30,7 @@ public class DataPostModelMapper {
                                 .orElse(StringUtils.EMPTY))
                         .build())
                 .orElseThrow(() -> new MapperException(Error.builder()
-                        .message(MessageInfo.POST_DATA_MODEL_MAPPER_ERROR_CONVERT_TO_DATA_MODEL)
+                        .message(MessageInfo.DATA_POST_MODEL_MAPPER_ERROR_CONVERT_TO_DATA_MODEL)
                         .identifier(dataPost)
                         .status(HttpStatus.BAD_REQUEST)
                         .build()));
@@ -47,7 +47,7 @@ public class DataPostModelMapper {
                         .secretUser(post.getSecretUser() != null ? post.getSecretUser() : false)
                         .build())
                 .orElseThrow(() -> new MapperException(Error.builder()
-                        .message(MessageInfo.POST_DATA_MODEL_MAPPER_ERROR_CONVERT_TO_POST_DATA)
+                        .message(MessageInfo.DATA_POST_MODEL_MAPPER_ERROR_CONVERT_TO_POST_DATA)
                         .identifier(dataPostModel)
                         .status(HttpStatus.BAD_REQUEST)
                         .build()));

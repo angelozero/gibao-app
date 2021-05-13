@@ -78,7 +78,7 @@ public class DataPostModelMapperTest {
         MapperException exception = assertThrows(MapperException.class, () -> DataPostModelMapper.toPostDataModel(null));
 
         assertNotNull(exception);
-        assertEquals(MessageInfo.POST_DATA_MODEL_MAPPER_ERROR_CONVERT_TO_DATA_MODEL, exception.getError().getMessage());
+        assertEquals(MessageInfo.DATA_POST_MODEL_MAPPER_ERROR_CONVERT_TO_DATA_MODEL, exception.getError().getMessage());
         assertNull(exception.getError().getIdentifier());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getError().getStatus());
     }
@@ -120,7 +120,7 @@ public class DataPostModelMapperTest {
         MapperException exception = assertThrows(MapperException.class, () -> DataPostModelMapper.toPostData(null));
 
         assertNotNull(exception);
-        assertEquals(MessageInfo.POST_DATA_MODEL_MAPPER_ERROR_CONVERT_TO_POST_DATA, exception.getError().getMessage());
+        assertEquals(MessageInfo.DATA_POST_MODEL_MAPPER_ERROR_CONVERT_TO_POST_DATA, exception.getError().getMessage());
         assertNull(exception.getError().getIdentifier());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getError().getStatus());
     }

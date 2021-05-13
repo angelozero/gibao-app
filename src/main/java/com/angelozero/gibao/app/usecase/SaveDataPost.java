@@ -12,21 +12,21 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class SavePostData {
+public class SaveDataPost {
 
     private final DataPostGateway dataPostGateway;
-    private final ValidatePostData validatePostData;
-    private final DeletePostDataThread deletePostDataThread;
+    private final ValidateDataPost validateDataPost;
+    private final DeleteDataPostThread deleteDataPostThread;
 
     public void execute(DataPost dataPost) {
-        validatePostData.execute(dataPost);
+        validateDataPost.execute(dataPost);
 
         try {
             log.info("[ INFO ] - Saving post data");
             DataPost dataPostSaved = dataPostGateway.save(dataPost);
 
             log.info("[ INFO ] - Validating and deleting a post data if wasn't created by a secret user");
-            deletePostDataThread.execute(dataPostSaved);
+            deleteDataPostThread.execute(dataPostSaved);
 
         } catch (Exception ex) {
             log.error("[ ERROR ] - Error to save post data");

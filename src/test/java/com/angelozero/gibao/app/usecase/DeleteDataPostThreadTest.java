@@ -11,8 +11,8 @@ import org.mockito.Mockito;
 public class DeleteDataPostThreadTest {
 
     private final PropertiesConfig propertiesConfig = Mockito.mock(PropertiesConfig.class);
-    private final DeletePostData deletePostData = Mockito.mock(DeletePostData.class);
-    private final ValidatePostData validatePostData = Mockito.mock(ValidatePostData.class);
+    private final DeleteDataPost deleteDataPost = Mockito.mock(DeleteDataPost.class);
+    private final ValidateDataPost validateDataPost = Mockito.mock(ValidateDataPost.class);
 
     @BeforeClass
     public static void setup() {
@@ -26,13 +26,13 @@ public class DeleteDataPostThreadTest {
         DataPost dataPostMock = Fixture.from(DataPost.class).gimme("valid DataPost");
 
         Mockito.when(propertiesConfig.getOneMinute()).thenReturn(1L);
-        Mockito.doNothing().when(validatePostData).execute(dataPostMock);
-        Mockito.doNothing().when(deletePostData).execute(dataPostMock.getId());
+        Mockito.doNothing().when(validateDataPost).execute(dataPostMock);
+        Mockito.doNothing().when(deleteDataPost).execute(dataPostMock.getId());
 
-        DeletePostDataThread deletePostDataThread = new DeletePostDataThread(propertiesConfig, deletePostData, validatePostData);
-        deletePostDataThread.execute(dataPostMock);
+        DeleteDataPostThread deleteDataPostThread = new DeleteDataPostThread(propertiesConfig, deleteDataPost, validateDataPost);
+        deleteDataPostThread.execute(dataPostMock);
 
-        Mockito.verify(validatePostData, Mockito.times(1)).execute(dataPostMock);
+        Mockito.verify(validateDataPost, Mockito.times(1)).execute(dataPostMock);
 
     }
 
@@ -43,13 +43,13 @@ public class DeleteDataPostThreadTest {
         dataPostMock.setSecretUser(Boolean.TRUE);
 
         Mockito.when(propertiesConfig.getOneMinute()).thenReturn(1L);
-        Mockito.doNothing().when(validatePostData).execute(dataPostMock);
-        Mockito.doNothing().when(deletePostData).execute(dataPostMock.getId());
+        Mockito.doNothing().when(validateDataPost).execute(dataPostMock);
+        Mockito.doNothing().when(deleteDataPost).execute(dataPostMock.getId());
 
-        DeletePostDataThread deletePostDataThread = new DeletePostDataThread(propertiesConfig, deletePostData, validatePostData);
-        deletePostDataThread.execute(dataPostMock);
+        DeleteDataPostThread deleteDataPostThread = new DeleteDataPostThread(propertiesConfig, deleteDataPost, validateDataPost);
+        deleteDataPostThread.execute(dataPostMock);
 
-        Mockito.verify(validatePostData, Mockito.times(1)).execute(dataPostMock);
+        Mockito.verify(validateDataPost, Mockito.times(1)).execute(dataPostMock);
 
     }
 
@@ -59,13 +59,13 @@ public class DeleteDataPostThreadTest {
         DataPost dataPostMock = Fixture.from(DataPost.class).gimme("valid DataPost without SecretUser");
 
         Mockito.when(propertiesConfig.getOneMinute()).thenReturn(1L);
-        Mockito.doNothing().when(validatePostData).execute(dataPostMock);
-        Mockito.doNothing().when(deletePostData).execute(dataPostMock.getId());
+        Mockito.doNothing().when(validateDataPost).execute(dataPostMock);
+        Mockito.doNothing().when(deleteDataPost).execute(dataPostMock.getId());
 
-        DeletePostDataThread deletePostDataThread = new DeletePostDataThread(propertiesConfig, deletePostData, validatePostData);
-        deletePostDataThread.execute(dataPostMock);
+        DeleteDataPostThread deleteDataPostThread = new DeleteDataPostThread(propertiesConfig, deleteDataPost, validateDataPost);
+        deleteDataPostThread.execute(dataPostMock);
 
-        Mockito.verify(validatePostData, Mockito.times(1)).execute(dataPostMock);
+        Mockito.verify(validateDataPost, Mockito.times(1)).execute(dataPostMock);
 
     }
 
@@ -73,12 +73,12 @@ public class DeleteDataPostThreadTest {
     public void shouldDeleteAPostDataInAThreadWhithNullPostDataWithSuccess() throws InterruptedException {
 
         Mockito.when(propertiesConfig.getOneMinute()).thenReturn(1L);
-        Mockito.doNothing().when(validatePostData).execute(null);
+        Mockito.doNothing().when(validateDataPost).execute(null);
 
-        DeletePostDataThread deletePostDataThread = new DeletePostDataThread(propertiesConfig, deletePostData, validatePostData);
-        deletePostDataThread.execute(null);
+        DeleteDataPostThread deleteDataPostThread = new DeleteDataPostThread(propertiesConfig, deleteDataPost, validateDataPost);
+        deleteDataPostThread.execute(null);
 
-        Mockito.verify(validatePostData, Mockito.times(1)).execute(null);
+        Mockito.verify(validateDataPost, Mockito.times(1)).execute(null);
 
     }
 

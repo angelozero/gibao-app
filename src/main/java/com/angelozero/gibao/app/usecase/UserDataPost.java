@@ -5,7 +5,7 @@ import lombok.Getter;
 import java.util.Arrays;
 
 @Getter
-public enum UserPostData {
+public enum UserDataPost {
 
     BATS("bats"),
     FLOG("flog"),
@@ -13,12 +13,12 @@ public enum UserPostData {
 
     private final String secretUser;
 
-    UserPostData(String secretUser) {
+    UserDataPost(String secretUser) {
         this.secretUser = secretUser;
     }
 
     public static boolean contains(String user) {
-        return Arrays.stream(UserPostData.values())
+        return Arrays.stream(UserDataPost.values())
                 .anyMatch(secretUser -> secretUser.getSecretUser().equals(user.toLowerCase()));
     }
 }

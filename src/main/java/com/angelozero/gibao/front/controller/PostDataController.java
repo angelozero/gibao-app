@@ -1,10 +1,10 @@
 package com.angelozero.gibao.front.controller;
 
 
-import com.angelozero.gibao.app.usecase.DeletePostData;
-import com.angelozero.gibao.app.usecase.FindPostData;
+import com.angelozero.gibao.app.usecase.DeleteDataPost;
+import com.angelozero.gibao.app.usecase.FindDataPost;
 import com.angelozero.gibao.app.usecase.GetPokemonByNumber;
-import com.angelozero.gibao.app.usecase.SavePostData;
+import com.angelozero.gibao.app.usecase.SaveDataPost;
 import com.angelozero.gibao.front.controller.mapper.PostDataMapper;
 import com.angelozero.gibao.front.controller.rest.PostDataRequest;
 import lombok.AllArgsConstructor;
@@ -21,9 +21,9 @@ import javax.validation.Valid;
 @AllArgsConstructor
 public class PostDataController {
 
-    private final SavePostData savePostData;
-    private final DeletePostData deletePostData;
-    private final FindPostData findPostData;
+    private final SaveDataPost saveDataPost;
+    private final DeleteDataPost deleteDataPost;
+    private final FindDataPost findDataPost;
     private final GetPokemonByNumber getPokemonByNumber;
 
 
@@ -37,14 +37,14 @@ public class PostDataController {
     public ModelAndView getInfoPost() {
         ModelAndView modelAndView = new ModelAndView("infoPostView");
         modelAndView.addObject("pokemon", getPokemonByNumber.execute());
-        modelAndView.addObject("infoPostList", findPostData.execute());
+        modelAndView.addObject("infoPostList", findDataPost.execute());
         return modelAndView;
     }
 
     @RequestMapping(value = "/posts/{id}", method = RequestMethod.GET)
     public ModelAndView getInfoPostDetail(@PathVariable("id") long id) {
         ModelAndView mv = new ModelAndView("infoPostDetailView");
-        return mv.addObject("infoPost", PostDataMapper.toPostDataResponse(findPostData.execute(id)));
+        return mv.addObject("infoPost", PostDataMapper.toPostDataResponse(findDataPost.execute(id)));
     }
 
     @RequestMapping(value = "/newpost", method = RequestMethod.GET)
@@ -57,13 +57,13 @@ public class PostDataController {
         if (bindingResult.hasErrors()) {
             return "redirect:/newpost";
         }
-        savePostData.execute(PostDataMapper.toPostData(postDataRequest));
+        saveDataPost.execute(PostDataMapper.toPostData(postDataRequest));
         return redirectIndexPage();
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String deletePost(long id) {
-        deletePostData.execute(id);
+        deleteDataPost.execute(id);
         return redirectIndexPage();
     }
 

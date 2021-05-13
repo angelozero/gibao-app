@@ -4,6 +4,7 @@ import com.angelozero.gibao.app.config.error.Error;
 import com.angelozero.gibao.app.config.exception.DataPostServiceException;
 import com.angelozero.gibao.app.domain.DataPost;
 import com.angelozero.gibao.app.gateway.db.DataPostGateway;
+import com.angelozero.gibao.app.util.MessageInfo;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -14,17 +15,17 @@ import java.util.List;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class FindPostData {
+public class FindDataPost {
 
     private final DataPostGateway dataPostGateway;
 
     public List<DataPost> execute() {
-        log.info("[ INFO ] - Finding for a list of post data");
+        log.info(MessageInfo.FIND_DATA_POST_LIST_INFO);
         return findAllPostsData();
     }
 
     public DataPost execute(Long id) {
-        log.info("[ INFO ] - Find a post data by id {}", id);
+        log.info(MessageInfo.FIND_DATA_POST_BY_ID_INFO, id);
         return findById(id);
     }
 
@@ -33,9 +34,9 @@ public class FindPostData {
             return dataPostGateway.findAll();
 
         } catch (Exception ex) {
-            log.error("[ ERROR ] - Error to find a list of post data");
+            log.error(MessageInfo.FIND_DATA_POST_LIST_ERROR);
             throw new DataPostServiceException(Error.builder()
-                    .message(String.format("Error to find a list of post data %s", ex.getMessage()))
+                    .message(String.format(MessageInfo.FIND_DATA_POST_LIST_ERROR_INFO, ex.getMessage()))
                     .identifier(ex)
                     .status(HttpStatus.BAD_REQUEST)
                     .build(), ex);
@@ -47,9 +48,9 @@ public class FindPostData {
             return dataPostGateway.findById(id);
 
         } catch (Exception ex) {
-            log.error("[ ERROR ] - Error to find a post data by id {}", id);
+            log.error(MessageInfo.FIND_DATA_POST_ID_ERROR, id);
             throw new DataPostServiceException(Error.builder()
-                    .message(String.format("Error to find a post data %s", ex.getMessage()))
+                    .message(String.format(MessageInfo.FIND_DATA_POST_ID_ERROR_INFO, ex.getMessage()))
                     .identifier(ex)
                     .status(HttpStatus.BAD_REQUEST)
                     .build(), ex);
