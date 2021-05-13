@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostData {
+public class DataPost {
 
     private Long id;
 

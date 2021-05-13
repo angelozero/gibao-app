@@ -3,7 +3,7 @@ package com.angelozero.gibao.front.controller.mapper;
 import com.angelozero.gibao.app.config.error.Error;
 import com.angelozero.gibao.app.config.exception.MapperException;
 import com.angelozero.gibao.app.domain.Author;
-import com.angelozero.gibao.app.domain.PostData;
+import com.angelozero.gibao.app.domain.DataPost;
 import com.angelozero.gibao.front.controller.rest.AuthorResponse;
 import com.angelozero.gibao.front.controller.rest.PostDataRequest;
 import com.angelozero.gibao.front.controller.rest.PostDataResponse;
@@ -16,9 +16,9 @@ import java.util.stream.Collectors;
 
 public class PostDataMapper {
 
-    public static PostData toPostData(PostDataRequest postDataRequest) {
+    public static DataPost toPostData(PostDataRequest postDataRequest) {
         return Optional.ofNullable(postDataRequest).map(post ->
-                PostData.builder()
+                DataPost.builder()
                         .id(post.getId())
                         .author(Optional.ofNullable(post.getAuthor()).map(author ->
                                 Author.builder().name(author.getName()).build())
@@ -37,15 +37,15 @@ public class PostDataMapper {
                         .build()));
     }
 
-    public static PostDataResponse toPostDataResponse(PostData postData) {
-        return Optional.ofNullable(postData).map(post ->
+    public static PostDataResponse toPostDataResponse(DataPost dataPost) {
+        return Optional.ofNullable(dataPost).map(post ->
                 PostDataResponse.builder()
                         .id(post.getId())
                         .author(Optional.ofNullable(post.getAuthor()).map(author ->
                                 AuthorResponse.builder().name(author.getName()).build())
                                 .orElseThrow(() -> new MapperException(Error.builder()
                                         .status(HttpStatus.BAD_REQUEST)
-                                        .identifier(postData)
+                                        .identifier(dataPost)
                                         .message("Error to validate a Author Response")
                                         .build())))
                         .title(post.getTitle())
@@ -54,13 +54,13 @@ public class PostDataMapper {
                         .build())
                 .orElseThrow(() -> new MapperException(Error.builder()
                         .status(HttpStatus.BAD_REQUEST)
-                        .identifier(postData)
+                        .identifier(dataPost)
                         .message("Error to convert a post data request to post data")
                         .build()));
     }
 
-    public static List<PostDataResponse> toPostDataList(List<PostData> postDataList) {
-        return Optional.ofNullable(postDataList).map(dataList ->
+    public static List<PostDataResponse> toPostDataList(List<DataPost> dataPostList) {
+        return Optional.ofNullable(dataPostList).map(dataList ->
                 dataList.stream().map(post ->
                         PostDataResponse.builder()
                                 .id(post.getId())

@@ -1,11 +1,10 @@
 package com.angelozero.gibao.front.utils;
 
-import com.angelozero.gibao.app.gateway.db.postgres.model.PostDataModel;
-import com.angelozero.gibao.app.gateway.db.repository.PostDataJPARepository;
+import com.angelozero.gibao.app.gateway.db.postgres.model.DataPostModel;
+import com.angelozero.gibao.app.gateway.db.repository.DataPostJPARepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -15,17 +14,17 @@ import java.util.UUID;
 public class DummyData {
 
     @Autowired
-    PostDataJPARepository postDataJPARepository;
+    DataPostJPARepository dataPostJPARepository;
 
     //@PostConstruct
     public void saveInfoPosts() {
 
-        List<PostDataModel> infoPostList = Arrays.asList(
-                PostDataModel.builder().date(LocalDate.now()).author("Angelo").description(UUID.randomUUID().toString()).title("Title 1").build(),
-                PostDataModel.builder().date(LocalDate.now()).author("Bats").description(UUID.randomUUID().toString()).title("Title 2").build(),
-                PostDataModel.builder().date(LocalDate.now()).author("Flog").description(UUID.randomUUID().toString()).title("Title 3").build()
+        List<DataPostModel> infoPostList = Arrays.asList(
+                DataPostModel.builder().date(LocalDate.now()).author("Angelo").description(UUID.randomUUID().toString()).title("Title 1").build(),
+                DataPostModel.builder().date(LocalDate.now()).author("Bats").description(UUID.randomUUID().toString()).title("Title 2").build(),
+                DataPostModel.builder().date(LocalDate.now()).author("Flog").description(UUID.randomUUID().toString()).title("Title 3").build()
         );
 
-        postDataJPARepository.saveAll(infoPostList);
+        dataPostJPARepository.saveAll(infoPostList);
     }
 }

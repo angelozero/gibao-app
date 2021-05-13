@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostDataModel {
+public class DataPostModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
