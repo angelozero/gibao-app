@@ -3,6 +3,7 @@ package com.angelozero.gibao.app.usecase;
 import com.angelozero.gibao.app.config.error.Error;
 import com.angelozero.gibao.app.config.exception.PokemonApiException;
 import com.angelozero.gibao.app.gateway.api.PokemonApi;
+import com.angelozero.gibao.app.util.MessageInfo;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -22,15 +23,15 @@ public class GetPokemonByNumber {
         int pokemonNumber = getRandomNumber();
 
         try {
-            log.info("[ INFO ] - Calling PokeApi - by number {}", pokemonNumber);
+            log.info(MessageInfo.GET_POKEMON_BY_NUMBER_INFO, pokemonNumber);
             return pokemonApi.getImageByNumber(pokemonNumber).getSprites().getOther().getOfficialArtWork().getFrontDefault();
 
         } catch (Exception ex) {
-            log.error("[ ERROR ] - Error to call PokeApi");
+            log.error(MessageInfo.GET_POKEMON_BY_NUMBER_ERROR);
             throw new PokemonApiException(Error.builder()
                     .status(HttpStatus.BAD_REQUEST)
                     .identifier(pokemonNumber)
-                    .message("Failed to get pokemon image")
+                    .message(String.format(MessageInfo.GET_POKEMON_BY_NUMBER_ERROR_INFO, ex.getMessage()))
                     .build(), ex);
         }
     }

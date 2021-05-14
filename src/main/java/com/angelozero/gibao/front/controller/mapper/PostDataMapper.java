@@ -61,15 +61,9 @@ public class PostDataMapper {
 
     public static List<PostDataResponse> toPostDataList(List<DataPost> dataPostList) {
         return Optional.ofNullable(dataPostList).map(dataList ->
-                dataList.stream().map(post ->
-                        PostDataResponse.builder()
-                                .id(post.getId())
-                                .title(post.getTitle())
-                                .description(post.getDescription())
-                                .date(post.getDate())
-                                .secretUser(post.getSecretUser())
-                                .build()
-                ).collect(Collectors.toList())
+                dataList.stream().
+                        map(PostDataMapper::toPostDataResponse)
+                        .collect(Collectors.toList())
         ).orElse(Collections.emptyList());
     }
 }

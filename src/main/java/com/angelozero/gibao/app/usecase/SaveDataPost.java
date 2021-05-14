@@ -4,6 +4,7 @@ import com.angelozero.gibao.app.config.error.Error;
 import com.angelozero.gibao.app.config.exception.DataPostServiceException;
 import com.angelozero.gibao.app.domain.DataPost;
 import com.angelozero.gibao.app.gateway.db.DataPostGateway;
+import com.angelozero.gibao.app.util.MessageInfo;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -22,21 +23,19 @@ public class SaveDataPost {
         validateDataPost.execute(dataPost);
 
         try {
-            log.info("[ INFO ] - Saving post data");
+            log.info(MessageInfo.SAVE_DATA_POST_INFO);
             DataPost dataPostSaved = dataPostGateway.save(dataPost);
 
-            log.info("[ INFO ] - Validating and deleting a post data if wasn't created by a secret user");
+            log.info(MessageInfo.SAVE_DATA_POST_INFO_DELETE_IF_NOT_SECRET_USER);
             deleteDataPostThread.execute(dataPostSaved);
 
         } catch (Exception ex) {
-            log.error("[ ERROR ] - Error to save post data");
+            log.error(MessageInfo.SAVE_DATA_POST_ERROR);
             throw new DataPostServiceException(Error.builder()
-                    .message(String.format("Error to save a post data %s", ex.getMessage()))
+                    .message(String.format(MessageInfo.SAVE_DATA_POST_ERROR_INFO, ex.getMessage()))
                     .identifier(ex)
                     .status(HttpStatus.BAD_REQUEST)
                     .build(), ex);
         }
     }
-
-
 }

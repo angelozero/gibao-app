@@ -1,4 +1,4 @@
-package com.angelozero.gibao.app.usecase;
+package com.angelozero.gibao.app.usecase.enums;
 
 import lombok.Getter;
 
