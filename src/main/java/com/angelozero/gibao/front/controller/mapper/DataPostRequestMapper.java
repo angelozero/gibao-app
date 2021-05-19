@@ -4,8 +4,9 @@ import com.angelozero.gibao.app.config.error.Error;
 import com.angelozero.gibao.app.config.exception.MapperException;
 import com.angelozero.gibao.app.domain.Author;
 import com.angelozero.gibao.app.domain.DataPost;
+import com.angelozero.gibao.app.util.MessageInfo;
 import com.angelozero.gibao.front.controller.rest.AuthorResponse;
-import com.angelozero.gibao.front.controller.rest.PostDataRequest;
+import com.angelozero.gibao.front.controller.rest.DataPostRequest;
 import com.angelozero.gibao.front.controller.rest.PostDataResponse;
 import org.springframework.http.HttpStatus;
 
@@ -14,26 +15,26 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class PostDataMapper {
+public class DataPostRequestMapper {
 
-    public static DataPost toPostData(PostDataRequest postDataRequest) {
-        return Optional.ofNullable(postDataRequest).map(post ->
+    public static DataPost toPostData(DataPostRequest dataPostRequest) {
+        return Optional.ofNullable(dataPostRequest).map(post ->
                 DataPost.builder()
                         .id(post.getId())
                         .author(Optional.ofNullable(post.getAuthor()).map(author ->
                                 Author.builder().name(author.getName()).build())
                                 .orElseThrow(() -> new MapperException(Error.builder()
                                         .status(HttpStatus.BAD_REQUEST)
-                                        .identifier(postDataRequest)
-                                        .message("Error to validate a Author")
+                                        .identifier(dataPostRequest)
+                                        .message(MessageInfo.DATA_POST_REQUEST_MAPPER_ERROR_NULL_AUTHOR)
                                         .build())))
                         .title(post.getTitle())
                         .description(post.getDescription())
                         .build())
                 .orElseThrow(() -> new MapperException(Error.builder()
                         .status(HttpStatus.BAD_REQUEST)
-                        .identifier(postDataRequest)
-                        .message("Error to convert a post data request to post data")
+                        .identifier(dataPostRequest)
+                        .message(MessageInfo.DATA_POST_REQUEST_MAPPER_ERROR_NULL_DATA_POST)
                         .build()));
     }
 
@@ -41,28 +42,23 @@ public class PostDataMapper {
         return Optional.ofNullable(dataPost).map(post ->
                 PostDataResponse.builder()
                         .id(post.getId())
-                        .author(Optional.ofNullable(post.getAuthor()).map(author ->
-                                AuthorResponse.builder().name(author.getName()).build())
-                                .orElseThrow(() -> new MapperException(Error.builder()
-                                        .status(HttpStatus.BAD_REQUEST)
-                                        .identifier(dataPost)
-                                        .message("Error to validate a Author Response")
-                                        .build())))
+                        .author(Optional.ofNullable(post.getAuthor())
+                                .map(author ->
+                                        AuthorResponse.builder()
+                                                .name(author.getName())
+                                                .build())
+                                .orElse(AuthorResponse.builder().build()))
                         .title(post.getTitle())
                         .description(post.getDescription())
                         .secretUser(post.getSecretUser())
                         .build())
-                .orElseThrow(() -> new MapperException(Error.builder()
-                        .status(HttpStatus.BAD_REQUEST)
-                        .identifier(dataPost)
-                        .message("Error to convert a post data request to post data")
-                        .build()));
+                .orElse(PostDataResponse.builder().build());
     }
 
     public static List<PostDataResponse> toPostDataList(List<DataPost> dataPostList) {
         return Optional.ofNullable(dataPostList).map(dataList ->
                 dataList.stream().
-                        map(PostDataMapper::toPostDataResponse)
+                        map(DataPostRequestMapper::toPostDataResponse)
                         .collect(Collectors.toList())
         ).orElse(Collections.emptyList());
     }

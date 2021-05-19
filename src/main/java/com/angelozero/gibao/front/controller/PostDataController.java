@@ -5,8 +5,8 @@ import com.angelozero.gibao.app.usecase.DeleteDataPost;
 import com.angelozero.gibao.app.usecase.FindDataPost;
 import com.angelozero.gibao.app.usecase.GetPokemonByNumber;
 import com.angelozero.gibao.app.usecase.SaveDataPost;
-import com.angelozero.gibao.front.controller.mapper.PostDataMapper;
-import com.angelozero.gibao.front.controller.rest.PostDataRequest;
+import com.angelozero.gibao.front.controller.mapper.DataPostRequestMapper;
+import com.angelozero.gibao.front.controller.rest.DataPostRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -44,7 +44,7 @@ public class PostDataController {
     @RequestMapping(value = "/posts/{id}", method = RequestMethod.GET)
     public ModelAndView getInfoPostDetail(@PathVariable("id") long id) {
         ModelAndView mv = new ModelAndView("infoPostDetailView");
-        return mv.addObject("infoPost", PostDataMapper.toPostDataResponse(findDataPost.execute(id)));
+        return mv.addObject("infoPost", DataPostRequestMapper.toPostDataResponse(findDataPost.execute(id)));
     }
 
     @RequestMapping(value = "/newpost", method = RequestMethod.GET)
@@ -53,11 +53,11 @@ public class PostDataController {
     }
 
     @RequestMapping(value = "/newpost", method = RequestMethod.POST)
-    public String savePost(@Valid PostDataRequest postDataRequest, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
+    public String savePost(@Valid DataPostRequest dataPostRequest, BindingResult bindingResult) {
+        if (bindingResult != null && bindingResult.hasErrors()) {
             return "redirect:/newpost";
         }
-        saveDataPost.execute(PostDataMapper.toPostData(postDataRequest));
+        saveDataPost.execute(DataPostRequestMapper.toPostData(dataPostRequest));
         return redirectIndexPage();
     }
 

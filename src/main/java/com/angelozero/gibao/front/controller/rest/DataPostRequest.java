@@ -9,7 +9,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostDataRequest {
+public class DataPostRequest {
 
     private Long id;
 

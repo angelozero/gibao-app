@@ -50,4 +50,7 @@ public class MessageInfo {
     public static final String DATA_POST_MODEL_MAPPER_ERROR_CONVERT_TO_DATA_MODEL = "Error to convert data post to a data post model";
     public static final String DATA_POST_MODEL_MAPPER_ERROR_CONVERT_TO_POST_DATA = "Error to convert data post model to a data post";
 
+    //DataPostRequestMapper
+    public static final String DATA_POST_REQUEST_MAPPER_ERROR_NULL_AUTHOR = "Error to validate a Author";
+    public static final String DATA_POST_REQUEST_MAPPER_ERROR_NULL_DATA_POST = "Error to convert a post data request to post data";
 }
