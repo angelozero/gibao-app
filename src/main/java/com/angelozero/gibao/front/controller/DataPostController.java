@@ -1,15 +1,13 @@
 package com.angelozero.gibao.front.controller;
 
 
-
-import com.angelozero.gibao.app.usecase.DeleteDataPost;
-import com.angelozero.gibao.app.usecase.FindDataPost;
-import com.angelozero.gibao.app.usecase.GetPokemonByNumber;
-import com.angelozero.gibao.app.usecase.SaveDataPost;
+import com.angelozero.gibao.app.usecase.*;
 import com.angelozero.gibao.front.controller.mapper.DataPostRequestMapper;
 import com.angelozero.gibao.front.controller.rest.DataPostRequest;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,13 +19,14 @@ import javax.validation.Valid;
 
 @Controller
 @AllArgsConstructor
-public class PostDataController {
+public class DataPostController {
 
 
     private final SaveDataPost saveDataPost;
     private final DeleteDataPost deleteDataPost;
     private final FindDataPost findDataPost;
     private final GetPokemonByNumber getPokemonByNumber;
+    private final GetRandomExcuse getRandomExcuse;
 
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -41,9 +40,21 @@ public class PostDataController {
         ModelAndView modelAndView = new ModelAndView("infoPostView");
 
         modelAndView.addObject("pokemon", getPokemonByNumber.execute());
-        modelAndView.addObject("infoPostList", findDataPost.execute());
+//        modelAndView.addObject("infoPostList", findDataPost.execute());
+        modelAndView.addObject("infoPostList", getRandomExcuse.execute());
 
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/posts/json", method = RequestMethod.GET)
+    public ResponseEntity<ModelAndView> getInfoPostJson() {
+        ModelAndView modelAndView = new ModelAndView("infoPostView");
+
+        modelAndView.addObject("pokemon", getPokemonByNumber.execute());
+        modelAndView.addObject("infoPostList", findDataPost.execute());
+        modelAndView.addObject("infoPostRandom", getRandomExcuse.execute());
+
+        return new ResponseEntity<>(modelAndView, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/posts/{id}", method = RequestMethod.GET)
@@ -70,6 +81,12 @@ public class PostDataController {
     public String deletePost(long id) {
         deleteDataPost.execute(id);
         return redirectIndexPage();
+    }
+
+    @RequestMapping(value = "/posts/random", method = RequestMethod.GET)
+    public ModelAndView getRandomPost() {
+        ModelAndView mv = new ModelAndView("infoPostView");
+        return mv.addObject("infoPostList", getRandomExcuse.execute());
     }
 
     private static String redirectIndexPage() {
