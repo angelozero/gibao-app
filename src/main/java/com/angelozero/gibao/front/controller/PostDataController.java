@@ -1,12 +1,14 @@
 package com.angelozero.gibao.front.controller;
 
 
+
 import com.angelozero.gibao.app.usecase.DeleteDataPost;
 import com.angelozero.gibao.app.usecase.FindDataPost;
 import com.angelozero.gibao.app.usecase.GetPokemonByNumber;
 import com.angelozero.gibao.app.usecase.SaveDataPost;
 import com.angelozero.gibao.front.controller.mapper.DataPostRequestMapper;
 import com.angelozero.gibao.front.controller.rest.DataPostRequest;
+
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -20,6 +22,7 @@ import javax.validation.Valid;
 @Controller
 @AllArgsConstructor
 public class PostDataController {
+
 
     private final SaveDataPost saveDataPost;
     private final DeleteDataPost deleteDataPost;
@@ -36,8 +39,10 @@ public class PostDataController {
     @RequestMapping(value = "/posts", method = RequestMethod.GET)
     public ModelAndView getInfoPost() {
         ModelAndView modelAndView = new ModelAndView("infoPostView");
+
         modelAndView.addObject("pokemon", getPokemonByNumber.execute());
         modelAndView.addObject("infoPostList", findDataPost.execute());
+
         return modelAndView;
     }
 
