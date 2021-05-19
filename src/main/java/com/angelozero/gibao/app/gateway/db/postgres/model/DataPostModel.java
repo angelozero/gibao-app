@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostDataModel {
+public class DataPostModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,4 +35,7 @@ public class PostDataModel {
     @Lob
     @Column(name = "description")
     private String description;
+
+    @Column(name = "isSecretUser")
+    private Boolean secretUser;
 }

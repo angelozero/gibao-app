@@ -1,12 +1,14 @@
 package com.angelozero.gibao.front.controller;
 
 
-import com.angelozero.gibao.app.usecase.DeletePostData;
-import com.angelozero.gibao.app.usecase.FindPostData;
-import com.angelozero.gibao.app.usecase.GetPokemon;
-import com.angelozero.gibao.app.usecase.SavePostData;
-import com.angelozero.gibao.front.controller.mapper.PostDataMapper;
-import com.angelozero.gibao.front.controller.rest.PostDataRequest;
+
+import com.angelozero.gibao.app.usecase.DeleteDataPost;
+import com.angelozero.gibao.app.usecase.FindDataPost;
+import com.angelozero.gibao.app.usecase.GetPokemonByNumber;
+import com.angelozero.gibao.app.usecase.SaveDataPost;
+import com.angelozero.gibao.front.controller.mapper.DataPostRequestMapper;
+import com.angelozero.gibao.front.controller.rest.DataPostRequest;
+
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -21,10 +23,11 @@ import javax.validation.Valid;
 @AllArgsConstructor
 public class PostDataController {
 
-    private final SavePostData savePostData;
-    private final DeletePostData deletePostData;
-    private final FindPostData findPostData;
-    private final GetPokemon getPokemon;
+
+    private final SaveDataPost saveDataPost;
+    private final DeleteDataPost deleteDataPost;
+    private final FindDataPost findDataPost;
+    private final GetPokemonByNumber getPokemonByNumber;
 
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -36,15 +39,17 @@ public class PostDataController {
     @RequestMapping(value = "/posts", method = RequestMethod.GET)
     public ModelAndView getInfoPost() {
         ModelAndView modelAndView = new ModelAndView("infoPostView");
-        modelAndView.addObject("pokemon", getPokemon.execute());
-        modelAndView.addObject("infoPostList", findPostData.execute());
+
+        modelAndView.addObject("pokemon", getPokemonByNumber.execute());
+        modelAndView.addObject("infoPostList", findDataPost.execute());
+
         return modelAndView;
     }
 
     @RequestMapping(value = "/posts/{id}", method = RequestMethod.GET)
     public ModelAndView getInfoPostDetail(@PathVariable("id") long id) {
         ModelAndView mv = new ModelAndView("infoPostDetailView");
-        return mv.addObject("infoPost", findPostData.execute(id));
+        return mv.addObject("infoPost", DataPostRequestMapper.toPostDataResponse(findDataPost.execute(id)));
     }
 
     @RequestMapping(value = "/newpost", method = RequestMethod.GET)
@@ -53,17 +58,17 @@ public class PostDataController {
     }
 
     @RequestMapping(value = "/newpost", method = RequestMethod.POST)
-    public String savePost(@Valid PostDataRequest postDataRequest, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
+    public String savePost(@Valid DataPostRequest dataPostRequest, BindingResult bindingResult) {
+        if (bindingResult != null && bindingResult.hasErrors()) {
             return "redirect:/newpost";
         }
-        savePostData.execute(PostDataMapper.toPostData(postDataRequest));
+        saveDataPost.execute(DataPostRequestMapper.toPostData(dataPostRequest));
         return redirectIndexPage();
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String deletePost(long id) {
-        deletePostData.execute(id);
+        deleteDataPost.execute(id);
         return redirectIndexPage();
     }
 

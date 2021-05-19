@@ -106,4 +106,18 @@ public class GetPokemon {
 #### 3. For more information !
 - [Feign: Uma maneira elegante de criar clientes HTTP em Java](https://felixgilioli.medium.com/feign-uma-maneira-elegante-de-criar-clientes-http-em-java-c7c13c318cbe)
 
+
 - [Pokemon API](https://pokeapi.co/) ![Pikachu](https://raw.githubusercontent.com/PokeAPI/media/master/logo/pokeapi_256.png)
+
+
+## Add some gifs
+
+
+ ![Octane](https://pa1.narvii.com/7219/3f6de78829849bb2c2425f764f9bde7ae52848e8r1-256-256_hq.gif)
+ ![Octane](https://pa1.narvii.com/7219/04dd0e9ac40347ac391d9ba6323f6b822f182831r1-256-256_hq.gif)
+ ![Wraith](https://64.media.tumblr.com/dfdf88c6295f4534e1b8e25b41b06b87/tumblr_przfnw4o471seajk2_400.png)
+ ![Bloodhound](https://64.media.tumblr.com/2e397b84b9f4880b0f8c0954d04d3236/tumblr_przfnwsVdb1seajk2_400.png)
+ ![Lifeline](https://64.media.tumblr.com/97e8abc9981caa9112a345f5c751db73/tumblr_przfnw2Nmo1seajk2_400.png)
+ ![Bangalore](https://64.media.tumblr.com/cd94a364139ea43ba9fab89bb03bb6c3/tumblr_przfnwprJW1seajk2_400.png)
+ 
+---

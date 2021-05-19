@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostData {
+public class DataPost {
 
     private Long id;
 
@@ -21,4 +21,6 @@ public class PostData {
     private String description;
 
     private LocalDate date;
+
+    private Boolean secretUser;
 }
