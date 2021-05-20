@@ -110,6 +110,9 @@ public class GetPokemon {
 - [Pokemon API](https://pokeapi.co/) ![Pikachu](https://raw.githubusercontent.com/PokeAPI/media/master/logo/pokeapi_256.png)
 
 
+## First BETA preview!
+![Excuse](https://s3.gifyu.com/images/ezgif.com-gif-makerad94f6de2a1f6698.gif)
+
 ## Add some gifs
 
 

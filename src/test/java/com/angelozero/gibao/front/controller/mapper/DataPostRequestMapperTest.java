@@ -6,7 +6,7 @@ import com.angelozero.gibao.app.config.exception.MapperException;
 import com.angelozero.gibao.app.domain.DataPost;
 import com.angelozero.gibao.app.util.MessageInfo;
 import com.angelozero.gibao.front.controller.rest.DataPostRequest;
-import com.angelozero.gibao.front.controller.rest.PostDataResponse;
+import com.angelozero.gibao.front.controller.rest.DataPostResponse;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
@@ -28,7 +28,7 @@ public class DataPostRequestMapperTest {
     public void shouldConvertADataPostRequestToDataPostWithSuccess() {
         DataPostRequest dataPostRequestMock = Fixture.from(DataPostRequest.class).gimme("valid DataPostRequest");
 
-        DataPost dataPost = DataPostRequestMapper.toPostData(dataPostRequestMock);
+        DataPost dataPost = DataPostRequestMapper.toDataPost(dataPostRequestMock);
 
         assertNotNull(dataPost);
         assertNotNull(dataPost.getAuthor());
@@ -42,7 +42,7 @@ public class DataPostRequestMapperTest {
     public void shouldConvertADataPostRequestToDataPostWithErrorNoAuthor() {
         DataPostRequest dataPostRequestMock = Fixture.from(DataPostRequest.class).gimme("valid DataPostRequest without Author");
 
-        MapperException exception = assertThrows(MapperException.class, () -> DataPostRequestMapper.toPostData(dataPostRequestMock));
+        MapperException exception = assertThrows(MapperException.class, () -> DataPostRequestMapper.toDataPost(dataPostRequestMock));
 
         assertNotNull(exception);
         assertEquals(HttpStatus.BAD_REQUEST, exception.getError().getStatus());
@@ -52,7 +52,7 @@ public class DataPostRequestMapperTest {
 
     @Test
     public void shouldConvertADataPostRequestToDataPostWithErrorNullData() {
-        MapperException exception = assertThrows(MapperException.class, () -> DataPostRequestMapper.toPostData(null));
+        MapperException exception = assertThrows(MapperException.class, () -> DataPostRequestMapper.toDataPost(null));
 
         assertNotNull(exception);
         assertEquals(HttpStatus.BAD_REQUEST, exception.getError().getStatus());
@@ -64,55 +64,56 @@ public class DataPostRequestMapperTest {
     public void shouldConvertADataPostToDataPostResponseWithSuccess() {
         DataPost dataPostMock = Fixture.from(DataPost.class).gimme("valid DataPost");
 
-        PostDataResponse postDataResponse = DataPostRequestMapper.toPostDataResponse(dataPostMock);
+        DataPostResponse dataPostResponse = DataPostRequestMapper.toDataPostResponse(dataPostMock);
 
-        assertNotNull(postDataResponse);
-        assertNotNull(postDataResponse.getAuthor());
-        assertEquals(dataPostMock.getAuthor().getName(), postDataResponse.getAuthor().getName());
-        assertEquals(dataPostMock.getId(), postDataResponse.getId());
-        assertEquals(dataPostMock.getTitle(), postDataResponse.getTitle());
-        assertEquals(dataPostMock.getDescription(), postDataResponse.getDescription());
-        assertEquals(dataPostMock.getSecretUser(), postDataResponse.getSecretUser());
+        assertNotNull(dataPostResponse);
+        assertNotNull(dataPostResponse.getAuthor());
+        assertEquals(dataPostMock.getAuthor().getName(), dataPostResponse.getAuthor().getName());
+        assertEquals(dataPostMock.getId(), dataPostResponse.getId());
+        assertEquals(dataPostMock.getTitle(), dataPostResponse.getTitle());
+        assertEquals(dataPostMock.getDescription(), dataPostResponse.getDescription());
+        assertEquals(dataPostMock.getSecretUser(), dataPostResponse.getSecretUser());
     }
 
     @Test
     public void shouldConvertADataPostToDataPostResponseWithSuccessNoAuthor() {
         DataPost dataPostMock = Fixture.from(DataPost.class).gimme("valid DataPost without Author");
 
-        PostDataResponse postDataResponse = DataPostRequestMapper.toPostDataResponse(dataPostMock);
+        DataPostResponse dataPostResponse = DataPostRequestMapper.toDataPostResponse(dataPostMock);
 
-        assertNotNull(postDataResponse);
-        assertNotNull(postDataResponse.getAuthor());
-        assertNull(postDataResponse.getAuthor().getName());
-        assertEquals(dataPostMock.getId(), postDataResponse.getId());
-        assertEquals(dataPostMock.getTitle(), postDataResponse.getTitle());
-        assertEquals(dataPostMock.getDescription(), postDataResponse.getDescription());
-        assertEquals(dataPostMock.getSecretUser(), postDataResponse.getSecretUser());
+        assertNotNull(dataPostResponse);
+        assertNotNull(dataPostResponse.getAuthor());
+        assertNull(dataPostResponse.getAuthor().getName());
+        assertEquals(dataPostMock.getId(), dataPostResponse.getId());
+        assertEquals(dataPostMock.getTitle(), dataPostResponse.getTitle());
+        assertEquals(dataPostMock.getDescription(), dataPostResponse.getDescription());
+        assertEquals(dataPostMock.getSecretUser(), dataPostResponse.getSecretUser());
+        assertNotNull(dataPostResponse.getDate());
     }
 
     @Test
     public void shouldConvertADataPostToDataPostResponseWithSuccessNoData() {
 
-        PostDataResponse postDataResponse = DataPostRequestMapper.toPostDataResponse(null);
+        DataPostResponse dataPostResponse = DataPostRequestMapper.toDataPostResponse(null);
 
-        assertNotNull(postDataResponse);
-        assertNull(postDataResponse.getAuthor());
+        assertNotNull(dataPostResponse);
+        assertNull(dataPostResponse.getAuthor());
     }
 
     @Test
     public void shouldConvertAListOfDataPostToAListOfDataPostResponseWithSuccess() {
         List<DataPost> dataPostListMock = Fixture.from(DataPost.class).gimme(3, "valid DataPost");
-        List<PostDataResponse> postDataResponseList = DataPostRequestMapper.toPostDataList(dataPostListMock);
+        List<DataPostResponse> dataPostResponseList = DataPostRequestMapper.toDataPostResponseList(dataPostListMock);
 
-        assertNotNull(postDataResponseList);
-        assertEquals(3, postDataResponseList.size());
+        assertNotNull(dataPostResponseList);
+        assertEquals(3, dataPostResponseList.size());
     }
 
     @Test
     public void shouldConvertAListOfDataPostToAListOfDataPostResponseWithSuccessNullList() {
-        List<PostDataResponse> postDataResponseList = DataPostRequestMapper.toPostDataList(null);
+        List<DataPostResponse> dataPostResponseList = DataPostRequestMapper.toDataPostResponseList(null);
 
-        assertNotNull(postDataResponseList);
-        assertEquals(0, postDataResponseList.size());
+        assertNotNull(dataPostResponseList);
+        assertEquals(0, dataPostResponseList.size());
     }
 }

@@ -20,6 +20,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/newpost",
             "/delete",
             "/pokemon",
+            "/random",
+            "/json",
+            "list",
             "/posts/{id}"
     };
 

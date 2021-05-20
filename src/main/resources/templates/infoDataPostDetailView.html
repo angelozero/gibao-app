@@ -25,16 +25,16 @@
 			</ol>
 		</nav>
 		<article>
-			<h1 class="card-title" style="font-weight: bold; margin-bottom: 20px;"><span th:text="${infoPost.title}"></span></h1>
+			<h1 class="card-title" style="font-weight: bold; margin-bottom: 20px;"><span th:text="${infoDataPost.title}"></span></h1>
 			<p class="card-subtitle mb-2 text-muted">
 				<i class="material-icons">person_outline</i>
-				<span th:text="${infoPost.author?.name}"></span>
+				<span th:text="${infoDataPost.author?.name}"></span>
 				<br>
 				<i class="material-icons">date_range</i>
-				<span th:text="${infoPost.date}"></span>
+				<span th:text="${infoDataPost.date}"></span>
 			</p>
 			<section>
-				<p class="card-text" style="margin-top: 40px;"><span th:utext="${infoPost.description}"></span></p>
+				<p class="card-text" style="margin-top: 40px;"><span th:utext="${infoDataPost.description}"></span></p>
 			</section>
 		</article>
 	</div>
