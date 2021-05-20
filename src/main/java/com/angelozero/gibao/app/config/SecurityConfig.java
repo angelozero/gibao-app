@@ -22,6 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/pokemon",
             "/random",
             "/json",
+            "list",
             "/posts/{id}"
     };
 

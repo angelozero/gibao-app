@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org" >
+<head>
+	<title>Gibao - App</title>
+	<!--Import Google Icon Font-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<!--<link rel="stylesheet" href="style/styleCss.css"/>-->
+</head>
+<body>
+
+<header>
+	<nav class="navbar navbar-light bg-light">
+		<span class="navbar-brand mb-0 h1" style="font-weight: bold;">Gibao App</span>
+		<a href="/newpost" class="btn btn-primary" role="button">New Post</a>
+	</nav>
+</header>
+
+<section >
+	<div class="container"  style="width: 60%; padding-bottom: 30px;">
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: white; padding-left: 0px;">
+				<li class="breadcrumb-item active" aria-current="page">Posts</li>
+			</ol>
+		</nav>
+		
+		<div>
+			<table style="width: 100%;">
+				<td style="width: 40%;">
+					<a th:href="${(#mvc.url('DPC#getDataPostList')).build()}">
+						<img id="pokemonID" th:src="@{${pokemon}}" alt="Pokemon" width="350" height="350">
+					</a>
+				</td>
+				
+				<td style="width: 60%;">
+					<div class="shadow-none p-3 mb-5 bg-light rounded" style="margin-top: 20px;">
+						<div class="card-body align-items-center d-flex justify-content-center">
+							<p class="card-text font-size:40px"><span id="descriptionID" th:text="@{${description}}"></span></p>
+						</div>
+					</div>
+				</td>
+			</table>
+		</div>
+		<br>
+		<br>
+		<br>
+		<div>
+			<table style="width: 100%;">
+				<td align="center">
+					<button class="btn btn-primary btn-lg" th:onclick="'loadSearchResult();'">I'm not going to play because...</button>
+				</td>
+			</table>
+		</div>
+	</div>
+</section>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" th:inline="javascript">
+	function loadSearchResult(){
+        $.ajax({
+			type: 'get',
+			url: '/posts/json',
+			success: function(data){
+				$("#pokemonID").attr('src',data.pokemon);
+				document.getElementById("descriptionID").innerHTML = data.description;
+			}
+        })
+	}
+</script>
+</body>
+</html>
+
+

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+	<title>Gibao - App</title>
+	<!--Import Google Icon Font-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<!--<link rel="stylesheet" href="style/styleCss.css"/>-->
+</head>
+<body>
+
+<header>
+	<nav class="navbar navbar-light bg-light">
+		<span class="navbar-brand mb-0 h1" style="font-weight: bold;">Gibao App</span>
+		<a href="/newpost" class="btn btn-primary" role="button">New Post</a>
+	</nav>
+</header>
+
+<section >
+	<div class="container"  style="width: 60%; padding-bottom: 30px;">
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" style="background-color: white; padding-left: 0px;">
+				<li class="breadcrumb-item active" aria-current="page">Posts</li>
+			</ol>
+		</nav>
+		
+		<div>
+			<table style="width: 100%;">
+				<td style="width: 40%;">
+					<a th:href="${(#mvc.url('DPC#getDataPost')).build()}">
+						<img th:src="@{${pokemon}}" alt="Pokemon" width="350" height="350">
+					</a>
+				</td>
+				
+				<td style="width: 60%;">
+					<div class="shadow-none p-3 mb-5 bg-light rounded" style="margin-top: 20px;" th:each="infoDataPost : ${infoDataPostList}">
+						<div class="card-body ">
+							<p class="card-subtitle mb-2 text-muted" style="font-size: 0.8rem;">
+								<span th:text="${infoDataPost.author?.name}"></span>
+							</p>
+							<p class="card-subtitle mb-2 text-muted" style="font-size: 0.8rem;">
+								<span th:text="${infoDataPost.date}"></span>
+							</p>
+							<a th:href="${(#mvc.url('DPC#getDataPostDetail').arg(0, infoDataPost.id)).build()}"><h4 class="card-title" style="font-weight: bold; color: black; padding-top: 5px;"><span th:text="${infoDataPost.title}"></span></h4></a>
+							<p class="card-text font-size:40px"><span th:utext="${#strings.abbreviate(infoDataPost.description,400)} "></span></p>
+							
+							<form action="#" th:action="@{/delete}"  method="post">
+								<div class="text-right" >
+									<button type="submit" class="btn btn-danger">
+										<input type="hidden" th:name="id" th:value="${infoDataPost.id}">Delete</input>
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</td>
+			</table>
+			
+		</div>
+	</div>
+</section>
+</body>
+</html>
+
+
+
