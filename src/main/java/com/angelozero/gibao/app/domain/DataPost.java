@@ -1,16 +1,20 @@
 package com.angelozero.gibao.app.domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.redis.core.RedisHash;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-@ToString
+@Data
 @Builder
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DataPost {
+@RedisHash("DataPost")
+public class DataPost implements Serializable {
 
     private Long id;
 

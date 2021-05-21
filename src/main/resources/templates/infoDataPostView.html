@@ -59,7 +59,7 @@
 	function loadSearchResult(){
         $.ajax({
 			type: 'get',
-			url: '/posts/json',
+			url: '/post/json',
 			success: function(data){
 				$("#pokemonID").attr('src',data.pokemon);
 				document.getElementById("descriptionID").innerHTML = data.description;
