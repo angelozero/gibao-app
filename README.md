@@ -106,11 +106,73 @@ public class GetPokemon {
 
 --- 
 
-## 3 - Docker
+## 3 - Docker and Redis
 
----
+Instal Docker
+- https://docs.docker.com/docker-for-mac/install/
 
-## 4 - Redis
+Test if ok type in terminal
+- `docker run hello-world`
+
+Output must be:
+
+```shell
+  Hello from Docker!
+  This message shows that your installation appears to be working correctly.
+
+  To generate this message, Docker took the following steps:
+  1. The Docker client contacted the Docker daemon.
+  2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+      (amd64)
+  3. The Docker daemon created a new container from that image which runs the
+      executable that produces the output you are currently reading.
+  4. The Docker daemon streamed that output to the Docker client, which sent it
+      to your terminal.
+
+  To try something more ambitious, you can run an Ubuntu container with:
+  $ docker run -it ubuntu bash
+
+  Share images, automate workflows, and more with a free Docker ID:
+  https://hub.docker.com/
+
+  For more examples and ideas, visit:
+  https://docs.docker.com/get-started/
+```
+
+Now let's go! First type this in terminal...
+
+```shell
+  docker run --name redis-data-base -p 6379:6379 redis
+```
+
+Where
+- `--name redis-data-base` ---- is the name of your docker container ( "redis-data-base" is Redis Data Base for example )
+- `-p 6379:6379` -- is the port where's gonna run the container
+- `redis` --------- is the name of the Redis Image
+
+Going inside the Redis container using the CLI ( Command Line Interface )
+- `docker exec -it redis-data-base redis-cli`
+
+Set a key with value
+- `set my-name "angelo zero"`
+
+Get the key value
+- `get my-name` must input `"angelo zero"`
+
+Set a key with expiration time ( 10 seconds )
+- `set name-and-temp "angelo zero 10 seconds" EX 10`
+
+Get the key value with expiration time
+- `get name-and-temp` must input ( before 10 seconds ) `"angelo zero 10 seconds"`
+- `get name-and-temp` must input ( after 10 seconds ) `(nil)`
+
+Check if a key exists
+- `exists my-name` - the output must be
+    - if `(integer) 1` this mean `true`
+    - else `(integer) 0` this mean `false`
+
+Delete a key
+- `del my-name` must input `(integer) 1`
 
 ---
 ## First BETA 0.0.1 preview!
