@@ -43,7 +43,7 @@ public class DataPostModelMapper {
                         .author(Author.builder().name(post.getAuthor()).build())
                         .title(post.getTitle())
                         .description(post.getDescription())
-                        .date(post.getDate())
+                        .infoDate(post.getDate().toString())
                         .secretUser(post.getSecretUser() != null ? post.getSecretUser() : false)
                         .build())
                 .orElseThrow(() -> new MapperException(Error.builder()

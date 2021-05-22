@@ -33,7 +33,7 @@ public class DataPostModelMapperTest {
         assertNotNull(dataPostModel);
         assertNotNull(dataPostModel.getAuthor());
         assertEquals(dataPostMock.getAuthor().getName(), dataPostModel.getAuthor());
-        assertEquals(dataPostMock.getDate(), dataPostModel.getDate());
+        assertEquals(dataPostMock.getInfoDate(), dataPostModel.getDate());
         assertEquals(dataPostMock.getDescription(), dataPostModel.getDescription());
         assertEquals(dataPostMock.getId(), dataPostModel.getId());
         assertEquals(dataPostMock.getTitle(), dataPostModel.getTitle());
@@ -48,7 +48,7 @@ public class DataPostModelMapperTest {
         DataPostModel dataPostModel = DataPostModelMapper.toPostDataModel(dataPostMock);
 
         assertNotNull(dataPostModel);
-        assertEquals(dataPostMock.getDate(), dataPostModel.getDate());
+        assertEquals(dataPostMock.getInfoDate(), dataPostModel.getDate());
         assertTrue(StringUtils.isEmpty(dataPostModel.getAuthor()));
         assertEquals(dataPostMock.getDescription(), dataPostModel.getDescription());
         assertEquals(dataPostMock.getId(), dataPostModel.getId());
@@ -65,7 +65,7 @@ public class DataPostModelMapperTest {
         assertNotNull(dataPostModel);
         assertNotNull(dataPostModel.getAuthor());
         assertEquals(dataPostMock.getAuthor().getName(), dataPostModel.getAuthor());
-        assertEquals(dataPostMock.getDate(), dataPostModel.getDate());
+        assertEquals(dataPostMock.getInfoDate(), dataPostModel.getDate());
         assertEquals(dataPostMock.getDescription(), dataPostModel.getDescription());
         assertEquals(dataPostMock.getId(), dataPostModel.getId());
         assertEquals(dataPostMock.getTitle(), dataPostModel.getTitle());
@@ -90,7 +90,7 @@ public class DataPostModelMapperTest {
         DataPost dataPost = DataPostModelMapper.toPostData(dataPostModelMock);
 
         assertNotNull(dataPost);
-        assertEquals(dataPostModelMock.getDate(), dataPost.getDate());
+        assertEquals(dataPostModelMock.getDate(), dataPost.getInfoDate());
         assertEquals(dataPostModelMock.getDescription(), dataPost.getDescription());
         assertEquals(dataPostModelMock.getId(), dataPost.getId());
         assertEquals(dataPostModelMock.getAuthor(), dataPost.getAuthor().getName());
@@ -105,7 +105,7 @@ public class DataPostModelMapperTest {
         DataPost dataPost = DataPostModelMapper.toPostData(dataPostModelMock);
 
         assertNotNull(dataPost);
-        assertEquals(dataPostModelMock.getDate(), dataPost.getDate());
+        assertEquals(dataPostModelMock.getDate(), dataPost.getInfoDate());
         assertEquals(dataPostModelMock.getDescription(), dataPost.getDescription());
         assertEquals(dataPostModelMock.getId(), dataPost.getId());
         assertNotNull(dataPost.getAuthor());

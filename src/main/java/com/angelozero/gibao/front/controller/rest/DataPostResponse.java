@@ -23,7 +23,7 @@ public class DataPostResponse {
 
     private String description;
 
-    private LocalDate date;
+    private String infoDate;
 
     private Boolean secretUser;
 

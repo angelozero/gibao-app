@@ -88,7 +88,7 @@ public class DataPostRequestMapperTest {
         assertEquals(dataPostMock.getTitle(), dataPostResponse.getTitle());
         assertEquals(dataPostMock.getDescription(), dataPostResponse.getDescription());
         assertEquals(dataPostMock.getSecretUser(), dataPostResponse.getSecretUser());
-        assertNotNull(dataPostResponse.getDate());
+        assertNotNull(dataPostResponse.getInfoDate());
     }
 
     @Test

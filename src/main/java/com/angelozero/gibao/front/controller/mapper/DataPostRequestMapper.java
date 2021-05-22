@@ -50,7 +50,7 @@ public class DataPostRequestMapper {
                         .title(post.getTitle())
                         .description(post.getDescription())
                         .secretUser(post.getSecretUser())
-                        .date(post.getDate())
+                        .infoDate(post.getInfoDate())
                         .build())
                 .orElse(DataPostResponse.builder().build());
     }

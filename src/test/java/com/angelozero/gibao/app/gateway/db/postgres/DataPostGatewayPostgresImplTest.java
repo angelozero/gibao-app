@@ -29,7 +29,7 @@ public class DataPostGatewayPostgresImplTest {
         DataPostModel dataPostModelMock = Fixture.from(DataPostModel.class).gimme("valid DataPostModel");
 
         Mockito.when(dataPostJPARepository.save(Mockito.any(DataPostModel.class))).thenReturn(dataPostModelMock);
-        DataPostGatewayPostgresImpl dataPostGatewayPostgresImpl = new DataPostGatewayPostgresImpl(dataPostJPARepository, null);
+        DataPostGatewayPostgresImpl dataPostGatewayPostgresImpl = new DataPostGatewayPostgresImpl(dataPostJPARepository);
 
         DataPost dataPost = dataPostGatewayPostgresImpl.save(dataPostMock);
 
@@ -40,7 +40,7 @@ public class DataPostGatewayPostgresImplTest {
     public void shouldDeleteWithSuccessAPostDataWithSuccess() {
         Long id = new Random().nextLong();
         Mockito.doNothing().when(dataPostJPARepository).deleteById(id);
-        DataPostGatewayPostgresImpl dataPostGatewayPostgresImpl = new DataPostGatewayPostgresImpl(dataPostJPARepository, null);
+        DataPostGatewayPostgresImpl dataPostGatewayPostgresImpl = new DataPostGatewayPostgresImpl(dataPostJPARepository);
 
         dataPostGatewayPostgresImpl.deleteById(id);
 
@@ -52,7 +52,7 @@ public class DataPostGatewayPostgresImplTest {
         List<DataPostModel> dataPostModelList = Fixture.from(DataPostModel.class).gimme(3, "valid DataPostModel");
 
         Mockito.when(dataPostJPARepository.findAll()).thenReturn(dataPostModelList);
-        DataPostGatewayPostgresImpl dataPostGatewayPostgresImpl = new DataPostGatewayPostgresImpl(dataPostJPARepository, null);
+        DataPostGatewayPostgresImpl dataPostGatewayPostgresImpl = new DataPostGatewayPostgresImpl(dataPostJPARepository);
 
         List<DataPost> dataPostList = dataPostGatewayPostgresImpl.findAll();
 

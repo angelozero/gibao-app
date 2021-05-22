@@ -21,8 +21,6 @@ import java.util.UUID;
 public class DataPostGatewayPostgresImpl implements DataPostGateway {
 
     private final DataPostJPARepository dataPostJPARepository;
-    private final RedisTemplate<String, Object> template;
-    private static final String HASH_KEY = "DataPost";
 
     @Override
     public DataPost save(DataPost dataPost) {
@@ -46,11 +44,6 @@ public class DataPostGatewayPostgresImpl implements DataPostGateway {
 
     @Override
     public List<DataPost> findAll() {
-        List<Object> teste = template.opsForHash().values(HASH_KEY);
-
-        log.info("\n\n ~~~~~~~~ LIST DATA POST ~~~~~~~~ \n\n");
-        List<DataPost> lista = DataPostModelMapper.toPostDataList(dataPostJPARepository.findAll());
-        template.opsForHash().put(HASH_KEY, UUID.randomUUID().toString(), lista.toString());
-        return lista;
+        return DataPostModelMapper.toPostDataList(dataPostJPARepository.findAll());
     }
 }

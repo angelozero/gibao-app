@@ -9,6 +9,7 @@ import com.angelozero.gibao.app.util.MessageInfo;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 
 import java.util.*;
@@ -19,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class FindDataPostTest {
 
     private final DataPostGateway dataPostGateway = Mockito.mock(DataPostGateway.class);
+    private final RedisTemplate template = Mockito.mock(RedisTemplate.class);
 
     @BeforeClass
     public static void setup() {
@@ -31,7 +33,7 @@ public class FindDataPostTest {
         List<DataPost> dataPostListMock = Fixture.from(com.angelozero.gibao.app.domain.DataPost.class).gimme(3, "valid DataPost");
         Mockito.when(dataPostGateway.findAll()).thenReturn(dataPostListMock);
 
-        FindDataPost findDataPost = new FindDataPost(dataPostGateway);
+        FindDataPost findDataPost = new FindDataPost(dataPostGateway, template);
         List<DataPost> dataPostList = findDataPost.execute();
 
         assertNotNull(dataPostList);
@@ -43,7 +45,7 @@ public class FindDataPostTest {
     public void shouldThrowAnExceptionWhenFindAListOfDataPosts() {
         Mockito.doThrow(new RuntimeException("Erro to get data post list test")).when(dataPostGateway).findAll();
 
-        FindDataPost findDataPost = new FindDataPost(dataPostGateway);
+        FindDataPost findDataPost = new FindDataPost(dataPostGateway, template);
 
         DataPostServiceException exception = assertThrows(DataPostServiceException.class, findDataPost::execute);
 
@@ -59,7 +61,7 @@ public class FindDataPostTest {
         DataPost dataPostMock = Fixture.from(com.angelozero.gibao.app.domain.DataPost.class).gimme("valid DataPost");
         Mockito.when(dataPostGateway.findById(dataPostMock.getId())).thenReturn(dataPostMock);
 
-        FindDataPost findDataPost = new FindDataPost(dataPostGateway);
+        FindDataPost findDataPost = new FindDataPost(dataPostGateway, template);
         DataPost dataPost = findDataPost.execute(dataPostMock.getId());
 
         assertNotNull(dataPost);
@@ -70,7 +72,7 @@ public class FindDataPostTest {
         Long id = new Random().nextLong();
         Mockito.doThrow(new RuntimeException("Erro to get data post by id test")).when(dataPostGateway).findById(id);
 
-        FindDataPost findDataPost = new FindDataPost(dataPostGateway);
+        FindDataPost findDataPost = new FindDataPost(dataPostGateway, template);
 
         DataPostServiceException exception = assertThrows(DataPostServiceException.class, () -> findDataPost.execute(id));
 

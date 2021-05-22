@@ -174,6 +174,10 @@ Check if a key exists
 Delete a key
 - `del my-name` must input `(integer) 1`
 
+Get all Keys
+- `KEYS *`
+
+
 ---
 ## First BETA 0.0.1 preview!
 ![Excuse](https://s3.gifyu.com/images/ezgif.com-gif-makerad94f6de2a1f6698.gif)

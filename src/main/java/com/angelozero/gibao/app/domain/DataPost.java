@@ -1,5 +1,6 @@
 package com.angelozero.gibao.app.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,7 +8,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.redis.core.RedisHash;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 @Data
 @Builder
@@ -16,15 +16,21 @@ import java.time.LocalDate;
 @RedisHash("DataPost")
 public class DataPost implements Serializable {
 
+    @JsonProperty("id")
     private Long id;
 
+    @JsonProperty("author")
     private Author author;
 
+    @JsonProperty("title")
     private String title;
 
+    @JsonProperty("description")
     private String description;
 
-    private LocalDate date;
+    @JsonProperty("infoDate")
+    private String infoDate;
 
+    @JsonProperty("secretUser")
     private Boolean secretUser;
 }

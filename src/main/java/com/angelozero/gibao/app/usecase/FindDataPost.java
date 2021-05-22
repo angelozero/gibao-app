@@ -5,19 +5,25 @@ import com.angelozero.gibao.app.config.exception.DataPostServiceException;
 import com.angelozero.gibao.app.domain.DataPost;
 import com.angelozero.gibao.app.gateway.db.DataPostGateway;
 import com.angelozero.gibao.app.util.MessageInfo;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Service
 @AllArgsConstructor
 public class FindDataPost {
 
+    private static final String HASH_KEY = "DataPost";
+
     private final DataPostGateway dataPostGateway;
+    private final RedisTemplate<String, Object> template;
 
     public List<DataPost> execute() {
         log.info(MessageInfo.FIND_DATA_POST_LIST_INFO);
@@ -31,7 +37,20 @@ public class FindDataPost {
 
     private List<DataPost> findAllPostsData() {
         try {
-            return dataPostGateway.findAll();
+
+            List<Object> redisCache = template.opsForHash().values(HASH_KEY);
+
+            if (!redisCache.isEmpty()) {
+                ObjectMapper objMapper = new ObjectMapper();
+                log.info("\n\n ~~~~~~~~~~~~ REDIS ~~~~~~~~~~~~ \n\n");
+                return objMapper.readValue(redisCache.get(0).toString(), objMapper.getTypeFactory().constructParametricType(List.class, DataPost.class));
+            }
+
+            List<DataPost> dataPostList = dataPostGateway.findAll();
+            template.opsForHash().put(HASH_KEY, UUID.randomUUID().toString(), new ObjectMapper().writeValueAsString(dataPostList));
+
+            log.info("\n\n ~~~~~~~~~~~~ POSTGRESS ~~~~~~~~~~~~ \n\n");
+            return dataPostList;
 
         } catch (Exception ex) {
             log.error(MessageInfo.FIND_DATA_POST_LIST_ERROR);

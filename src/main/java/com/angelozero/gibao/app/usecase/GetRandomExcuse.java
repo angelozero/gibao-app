@@ -25,12 +25,13 @@ public class GetRandomExcuse {
 
         List<DataPost> allPosts = findDataPost.execute();
 
-        try {
-            Optional.ofNullable(allPosts).orElseThrow(() -> new DataPostServiceException(Error.builder()
-                    .message("Não houve retorno do banco")
-                    .status(HttpStatus.BAD_REQUEST)
-                    .build()));
+        Optional.ofNullable(allPosts).orElseThrow(() ->
+                new DataPostServiceException(Error.builder()
+                        .message("Não houve retorno do banco")
+                        .status(HttpStatus.BAD_REQUEST)
+                        .build()));
 
+        try {
             return !allPosts.isEmpty() ? Collections.singletonList(allPosts.get(new Random().nextInt(allPosts.size()))).get(0).getDescription() : StringUtils.EMPTY;
 
         } catch (Exception ex) {
