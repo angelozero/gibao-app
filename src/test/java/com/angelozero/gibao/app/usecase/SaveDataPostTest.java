@@ -5,7 +5,7 @@ import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 import com.angelozero.gibao.app.config.exception.DataPostServiceException;
 import com.angelozero.gibao.app.domain.DataPost;
 import com.angelozero.gibao.app.gateway.db.DataPostGateway;
-import com.angelozero.gibao.app.util.MessageInfo;
+import com.angelozero.gibao.app.util.MessagesUtil;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -53,7 +53,7 @@ public class SaveDataPostTest {
         DataPostServiceException exception = assertThrows(DataPostServiceException.class, () -> saveDataPost.execute(dataPostMock));
 
         assertNotNull(exception);
-        assertEquals(MessageInfo.SAVE_DATA_POST_ERROR_INFO.replace("%s", "") + "Error to save data post test", exception.getError().getMessage());
+        assertEquals(MessagesUtil.join(MessagesUtil.SAVE_DATA_POST_ERROR, "Error to save data post test"), exception.getError().getMessage());
         assertNotNull(exception.getError().getIdentifier());
     }
 
@@ -70,7 +70,7 @@ public class SaveDataPostTest {
         DataPostServiceException exception = assertThrows(DataPostServiceException.class, () -> saveDataPost.execute(dataPostMock));
 
         assertNotNull(exception);
-        assertEquals(MessageInfo.SAVE_DATA_POST_ERROR_INFO.replace("%s", "") + "Error to save data post test", exception.getError().getMessage());
+        assertEquals(MessagesUtil.join(MessagesUtil.SAVE_DATA_POST_ERROR, "Error to save data post test"), exception.getError().getMessage());
         assertNotNull(exception.getError().getIdentifier());
     }
 }

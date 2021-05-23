@@ -4,7 +4,7 @@ import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 import com.angelozero.gibao.app.config.exception.MapperException;
 import com.angelozero.gibao.app.domain.DataPost;
-import com.angelozero.gibao.app.util.MessageInfo;
+import com.angelozero.gibao.app.util.MessagesUtil;
 import com.angelozero.gibao.front.controller.rest.DataPostRequest;
 import com.angelozero.gibao.front.controller.rest.DataPostResponse;
 import org.junit.BeforeClass;
@@ -46,7 +46,7 @@ public class DataPostRequestMapperTest {
 
         assertNotNull(exception);
         assertEquals(HttpStatus.BAD_REQUEST, exception.getError().getStatus());
-        assertEquals(MessageInfo.DATA_POST_REQUEST_MAPPER_ERROR_NULL_AUTHOR, exception.getError().getMessage());
+        assertEquals(MessagesUtil.DATA_POST_REQUEST_MAPPER_ERROR_NULL_AUTHOR, exception.getError().getMessage());
         assertNotNull(exception.getError().getIdentifier());
     }
 
@@ -56,7 +56,7 @@ public class DataPostRequestMapperTest {
 
         assertNotNull(exception);
         assertEquals(HttpStatus.BAD_REQUEST, exception.getError().getStatus());
-        assertEquals(MessageInfo.DATA_POST_REQUEST_MAPPER_ERROR_NULL_DATA_POST, exception.getError().getMessage());
+        assertEquals(MessagesUtil.DATA_POST_REQUEST_MAPPER_ERROR_NULL_DATA_POST, exception.getError().getMessage());
         assertNull(exception.getError().getIdentifier());
     }
 

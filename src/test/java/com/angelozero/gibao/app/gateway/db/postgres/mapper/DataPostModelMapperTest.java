@@ -5,7 +5,7 @@ import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 import com.angelozero.gibao.app.config.exception.MapperException;
 import com.angelozero.gibao.app.domain.DataPost;
 import com.angelozero.gibao.app.gateway.db.postgres.model.DataPostModel;
-import com.angelozero.gibao.app.util.MessageInfo;
+import com.angelozero.gibao.app.util.MessagesUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -33,7 +33,7 @@ public class DataPostModelMapperTest {
         assertNotNull(dataPostModel);
         assertNotNull(dataPostModel.getAuthor());
         assertEquals(dataPostMock.getAuthor().getName(), dataPostModel.getAuthor());
-        assertEquals(dataPostMock.getInfoDate(), dataPostModel.getDate());
+        assertNotNull(dataPostModel.getDate());
         assertEquals(dataPostMock.getDescription(), dataPostModel.getDescription());
         assertEquals(dataPostMock.getId(), dataPostModel.getId());
         assertEquals(dataPostMock.getTitle(), dataPostModel.getTitle());
@@ -48,7 +48,7 @@ public class DataPostModelMapperTest {
         DataPostModel dataPostModel = DataPostModelMapper.toPostDataModel(dataPostMock);
 
         assertNotNull(dataPostModel);
-        assertEquals(dataPostMock.getInfoDate(), dataPostModel.getDate());
+        assertEquals(dataPostMock.getInfoDate(), dataPostModel.getDate().toString());
         assertTrue(StringUtils.isEmpty(dataPostModel.getAuthor()));
         assertEquals(dataPostMock.getDescription(), dataPostModel.getDescription());
         assertEquals(dataPostMock.getId(), dataPostModel.getId());
@@ -65,7 +65,7 @@ public class DataPostModelMapperTest {
         assertNotNull(dataPostModel);
         assertNotNull(dataPostModel.getAuthor());
         assertEquals(dataPostMock.getAuthor().getName(), dataPostModel.getAuthor());
-        assertEquals(dataPostMock.getInfoDate(), dataPostModel.getDate());
+        assertEquals(dataPostMock.getInfoDate(), dataPostModel.getDate().toString());
         assertEquals(dataPostMock.getDescription(), dataPostModel.getDescription());
         assertEquals(dataPostMock.getId(), dataPostModel.getId());
         assertEquals(dataPostMock.getTitle(), dataPostModel.getTitle());
@@ -78,7 +78,7 @@ public class DataPostModelMapperTest {
         MapperException exception = assertThrows(MapperException.class, () -> DataPostModelMapper.toPostDataModel(null));
 
         assertNotNull(exception);
-        assertEquals(MessageInfo.DATA_POST_MODEL_MAPPER_ERROR_CONVERT_TO_DATA_MODEL, exception.getError().getMessage());
+        assertEquals(MessagesUtil.DATA_POST_MODEL_MAPPER_ERROR_CONVERT_TO_DATA_MODEL, exception.getError().getMessage());
         assertNull(exception.getError().getIdentifier());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getError().getStatus());
     }
@@ -90,7 +90,7 @@ public class DataPostModelMapperTest {
         DataPost dataPost = DataPostModelMapper.toPostData(dataPostModelMock);
 
         assertNotNull(dataPost);
-        assertEquals(dataPostModelMock.getDate(), dataPost.getInfoDate());
+        assertNotNull(dataPost.getInfoDate());
         assertEquals(dataPostModelMock.getDescription(), dataPost.getDescription());
         assertEquals(dataPostModelMock.getId(), dataPost.getId());
         assertEquals(dataPostModelMock.getAuthor(), dataPost.getAuthor().getName());
@@ -105,7 +105,7 @@ public class DataPostModelMapperTest {
         DataPost dataPost = DataPostModelMapper.toPostData(dataPostModelMock);
 
         assertNotNull(dataPost);
-        assertEquals(dataPostModelMock.getDate(), dataPost.getInfoDate());
+        assertEquals(dataPostModelMock.getDate().toString(), dataPost.getInfoDate());
         assertEquals(dataPostModelMock.getDescription(), dataPost.getDescription());
         assertEquals(dataPostModelMock.getId(), dataPost.getId());
         assertNotNull(dataPost.getAuthor());
@@ -120,7 +120,7 @@ public class DataPostModelMapperTest {
         MapperException exception = assertThrows(MapperException.class, () -> DataPostModelMapper.toPostData(null));
 
         assertNotNull(exception);
-        assertEquals(MessageInfo.DATA_POST_MODEL_MAPPER_ERROR_CONVERT_TO_POST_DATA, exception.getError().getMessage());
+        assertEquals(MessagesUtil.DATA_POST_MODEL_MAPPER_ERROR_CONVERT_TO_POST_DATA, exception.getError().getMessage());
         assertNull(exception.getError().getIdentifier());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getError().getStatus());
     }

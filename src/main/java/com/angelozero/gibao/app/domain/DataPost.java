@@ -16,6 +16,8 @@ import java.io.Serializable;
 @RedisHash("DataPost")
 public class DataPost implements Serializable {
 
+    public static final String REDIS_HASH = "DataPost";
+
     @JsonProperty("id")
     private Long id;
 

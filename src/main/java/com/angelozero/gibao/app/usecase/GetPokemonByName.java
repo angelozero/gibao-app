@@ -4,7 +4,7 @@ import com.angelozero.gibao.app.config.PropertiesConfig;
 import com.angelozero.gibao.app.config.error.Error;
 import com.angelozero.gibao.app.config.exception.PokemonApiException;
 import com.angelozero.gibao.app.gateway.api.PokemonApi;
-import com.angelozero.gibao.app.util.MessageInfo;
+import com.angelozero.gibao.app.util.MessagesUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -21,23 +21,18 @@ public class GetPokemonByName {
     private final PokemonApi pokemonApi;
 
     public String execute() {
-        String pokemonName = getRandomName();
-
         try {
-            log.info(MessageInfo.GET_POKEMON_BY_NAME_INFO, pokemonName);
-            return pokemonApi.getImageByName(pokemonName).getSprites().getOther().getOfficialArtWork().getFrontDefault();
+            String pokemonRandomName = propertiesConfig.getPokemonList().get(new Random().nextInt(propertiesConfig.getPokemonList().size()));
+            String pokemonName = pokemonApi.getImageByName(pokemonRandomName).getSprites().getOther().getOfficialArtWork().getFrontDefault();
+
+            log.info(MessagesUtil.GET_POKEMON_BY_NAME_SUCCESS, pokemonName);
+            return pokemonName;
 
         } catch (Exception ex) {
-            log.error(MessageInfo.GET_POKEMON_BY_NAME_ERROR);
             throw new PokemonApiException(Error.builder()
                     .status(HttpStatus.BAD_REQUEST)
-                    .identifier(pokemonName)
-                    .message(String.format(MessageInfo.GET_POKEMON_BY_NAME_ERROR_INFO, ex.getMessage()))
+                    .message(MessagesUtil.join(MessagesUtil.GET_POKEMON_BY_NAME_ERROR, ex.getMessage()))
                     .build(), ex);
         }
-    }
-
-    private String getRandomName() {
-        return propertiesConfig.getPokemonList().get(new Random().nextInt(propertiesConfig.getPokemonList().size()));
     }
 }

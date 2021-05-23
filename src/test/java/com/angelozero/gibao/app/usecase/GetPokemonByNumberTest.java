@@ -5,7 +5,7 @@ import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 import com.angelozero.gibao.app.config.exception.PokemonApiException;
 import com.angelozero.gibao.app.domain.Pokemon;
 import com.angelozero.gibao.app.gateway.api.PokemonApi;
-import com.angelozero.gibao.app.util.MessageInfo;
+import com.angelozero.gibao.app.util.MessagesUtil;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -45,7 +45,7 @@ public class GetPokemonByNumberTest {
         PokemonApiException exception = assertThrows(PokemonApiException.class, getPokemonByNumber::execute);
 
         assertNotNull(exception);
-        assertEquals(MessageInfo.GET_POKEMON_BY_NUMBER_ERROR_INFO.replace("%s", "") + "Error to get pokemon by number test", exception.getError().getMessage());
+        assertEquals(MessagesUtil.join(MessagesUtil.GET_POKEMON_BY_NUMBER_ERROR, "Error to get pokemon by number test"), exception.getError().getMessage());
         assertNotNull(exception.getError().getIdentifier());
     }
 }

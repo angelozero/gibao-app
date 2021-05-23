@@ -8,6 +8,7 @@ import com.angelozero.gibao.front.controller.rest.DataPostRequest;
 
 import com.angelozero.gibao.front.controller.rest.DataPostResponse;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.EnableCaching;
@@ -25,11 +26,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Controller
 @AllArgsConstructor
 @EnableCaching
 public class DataPostController {
-
 
     private final SaveDataPost saveDataPost;
     private final DeleteDataPost deleteDataPost;
