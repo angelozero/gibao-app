@@ -13,7 +13,7 @@
 <header>
 	<nav class="navbar navbar-light bg-light">
 		<span class="navbar-brand mb-0 h1" style="font-weight: bold;">Gibao App</span>
-		<a href="/newpost" class="btn btn-primary" role="button">New Post</a>
+		<a href="/new-post" class="btn btn-primary" role="button">New Post</a>
 	</nav>
 </header>
 
@@ -40,7 +40,7 @@
 								<span th:text="${infoDataPost.author?.name}"></span>
 							</p>
 							<p class="card-subtitle mb-2 text-muted" style="font-size: 0.8rem;">
-								<span th:text="${infoDataPost.date}"></span>
+								<span th:text="${infoDataPost.infoDate}"></span>
 							</p>
 							<a th:href="${(#mvc.url('DPC#getDataPostDetail').arg(0, infoDataPost.id)).build()}"><h4 class="card-title" style="font-weight: bold; color: black; padding-top: 5px;"><span th:text="${infoDataPost.title}"></span></h4></a>
 							<p class="card-text font-size:40px"><span th:utext="${#strings.abbreviate(infoDataPost.description,400)} "></span></p>

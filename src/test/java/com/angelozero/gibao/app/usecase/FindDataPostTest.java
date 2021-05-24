@@ -6,14 +6,15 @@ import com.angelozero.gibao.app.config.exception.DataPostServiceException;
 import com.angelozero.gibao.app.domain.DataPost;
 import com.angelozero.gibao.app.gateway.db.DataPostGateway;
 import com.angelozero.gibao.app.util.MessagesUtil;
+import org.assertj.core.util.Arrays;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 
-import java.util.*;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,6 +32,7 @@ public class FindDataPostTest {
     @Test
     public void shouldFindAListOfDataPosts() {
         List<DataPost> dataPostListMock = Fixture.from(com.angelozero.gibao.app.domain.DataPost.class).gimme(3, "valid DataPost");
+        Mockito.when(redisService.findAll(Mockito.any())).thenReturn(Collections.emptyList());
         Mockito.when(dataPostGateway.findAll()).thenReturn(dataPostListMock);
 
         FindDataPost findDataPost = new FindDataPost(dataPostGateway, redisService);

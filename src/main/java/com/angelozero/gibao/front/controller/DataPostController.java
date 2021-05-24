@@ -100,7 +100,7 @@ public class DataPostController {
         return "dataPostForm";
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/new-post", method = RequestMethod.POST)
     public String saveDataPost(@Valid DataPostRequest dataPostRequest, BindingResult bindingResult) {
         if (bindingResult != null && bindingResult.hasErrors()) {
             return "redirect:/new-post";

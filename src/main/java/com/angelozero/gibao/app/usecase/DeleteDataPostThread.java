@@ -18,6 +18,7 @@ public class DeleteDataPostThread {
     private final PropertiesConfig propertiesConfig;
     private final DeleteDataPost deleteDataPost;
     private final ValidateDataPost validateDataPost;
+    private final FindDataPost findDataPost;
 
     public void execute(DataPost dataPost) {
         validateDataPost.execute(dataPost);
@@ -36,8 +37,11 @@ public class DeleteDataPostThread {
             log.info(MessagesUtil.DELETE_DATA_POST_THREAD_INFO_START_THREAD, propertiesConfig.getOneMinute());
             Thread.sleep(propertiesConfig.getOneMinute());
 
-            deleteDataPost.execute(id);
-            log.info(MessagesUtil.DELETE_DATA_POST_THREAD_SUCCESS, id);
+            if (findDataPost.execute(id) != null) {
+                deleteDataPost.execute(id);
+                log.info(MessagesUtil.DELETE_DATA_POST_THREAD_SUCCESS, id);
+            }
+
 
         } catch (Exception ex) {
             throw new DataPostServiceException(Error.builder()

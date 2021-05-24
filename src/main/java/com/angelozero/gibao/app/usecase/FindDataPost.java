@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Slf4j
@@ -39,7 +40,7 @@ public class FindDataPost {
                 ObjectMapper objMapper = new ObjectMapper();
                 List<DataPost> dataPostRedisCacheList = objMapper.readValue(redisCache.get(0).toString(), objMapper.getTypeFactory().constructParametricType(List.class, DataPost.class));
 
-                log.info(MessagesUtil.FIND_DATA_POST_LIST_SUCCESS, dataPostRedisCacheList);
+                log.info(MessagesUtil.FIND_DATA_POST_LIST_SUCCESS_BY_REDIS, dataPostRedisCacheList);
                 return dataPostRedisCacheList;
             }
 
@@ -64,6 +65,10 @@ public class FindDataPost {
 
             log.info(MessagesUtil.FIND_DATA_POST_BY_ID_SUCCESS, dataPost);
             return dataPost;
+
+        } catch (NoSuchElementException ex) {
+            log.info(MessagesUtil.FIND_DATA_POST_BY_ID_NO_DATA_FOUND, id);
+            return null;
 
         } catch (Exception ex) {
             throw new DataPostServiceException(Error.builder()

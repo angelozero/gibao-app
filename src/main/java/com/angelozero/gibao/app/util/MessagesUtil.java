@@ -17,10 +17,12 @@ public class MessagesUtil {
     public static final String DELETE_DATA_POST_THREAD_ERROR = "[ THREAD ] - Error to delete Data Post by thread";
 
     //FindDataPost
-    public static final String FIND_DATA_POST_LIST_SUCCESS = "Success to find for a list of Data Post {}";
+    public static final String FIND_DATA_POST_LIST_SUCCESS = "[ DB ] Success to find for a list of Data Post {}";
+    public static final String FIND_DATA_POST_LIST_SUCCESS_BY_REDIS = "[ REDIS ] Success to find for a list of Data Post {}";
     public static final String FIND_DATA_POST_LIST_ERROR = "Error to find a list of data post";
     public static final String FIND_DATA_POST_BY_ID_SUCCESS = "Find a Data Post by id {}";
     public static final String FIND_DATA_POST_ID_ERROR = "Error to find a Data Post by id";
+    public static final String FIND_DATA_POST_BY_ID_NO_DATA_FOUND = " No Data Post found by id {}";
 
     //SaveDataPost
     public static final String SAVE_DATA_POST_SUCCESS = "Data Post saved with success {}";

@@ -4,6 +4,7 @@ import com.angelozero.gibao.app.config.error.Error;
 import com.angelozero.gibao.app.config.exception.DataPostServiceException;
 import com.angelozero.gibao.app.domain.DataPost;
 import com.angelozero.gibao.app.gateway.db.DataPostGateway;
+import com.angelozero.gibao.app.usecase.enums.RedisInfo;
 import com.angelozero.gibao.app.util.MessagesUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,12 +19,14 @@ public class SaveDataPost {
     private final DataPostGateway dataPostGateway;
     private final ValidateDataPost validateDataPost;
     private final DeleteDataPostThread deleteDataPostThread;
+    private final RedisService<DataPost> redisService;
 
     public void execute(DataPost dataPost) {
         validateDataPost.execute(dataPost);
 
         try {
             DataPost dataPostSaved = dataPostGateway.save(dataPost);
+            redisService.delete(RedisInfo.HASH_KEY_DATA_POST);
             log.info(MessagesUtil.SAVE_DATA_POST_SUCCESS, dataPostSaved);
 
             deleteDataPostThread.execute(dataPostSaved);
