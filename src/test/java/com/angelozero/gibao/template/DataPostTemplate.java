@@ -20,7 +20,7 @@ public class DataPostTemplate implements TemplateLoader {
                         add("author", one(Author.class, "valid Author"));
                         add("title", UUID.randomUUID().toString());
                         add("description", UUID.randomUUID().toString());
-                        add("date", LocalDate.now());
+                        add("infoDate", LocalDate.now().toString());
                         add("secretUser", Math.random() < 0.5);
                     }
                 })
@@ -29,7 +29,7 @@ public class DataPostTemplate implements TemplateLoader {
                         add("id", new Random().nextLong());
                         add("title", UUID.randomUUID().toString());
                         add("description", UUID.randomUUID().toString());
-                        add("date", LocalDate.now());
+                        add("infoDate", LocalDate.now().toString());
                         add("secretUser", Math.random() < 0.5);
                     }
                 })
@@ -39,7 +39,7 @@ public class DataPostTemplate implements TemplateLoader {
                         add("author", one(Author.class, "valid Author"));
                         add("title", UUID.randomUUID().toString());
                         add("description", UUID.randomUUID().toString());
-                        add("date", LocalDate.now());
+                        add("infoDate", LocalDate.now().toString());
                     }
                 });
     }

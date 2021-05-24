@@ -1,13 +1,16 @@
 package com.angelozero.gibao.front.controller.rest;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.redis.core.RedisHash;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-@ToString
+@Data
 @Builder
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class DataPostResponse {
@@ -20,7 +23,7 @@ public class DataPostResponse {
 
     private String description;
 
-    private LocalDate date;
+    private String infoDate;
 
     private Boolean secretUser;
 

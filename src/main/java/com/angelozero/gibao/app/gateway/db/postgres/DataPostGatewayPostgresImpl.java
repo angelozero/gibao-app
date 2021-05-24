@@ -6,13 +6,18 @@ import com.angelozero.gibao.app.gateway.db.postgres.mapper.DataPostModelMapper;
 import com.angelozero.gibao.app.gateway.db.postgres.model.DataPostModel;
 import com.angelozero.gibao.app.gateway.db.repository.DataPostJPARepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 @AllArgsConstructor
+@Slf4j
 public class DataPostGatewayPostgresImpl implements DataPostGateway {
 
     private final DataPostJPARepository dataPostJPARepository;

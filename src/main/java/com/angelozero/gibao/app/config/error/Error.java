@@ -21,4 +21,5 @@ public class Error {
     private String field;
 
     private transient Object identifier;
+
 }

@@ -5,13 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.redis.core.RedisHash;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 
 @Entity
-@Table(name = "post_data")
+@Table(name = "data_post")
 @Data
 @Builder
 @AllArgsConstructor

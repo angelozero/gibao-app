@@ -5,11 +5,13 @@ import com.angelozero.gibao.app.config.exception.DataPostServiceException;
 import com.angelozero.gibao.app.domain.DataPost;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Slf4j
@@ -23,12 +25,18 @@ public class GetRandomExcuse {
 
         List<DataPost> allPosts = findDataPost.execute();
 
+        Optional.ofNullable(allPosts).orElseThrow(() ->
+                new DataPostServiceException(Error.builder()
+                        .message("Não houve retorno do banco")
+                        .status(HttpStatus.BAD_REQUEST)
+                        .build()));
+
         try {
-            return Collections.singletonList(allPosts.get(new Random().nextInt(allPosts.size()))).get(0).getDescription();
+            return !allPosts.isEmpty() ? Collections.singletonList(allPosts.get(new Random().nextInt(allPosts.size()))).get(0).getDescription() : StringUtils.EMPTY;
 
         } catch (Exception ex) {
             throw new DataPostServiceException(Error.builder()
-                    .message("Erro ao recuperar desculpa")
+                    .message("Erro ao recuperar dados " + ex.getMessage())
                     .status(HttpStatus.BAD_REQUEST)
                     .build());
         }

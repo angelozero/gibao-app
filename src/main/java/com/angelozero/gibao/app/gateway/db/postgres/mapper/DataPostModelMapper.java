@@ -5,7 +5,7 @@ import com.angelozero.gibao.app.config.exception.MapperException;
 import com.angelozero.gibao.app.domain.Author;
 import com.angelozero.gibao.app.domain.DataPost;
 import com.angelozero.gibao.app.gateway.db.postgres.model.DataPostModel;
-import com.angelozero.gibao.app.util.MessageInfo;
+import com.angelozero.gibao.app.util.MessagesUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 
@@ -30,7 +30,7 @@ public class DataPostModelMapper {
                                 .orElse(StringUtils.EMPTY))
                         .build())
                 .orElseThrow(() -> new MapperException(Error.builder()
-                        .message(MessageInfo.DATA_POST_MODEL_MAPPER_ERROR_CONVERT_TO_DATA_MODEL)
+                        .message(MessagesUtil.DATA_POST_MODEL_MAPPER_ERROR_CONVERT_TO_DATA_MODEL)
                         .identifier(dataPost)
                         .status(HttpStatus.BAD_REQUEST)
                         .build()));
@@ -43,11 +43,11 @@ public class DataPostModelMapper {
                         .author(Author.builder().name(post.getAuthor()).build())
                         .title(post.getTitle())
                         .description(post.getDescription())
-                        .date(post.getDate())
+                        .infoDate(post.getDate().toString())
                         .secretUser(post.getSecretUser() != null ? post.getSecretUser() : false)
                         .build())
                 .orElseThrow(() -> new MapperException(Error.builder()
-                        .message(MessageInfo.DATA_POST_MODEL_MAPPER_ERROR_CONVERT_TO_POST_DATA)
+                        .message(MessagesUtil.DATA_POST_MODEL_MAPPER_ERROR_CONVERT_TO_POST_DATA)
                         .identifier(dataPostModel)
                         .status(HttpStatus.BAD_REQUEST)
                         .build()));

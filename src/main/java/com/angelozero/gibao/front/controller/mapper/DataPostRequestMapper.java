@@ -4,7 +4,7 @@ import com.angelozero.gibao.app.config.error.Error;
 import com.angelozero.gibao.app.config.exception.MapperException;
 import com.angelozero.gibao.app.domain.Author;
 import com.angelozero.gibao.app.domain.DataPost;
-import com.angelozero.gibao.app.util.MessageInfo;
+import com.angelozero.gibao.app.util.MessagesUtil;
 import com.angelozero.gibao.front.controller.rest.AuthorResponse;
 import com.angelozero.gibao.front.controller.rest.DataPostRequest;
 import com.angelozero.gibao.front.controller.rest.DataPostResponse;
@@ -26,14 +26,14 @@ public class DataPostRequestMapper {
                                 .orElseThrow(() -> new MapperException(Error.builder()
                                         .status(HttpStatus.BAD_REQUEST)
                                         .identifier(dataPostRequest)
-                                        .message(MessageInfo.DATA_POST_REQUEST_MAPPER_ERROR_NULL_AUTHOR)
+                                        .message(MessagesUtil.DATA_POST_REQUEST_MAPPER_ERROR_NULL_AUTHOR)
                                         .build())))
                         .title(post.getTitle())
                         .description(post.getDescription())
                         .build())
                 .orElseThrow(() -> new MapperException(Error.builder()
                         .status(HttpStatus.BAD_REQUEST)
-                        .message(MessageInfo.DATA_POST_REQUEST_MAPPER_ERROR_NULL_DATA_POST)
+                        .message(MessagesUtil.DATA_POST_REQUEST_MAPPER_ERROR_NULL_DATA_POST)
                         .build()));
     }
 
@@ -50,7 +50,7 @@ public class DataPostRequestMapper {
                         .title(post.getTitle())
                         .description(post.getDescription())
                         .secretUser(post.getSecretUser())
-                        .date(post.getDate())
+                        .infoDate(post.getInfoDate())
                         .build())
                 .orElse(DataPostResponse.builder().build());
     }

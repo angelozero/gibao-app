@@ -16,23 +16,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // url's that don't need authentication
     private static final String[] AUTH_LIST = {
             "/",
-            "/posts",
-            "/newpost",
-            "/delete",
-            "/pokemon",
-            "/random",
+            "/post",
             "/json",
-            "list",
-            "/posts/{id}"
+            "/list",
+            "/{id}",
+            "/post/json",
+            "/post/list",
+            "/post/list/json",
+            "/posts/{id}",
+            "/post/{id}/json",
+            "/new-post",
+            "/save",
+            "/delete",
+
     };
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests()
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.csrf().disable().authorizeRequests()
                 .antMatchers(AUTH_LIST).permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin().permitAll()
                 .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+//        httpSecurity.authorizeRequests().antMatchers("/").permitAll();
     }
 
     @Override
