@@ -29,7 +29,7 @@
 
 ### Feing Setup
 - Add Feing Maven dependecy into your .pom file
-```
+```xml
  <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-openfeign -->
  <dependency>
      <groupId>org.springframework.cloud</groupId>
@@ -38,7 +38,7 @@
  </dependency>
 ```
 - In your start application class add the anottation `@EnableFeignClients`
-```
+```java
 @EnableFeignClients
 @SpringBootApplication
 public class Application {
@@ -50,7 +50,7 @@ public class Application {
 ```
 - Create an interface that's will receive the PokeApi info, don't forge it to create a domain to.
 
-```
+```java
 @FeignClient(name = "pokemon-api", url = "https://pokeapi.co/api/v2/pokemon/")
 public interface PokemonApi {
 
@@ -63,8 +63,7 @@ public interface PokemonApi {
 ```
 
  - Domain ( take a look in class [Pokemon.java](https://github.com/angelozero/gibao-app/blob/master/src/main/java/com/angelozero/gibao/app/domain/Pokemon.java) )
-```
-
+```java
 public class Pokemon {
 
     private Sprites sprites;
@@ -85,7 +84,7 @@ public class Pokemon {
 ### Call the API
 - For use Feing you just need to call directly the [Poke Api](https://github.com/angelozero/gibao-app/blob/master/src/main/java/com/angelozero/gibao/app/usecase/GetPokemon.java)
 
-```
+```java
 public class GetPokemon {
 
     private final PokemonApi pokemonApi;
@@ -108,6 +107,7 @@ public class GetPokemon {
 
 ## 3 - Docker and Redis
 
+### Docker
 Instal Docker
 - https://docs.docker.com/docker-for-mac/install/
 
@@ -150,6 +150,10 @@ Where
 - `-p 6379:6379` -- is the port where's gonna run the container
 - `redis` --------- is the name of the Redis Image
 
+---
+
+### Redis
+
 Going inside the Redis container using the CLI ( Command Line Interface )
 - `docker exec -it redis-data-base redis-cli`
 
@@ -176,6 +180,61 @@ Delete a key
 
 Get all Keys
 - `KEYS *`
+
+### Backend
+
+The configuration class is [RedisConfig.class](https://github.com/angelozero/gibao-app/blob/master/src/main/java/com/angelozero/gibao/app/config/RedisConfig.java)
+
+```java
+@Configuration
+@EnableRedisRepositories
+public class RedisConfig {
+
+  @Bean
+  public JedisConnectionFactory connectionFactory() {
+      RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
+      configuration.setHostName("localhost");
+      configuration.setPort(6379);
+      return new JedisConnectionFactory(configuration);
+  }
+```
+
+How to use - [FindDataPost.class](https://github.com/angelozero/gibao-app/blob/master/src/main/java/com/angelozero/gibao/app/usecase/FindDataPost.java)
+```java
+List<Object> redisCache = redisService.findAll(RedisInfo.HASH_KEY_DATA_POST);
+
+  if (!redisCache.isEmpty()) {
+      ObjectMapper objMapper = new ObjectMapper();
+      List<DataPost> dataPostRedisCacheList = objMapper.readValue(redisCache.get(0).toString(), objMapper.getTypeFactory().constructParametricType(List.class, DataPost.class));
+  
+      log.info(MessagesUtil.FIND_DATA_POST_LIST_SUCCESS_BY_REDIS, dataPostRedisCacheList);
+      return dataPostRedisCacheList;
+  }
+```
+
+Maven dependency - [pom.xml](https://github.com/angelozero/gibao-app/blob/master/pom.xml)
+
+```xml
+<!-- Redis -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-redis</artifactId>
+</dependency>
+<dependency>
+
+<!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
+<dependency>
+    <groupId>redis.clients</groupId>
+    <artifactId>jedis</artifactId>
+    <version>3.3.0</version>
+</dependency>
+```
+
+### For more information
+- [Introduction to Spring Data Redis](https://www.baeldung.com/spring-data-redis-tutorial)
+- [Spring Boot Cache Fácil e Rápido! Com Redis!](https://www.youtube.com/watch?v=k58Dk5wXdvc)
+- [Spring Boot | Spring Data Redis as Cache | @Cacheable | @CacheEvict | @CachePut | JavaTechie](https://www.youtube.com/watch?v=vpe4aDu5ixI)
+- [Spring Boot | Spring Data Redis | Database | CRUD Example | JavaTechie](https://www.youtube.com/watch?v=oRGqCz8OLcM)
 
 
 ---
