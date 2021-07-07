@@ -48,7 +48,7 @@ public class DeleteDataPostThread {
                     .message(MessagesUtil.join(MessagesUtil.DELETE_DATA_POST_THREAD_ERROR, ex.getMessage()))
                     .identifier(ex)
                     .status(HttpStatus.BAD_REQUEST)
-                    .build(), ex);
+                    .build());
 
         }
     }

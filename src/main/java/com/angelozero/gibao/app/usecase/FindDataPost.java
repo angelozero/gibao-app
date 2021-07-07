@@ -55,7 +55,7 @@ public class FindDataPost {
                     .message(MessagesUtil.join(MessagesUtil.FIND_DATA_POST_LIST_ERROR, ex.getMessage()))
                     .identifier(ex)
                     .status(HttpStatus.BAD_REQUEST)
-                    .build(), ex);
+                    .build());
         }
     }
 
@@ -75,7 +75,7 @@ public class FindDataPost {
                     .message(MessagesUtil.join(MessagesUtil.FIND_DATA_POST_ID_ERROR, ex.getMessage()))
                     .identifier(ex)
                     .status(HttpStatus.BAD_REQUEST)
-                    .build(), ex);
+                    .build());
         }
     }
 }

@@ -13,7 +13,7 @@
 <header>
 	<nav class="navbar navbar-light bg-light">
 		<span class="navbar-brand mb-0 h1" style="font-weight: bold;">Gibao App</span>
-		<a href="/new-post" class="btn btn-primary" role="button">New Post</a>
+		<a href="/gibao-app/new-data" class="btn btn-primary" role="button">Excuse me ?</a>
 	</nav>
 </header>
 
@@ -21,7 +21,7 @@
 	<div class="container"  style="width: 60%; padding-bottom: 30px;">
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb" style="background-color: white; padding-left: 0px;">
-				<li class="breadcrumb-item active" aria-current="page">Posts</li>
+<!--				<li class="breadcrumb-item active" aria-current="page">Excuses</li>-->
 			</ol>
 		</nav>
 		
@@ -59,7 +59,7 @@
 	function loadSearchResult(){
         $.ajax({
 			type: 'get',
-			url: '/post/json',
+			url: '/gibao-app/data/json',
 			success: function(data){
 				$("#pokemonID").attr('src',data.pokemon);
 				document.getElementById("descriptionID").innerHTML = data.description;

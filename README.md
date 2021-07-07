@@ -154,7 +154,7 @@ Where
 
 ### Redis
 
-Going inside the Redis container using the CLI ( Command Line Interface )
+Going inside the Redis container using the CLI ( Command Line Interface on Docker )
 - `docker exec -it redis-data-base redis-cli`
 
 Set a key with value

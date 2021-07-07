@@ -37,7 +37,7 @@ public class DeleteDataPost {
                     .message(MessagesUtil.join(MessagesUtil.DELETE_DATA_POST_ERROR, ex.getMessage()))
                     .identifier(ex)
                     .status(HttpStatus.BAD_REQUEST)
-                    .build(), ex);
+                    .build());
         }
     }
 
@@ -58,7 +58,7 @@ public class DeleteDataPost {
                     .message(MessagesUtil.join(MessagesUtil.DELETE_DATA_POST_ERROR, ex.getMessage()))
                     .identifier(ex)
                     .status(HttpStatus.BAD_REQUEST)
-                    .build(), ex);
+                    .build());
         }
     }
 }

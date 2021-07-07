@@ -4,16 +4,10 @@ import com.angelozero.gibao.app.config.error.Error;
 import lombok.Getter;
 
 @Getter
-public class MapperException extends RuntimeException {
-
-    private final Error error;
-
-    public MapperException(Error error, Exception e) {
-        this.error = error;
-    }
+public class MapperException extends AppException {
 
     public MapperException(Error error) {
-        this.error = error;
+        super(error);
     }
 }
 

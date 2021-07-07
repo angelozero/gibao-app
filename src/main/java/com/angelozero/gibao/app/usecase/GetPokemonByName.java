@@ -32,7 +32,7 @@ public class GetPokemonByName {
             throw new PokemonApiException(Error.builder()
                     .status(HttpStatus.BAD_REQUEST)
                     .message(MessagesUtil.join(MessagesUtil.GET_POKEMON_BY_NAME_ERROR, ex.getMessage()))
-                    .build(), ex);
+                    .build());
         }
     }
 }

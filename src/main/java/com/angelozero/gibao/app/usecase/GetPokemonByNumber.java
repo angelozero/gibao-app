@@ -33,7 +33,7 @@ public class GetPokemonByNumber {
                     .status(HttpStatus.BAD_REQUEST)
                     .identifier(pokemonRandomNumber)
                     .message(MessagesUtil.join(MessagesUtil.GET_POKEMON_BY_NUMBER_ERROR, ex.getMessage()))
-                    .build(), ex);
+                    .build());
         }
     }
 }

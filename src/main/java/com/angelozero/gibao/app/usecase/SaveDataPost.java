@@ -36,7 +36,7 @@ public class SaveDataPost {
                     .message(MessagesUtil.join(MessagesUtil.SAVE_DATA_POST_ERROR, ex.getMessage()))
                     .identifier(ex)
                     .status(HttpStatus.BAD_REQUEST)
-                    .build(), ex);
+                    .build());
         }
     }
 }
