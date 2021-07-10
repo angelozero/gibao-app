@@ -24,6 +24,15 @@ public class DataPostModelTemplate implements TemplateLoader {
                         add("secretUser", Math.random() < 0.5);
                     }
                 })
+                .addTemplate("valid DataPostModel to save", new Rule() {
+                    {
+                        add("author", UUID.randomUUID().toString());
+                        add("title", UUID.randomUUID().toString());
+                        add("description", UUID.randomUUID().toString());
+                        add("date", LocalDate.now());
+                        add("secretUser", Math.random() < 0.5);
+                    }
+                })
                 .addTemplate("valid DataPostModel without SecretUser", new Rule() {
                     {
                         add("id", new Random().nextLong());

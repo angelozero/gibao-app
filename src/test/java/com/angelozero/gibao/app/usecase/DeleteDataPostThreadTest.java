@@ -8,8 +8,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import java.util.Collections;
-
 import static org.mockito.ArgumentMatchers.anyLong;
 
 public class DeleteDataPostThreadTest {

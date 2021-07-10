@@ -35,7 +35,7 @@ public class DataPostControllerTest {
     public void shouldCallHomeWithSuccess() {
         DataPostController controller = new DataPostController(saveDataPost, deleteDataPost, findDataPost, getPokemonByNumber, getRandomExcuse);
 
-        assertEquals("redirect:/post", controller.index());
+        assertEquals("redirect:/gibao-app/data", controller.index());
     }
 
     @Test
@@ -142,7 +142,7 @@ public class DataPostControllerTest {
         DataPostRequest dataPostRequest = Fixture.from(DataPostRequest.class).gimme("valid DataPostRequest");
         DataPostController controller = new DataPostController(saveDataPost, deleteDataPost, findDataPost, getPokemonByNumber, getRandomExcuse);
 
-        assertEquals("redirect:/post", controller.saveDataPost(dataPostRequest, null));
+        assertEquals("redirect:/gibao-app/data", controller.saveDataPost(dataPostRequest, null));
     }
 
     @Test
@@ -153,7 +153,7 @@ public class DataPostControllerTest {
         Mockito.when(bindingResultMock.hasErrors()).thenReturn(Boolean.TRUE);
         DataPostController controller = new DataPostController(saveDataPost, deleteDataPost, findDataPost, getPokemonByNumber, getRandomExcuse);
 
-        assertEquals("redirect:/new-post", controller.saveDataPost(dataPostRequest, bindingResultMock));
+        assertEquals("redirect:/gibao-app/new-data", controller.saveDataPost(dataPostRequest, bindingResultMock));
     }
 
     @Test
@@ -165,7 +165,7 @@ public class DataPostControllerTest {
         Mockito.doNothing().when(saveDataPost).execute(Mockito.any(DataPost.class));
         DataPostController controller = new DataPostController(saveDataPost, deleteDataPost, findDataPost, getPokemonByNumber, getRandomExcuse);
 
-        assertEquals("redirect:/post", controller.saveDataPost(dataPostRequest, bindingResultMock));
+        assertEquals("redirect:/gibao-app/data", controller.saveDataPost(dataPostRequest, bindingResultMock));
     }
 
     @Test
@@ -174,7 +174,7 @@ public class DataPostControllerTest {
 
         DataPostController controller = new DataPostController(saveDataPost, deleteDataPost, findDataPost, getPokemonByNumber, getRandomExcuse);
 
-        assertEquals("redirect:/post", controller.deleteDataPost(ID));
+        assertEquals("redirect:/gibao-app/data", controller.deleteDataPost(ID));
     }
 
 }

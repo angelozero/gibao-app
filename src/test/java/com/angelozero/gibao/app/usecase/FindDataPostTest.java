@@ -6,7 +6,6 @@ import com.angelozero.gibao.app.config.exception.DataPostServiceException;
 import com.angelozero.gibao.app.domain.DataPost;
 import com.angelozero.gibao.app.gateway.db.DataPostGateway;
 import com.angelozero.gibao.app.util.MessagesUtil;
-import org.assertj.core.util.Arrays;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
