@@ -45,7 +45,7 @@ public class ApplicationConfigurationTest {
     }
 
     /**
-     * * Testcontainer - PostreSQL
+     * * Testcontainer - PostgreSQL
      **/
     @ClassRule
     public static PostgreSQLContainer container = new PostgreSQLContainer()

@@ -114,8 +114,6 @@
         </dependency>
 
 
-
-
         <!-- Wiremock -->
         <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-contract-wiremock -->
         <dependency>
