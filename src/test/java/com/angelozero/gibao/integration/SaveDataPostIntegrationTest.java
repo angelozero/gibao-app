@@ -3,65 +3,85 @@ package com.angelozero.gibao.integration;
 
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
+import com.angelozero.gibao.app.domain.Pokemon;
 import com.angelozero.gibao.app.gateway.db.postgres.model.DataPostModel;
 import com.angelozero.gibao.app.gateway.db.repository.DataPostJPARepository;
-import com.angelozero.gibao.app.usecase.*;
 import com.angelozero.gibao.front.controller.DataPostController;
 import com.angelozero.gibao.integration.config.ApplicationConfigurationTest;
+import com.github.tomakehurst.wiremock.junit.WireMockRule;
+import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.Result;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.util.TestPropertyValues;
-import org.springframework.context.ApplicationContextInitializer;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.servlet.ModelAndView;
-import org.testcontainers.containers.PostgreSQLContainer;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.io.IOException;
 import java.util.List;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static java.nio.charset.Charset.defaultCharset;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.util.StreamUtils.copyToString;
 
-@RunWith(SpringRunner.class)
+//@RunWith(SpringRunner.class)
 public class SaveDataPostIntegrationTest extends ApplicationConfigurationTest {
+
+    private static final String URL_DATA_POST = "/gibao-app/data/json";
+    public static final String POKEMON_API_ID = "/pokemon-api/[0-9]+";
 
     @Autowired
     DataPostJPARepository repository;
+
+    @Autowired
+    private DataPostController controller;
+
+    private MockMvc mockMvc;
 
     @BeforeClass
     public static void setup() {
         FixtureFactoryLoader.loadTemplates("com.angelozero.gibao.template");
     }
 
-    @Test
-    public void shouldGetADataPostInPostgresFromTheFirstTimeAndShouldGetTheSameInformationInRedisFromSecondTime() {
+    @Rule
+    public WireMockRule wireMockRule = new WireMockRule(9898);
 
-        DataPostModel dataPost = Fixture.from(DataPostModel.class).gimme("valid DataPostModel to save");
-        repository.save(dataPost);
+    @Before
+    public void setUp() throws IOException {
+        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+    }
 
-        List<DataPostModel> list = repository.findAll();
-        assertEquals(1, list.size());
+//    @Test
+    public void shouldGetADataPostInPostgresFromTheFirstTimeAndShouldGetTheSameInformationInRedisFromSecondTime() throws Exception {
 
-
-//        DataPostController controller = new DataPostController(saveDataPost, deleteDataPost, findDataPost, getPokemonByNumber, getRandomExcuse);
+//        DataPostModel dataPost = Fixture.from(DataPostModel.class).gimme("valid DataPostModel to save");
+//        repository.save(dataPost);
 //
-//        stubFor(get("/data")
-//                .withHeader("Content-Type", containing("json"))
-//                .willReturn(ok()
-//                        .withHeader("Content-Type", "text/xml")
-//                        .withBody("<response>SUCCESS</response>")));
+//        List<DataPostModel> list = repository.findAll();
+//        assertEquals(1, list.size());
 //
-//        ModelAndView result = controller.getDataPost();
-//        assertNotNull(result);
-
-//        verify(postRequestedFor(urlPathEqualTo("/my/resource"))
-//                .withRequestBody(matching(".*message-1234.*"))
-//                .withHeader("Content-Type", equalTo("text/xml")));
+//        this.wireMockRule.stubFor(get(urlMatching(POKEMON_API_ID))
+//                .willReturn(aResponse()
+//                        .withStatus(HttpStatus.OK.value())
+//                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
+//                        .withBody(
+//                                copyToString(
+//                                        Pokemon.class.getClassLoader().getResourceAsStream("pokemonapi/mewtwo.json"),
+//                                        defaultCharset()))));
+//
+//        this.mockMvc.perform(MockMvcRequestBuilders
+//                .get(URL_DATA_POST)
+//                .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().is(HttpStatus.OK.value()))
+//                .andExpect(content().json("json_resposta"));
 
     }
 }

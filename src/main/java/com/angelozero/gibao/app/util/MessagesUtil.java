@@ -19,6 +19,8 @@ public class MessagesUtil {
     //FindDataPost
     public static final String FIND_DATA_POST_LIST_SUCCESS = "[ DB ] Success to find for a list of Data Post {}";
     public static final String FIND_DATA_POST_LIST_SUCCESS_BY_REDIS = "[ REDIS ] Success to find for a list of Data Post {}";
+    public static final String NO_DATA_POST_LIST_FOUND_BY_REDIS = "[ REDIS ] No data was found for a list of Data Post";
+    public static final String FIND_DATA_POST_LIST_ERROR_BY_REDIS = "[ REDIS ] Error to find for a list of Data Post {}";
     public static final String FIND_DATA_POST_LIST_ERROR = "Error to find a list of data post";
     public static final String FIND_DATA_POST_BY_ID_SUCCESS = "Find a Data Post by id {}";
     public static final String FIND_DATA_POST_ID_ERROR = "Error to find a Data Post by id";
