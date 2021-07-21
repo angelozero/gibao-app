@@ -143,3 +143,36 @@
   --- 
   --- 
   ## EC2
+
+  - EC2 - Electronic Computer 2 - Maquinas Virtuais 
+
+  - EC2 Options
+    - Existem 4 tipos de maquina
+      - On Demand
+        - Subir / Desligar / Ligar uma VM - Paga por Hora / Min / Segundo - Pagamento feito depois
+      - Reserved 
+        - Reserva / Assina um contrato com a AWS de 1 a 3 anos - Usado para uma aplicaçao que nao tem alteracao - uma aplicacao estavel
+      - Spot
+        - BID - Usado para quando sua aplicao fica ligada por um tempo especifico, nao o dia todo. Configuracoes fixas mas podendo ser alterados.
+      - Dedicated Hosts 
+        - Maquinas fisicas - sao mais caras - usado por empresas financeiras, usado por exmeplo para armazenar dados de cartao de credito.
+  
+  - EC2 Types
+    - https://aws.amazon.com/ec2/instance-types/
+    - Os tipos de instancia sao divididos em 5 categorias
+      - General Purpose
+      - Compute Optimized
+      - Memory Optimized
+      - Accelerated Computing
+      - Storage Optimized
+
+  - EC2 Pricing
+    - Free Tier - 12 meses  ( t2.micro ) 
+    - On Demand
+      - O preço varia por 
+        - Localizacao
+        - Sistema Operacional
+        - Tipo da maquina
+
+  - EBS - Elastic Block Storaged
+    - 

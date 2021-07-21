@@ -289,6 +289,16 @@ Maven dependency - [pom.xml](https://github.com/angelozero/gibao-app/blob/master
 ### Fixture
  - Falar sobre fixture
 
+ - WIremock com Feing
+  - https://www.programmersought.com/article/5355949210/
+
+- Stubbing com Wiremock
+  - Match URL 
+    - http://one.wiremock.org/stubbing.html
+
+- Explicar com codigo da classe SaveDataPostIntegrationTest
+
+
 - Problemas que tive 
   - https://www.youtube.com/watch?v=pNg72FknNco -  JUNIT4
   - Erro - {"message":"No such image: bsideup/moby-ryuk:0.2.2"}
