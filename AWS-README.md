@@ -176,3 +176,88 @@
 
   - EBS - Elastic Block Storaged
     - 
+
+  - Iniciando uma instancia
+    - Dentro da Cloud da Aws vamos criar uma instancia
+    - AMI - Amazon Machine Image (AMI)
+    - Dentro do serviço de EC2 escolha a opcao instance ao lado esquerdo da coluna
+    
+      - 1 - Choose AMI 
+      - An AMI is a template that contains the software configuration (operating system, application server, and applications) required to launch your instance. You can select an AMI provided by AWS, our user community, or the AWS Marketplace; or you can select one of your own AMIs.
+        - Escolher o sistema operacional / maquina que sera criada
+     
+      - 2 - Choose Instance Type
+      - Amazon EC2 provides a wide selection of instance types optimized to fit different use cases. Instances are virtual servers that can run applications. They have varying combinations of CPU, memory, storage, and networking capacity, and give you the flexibility to choose the appropriate mix of resources for your applications.
+        - Escolher o tipo de instancia
+          - Ex.: t2.nano / t2.micro / t2.small
+      
+      - 3 - Configure Instance
+      - Cancel Previous Review and Launch Next: Add Storage 
+      Configure the instance to suit your requirements. You can launch multiple instances from the same AMI, request Spot instances to take advantage of the lower pricing, assign an access management role to the instance, and more.
+
+        - Definir numero de instancias ( iniciar numero de maquinas ao mesmo tempo)
+        - Configuracoes de IP
+      
+      - 4 - Add Storage
+      - Your instance will be launched with the following storage device settings. You can attach additional EBS volumes and instance store volumes to your instance, or edit the settings of the root volume. You can also attach additional EBS volumes after launching an instance, but not instance store volumes.
+        - Adicionando o HD / Volume para a maquina
+
+      - 5 - Add Tags
+      - A tag consists of a case-sensitive key-value pair. For example, you could define a tag with key = Name and value = Webserver. A copy of a tag can be applied to volumes, instances or both. Tags will be applied to all instances and volumes.
+        - Adicionando TAG para a instancia criada
+
+        - 6 - Configure Security Group
+          - A security group is a set of firewall rules that control the traffic for your instance. On this page, you can add rules to allow specific traffic to reach your instance. For example, if you want to set up a web server and allow Internet traffic to reach your instance, add rules that allow unrestricted access to the HTTP and HTTPS ports. You can create a new security group or select from an existing one below.
+            - Firewall para a maquina criada
+            - Cria um grupo para reutilizar para outras maquinas. Ex.: configuracoes de porta para todas as maquians que estiverem nesse grupo.
+
+      - Se conectando a maquina
+        Open an SSH client.
+        Run this command
+          - chmod 400 linux-server.pem
+        Connect to your instance using its Public DNS:
+          - ssh -i "linux-server.pem" ec2-user@ec2-54-173-112-202.compute-1.amazonaws.com
+
+  --- 
+  --- 
+  ## LOAD BALANCERS
+    - Ha 3 tipos de loadbalancer
+      
+      - application loadbalancer
+        - responsavel por protocolos http/https\
+        - camada 7 ( qual tipo de tragego )
+        - consegue identificar a origem e destino
+
+      - network loadbalancer
+        - mais especifico para redes 
+        - tcp
+        - camada 4 ( filtra portas )
+
+      - classic loadbalancer ( elastic load balancer )
+        - mais antigo ( legacy )
+        - nao recomenda
+        - fazia as duas outras ( application e network ) e isso onerava muito 
+    
+    - Loadbalancer utiliza um sistema chamado x-forward for header, no cabeçalho http/https aonde é preenchido com o valor do endereço de IP origem, assim toda requisiçao que chega para um servidor que passar por um loadbalancer sabe exatamente para quem devolver.
+
+  - Criando um loadbalancer e dois servidores
+    - Primeiro crie duas instancias ec2 ( linux t2.micro )
+    - Adicione esse script para teste 
+    ```
+      #!/bin/bash
+      yum update -y
+      yum install httpd -y
+      service httpd start
+      chkconfig httpd on
+      cd /var/www/html
+      echo "<html><h1>Site Funcionando</h1></html>" > index.html
+    ``` 
+    - libere o acesso via http -> ( ver parte configure security group ) https://www.guru99.com/creating-amazon-ec2-instance.html
+    - Na coluna agora ( ainda dentro de ec2 ) va em networking e crie um novo loadbalancer
+    - selecione o Classic Load Balancer
+    - Item Configure Health Check 
+      - Response Timeout - tempo de espera para soltar timeout se caso um servidor nao responder
+      - Interval - Intervalo de tempo para chamada para saber se o servidor esta de pé
+      - Unhealty threshold - Quantidade de timouts para que diga que o servidor esta fora
+      - Healthy threshold - Quantidade de chamadas para executar e garantir que o servidor voltou
+

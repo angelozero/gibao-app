@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.util.StreamUtils.copyToString;
 
-//@RunWith(SpringRunner.class)
+@RunWith(SpringRunner.class)
 public class SaveDataPostIntegrationTest extends ApplicationConfigurationTest {
 
     private static final String URL_DATA_POST = "/gibao-app/data/json";
@@ -59,29 +59,29 @@ public class SaveDataPostIntegrationTest extends ApplicationConfigurationTest {
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
-//    @Test
+    @Test
     public void shouldGetADataPostInPostgresFromTheFirstTimeAndShouldGetTheSameInformationInRedisFromSecondTime() throws Exception {
 
-//        DataPostModel dataPost = Fixture.from(DataPostModel.class).gimme("valid DataPostModel to save");
-//        repository.save(dataPost);
-//
-//        List<DataPostModel> list = repository.findAll();
-//        assertEquals(1, list.size());
-//
-//        this.wireMockRule.stubFor(get(urlMatching(POKEMON_API_ID))
-//                .willReturn(aResponse()
-//                        .withStatus(HttpStatus.OK.value())
-//                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
-//                        .withBody(
-//                                copyToString(
-//                                        Pokemon.class.getClassLoader().getResourceAsStream("pokemonapi/mewtwo.json"),
-//                                        defaultCharset()))));
-//
-//        this.mockMvc.perform(MockMvcRequestBuilders
-//                .get(URL_DATA_POST)
-//                .contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(status().is(HttpStatus.OK.value()))
-//                .andExpect(content().json("json_resposta"));
+        DataPostModel dataPost = Fixture.from(DataPostModel.class).gimme("valid DataPostModel integration test");
+        repository.save(dataPost);
+
+        List<DataPostModel> list = repository.findAll();
+        assertEquals(1, list.size());
+
+        this.wireMockRule.stubFor(get(urlMatching(POKEMON_API_ID))
+                .willReturn(aResponse()
+                        .withStatus(HttpStatus.OK.value())
+                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
+                        .withBody(
+                                copyToString(
+                                        Pokemon.class.getClassLoader().getResourceAsStream("pokemonapi/mewtwo.json"),
+                                        defaultCharset()))));
+
+        this.mockMvc.perform(MockMvcRequestBuilders
+                .get(URL_DATA_POST)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(HttpStatus.OK.value()))
+                .andExpect(content().json("json_resposta"));
 
     }
 }

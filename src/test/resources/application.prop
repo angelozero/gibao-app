@@ -1,0 +1,2 @@
+spring.redis.port=16379
+spring.redis.host=localhost

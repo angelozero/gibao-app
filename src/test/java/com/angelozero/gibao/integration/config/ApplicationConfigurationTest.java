@@ -1,8 +1,6 @@
 package com.angelozero.gibao.integration.config;
 
 import org.junit.ClassRule;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -14,8 +12,8 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
-import redis.embedded.RedisServer;
 
 
 @AutoConfigureMockMvc
@@ -28,33 +26,27 @@ import redis.embedded.RedisServer;
 public class ApplicationConfigurationTest {
 
     /**
-     * REDIS
+     * Testcontainer - REDIS
      */
-    private final RedisServer redis = new RedisServer();
 
-    @BeforeEach
-    public void beforeEach() {
-        if (!redis.isActive()) {
-            redis.start();
-        }
-    }
+    @ClassRule
+    public static GenericContainer redisContainer = new GenericContainer("redis:latest")
+            .withExposedPorts(6379);
 
-    @AfterEach
-    public void afterEach() {
-        if (redis.isActive()) {
-            redis.stop();
-        }
-    }
 
     /**
-     * * Testcontainer - PostgreSQL
-     **/
+     * Testcontainer - PostgreSQL
+     */
     @ClassRule
     public static PostgreSQLContainer container = new PostgreSQLContainer()
             .withDatabaseName("gibao-app-test-db")
             .withPassword("password")
             .withUsername("user");
 
+
+    /**
+     * Configuration initializer
+     */
     public static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
         @Override
@@ -62,10 +54,15 @@ public class ApplicationConfigurationTest {
             TestPropertyValues values = TestPropertyValues.of(
                     "spring.datasource.url=" + container.getJdbcUrl(),
                     "spring.datasource.password=" + container.getPassword(),
-                    "spring.datasource.username=" + container.getUsername()
+                    "spring.datasource.username=" + container.getUsername(),
+                    "spring.redis.port=" + redisContainer.getFirstMappedPort()
             );
 
             values.applyTo(configurableApplicationContext);
+
+            //Setting Redis config values in runtime
+            System.setProperty("redis.port.value", redisContainer.getFirstMappedPort().toString());
         }
+
     }
 }

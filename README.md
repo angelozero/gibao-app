@@ -212,7 +212,10 @@ Cleaning all data from Redis
 ---
 ---
 
-### Redis instaled by brew
+### Redis instaled by brew ( the project is using Redis localy )
+
+Installing Redis on Mac by Brew
+- `brew install redis`
 
 Stop Redis Service ( With Redis instaled by brew )
 - `brew services stop redis`

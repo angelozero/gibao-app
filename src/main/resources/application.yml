@@ -21,6 +21,10 @@ spring:
           lob:
             non_contextual_creation: true
 
+redis:
+  port: 6379
+  host: localhost
+
 thread:
   time:
     sleep:

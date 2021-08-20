@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    url: gibao-app-test-db
+    username: user
+    password: password
     driver-class-name: org.postgresql.Driver
     hikari:
       maximum-pool-size: 5
@@ -20,6 +20,10 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
+
+redis:
+  port: ${redis.port.value}
+  host: localhost
 
 thread:
   time:

@@ -33,6 +33,15 @@ public class DataPostModelTemplate implements TemplateLoader {
                         add("secretUser", Boolean.TRUE);
                     }
                 })
+                .addTemplate("valid DataPostModel integration test", new Rule() {
+                    {
+                        add("author", "Author Integra Tion");
+                        add("title", "Title Integration Test with Testcontainer");
+                        add("description", "This is an object saved by Testcontainer using a database");
+                        add("date", LocalDate.now());
+                        add("secretUser", Boolean.TRUE);
+                    }
+                })
                 .addTemplate("valid DataPostModel without SecretUser", new Rule() {
                     {
                         add("id", new Random().nextLong());
