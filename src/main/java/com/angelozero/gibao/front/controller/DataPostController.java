@@ -38,11 +38,9 @@ public class DataPostController {
     private final GetRandomExcuse getRandomExcuse;
 
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String index() {
-        return redirectIndexPage();
-    }
-
+    /**
+     * GET Data
+     */
     @RequestMapping(value = "/data", method = RequestMethod.GET)
     public ModelAndView getDataPost() {
         ModelAndView modelAndView = new ModelAndView("infoDataPostView");
@@ -59,6 +57,9 @@ public class DataPostController {
         return new ResponseEntity<>(itens, HttpStatus.OK);
     }
 
+    /**
+     * GET Data List
+     */
     @RequestMapping(value = "/data/list", method = RequestMethod.GET)
     public ModelAndView getDataPostList() {
         List<DataPostResponse> dataPostResponseList = DataPostRequestMapper.toDataPostResponseList(findDataPost.execute());
@@ -78,7 +79,9 @@ public class DataPostController {
         return new ResponseEntity<>(itens, HttpStatus.OK);
     }
 
-
+    /**
+     * GET Data by ID
+     */
     @RequestMapping(value = "/data/{id}", method = RequestMethod.GET)
     public ModelAndView getDataPostDetail(@PathVariable("id") long id) {
         ModelAndView mv = new ModelAndView("infoDataPostDetailView");
@@ -94,11 +97,9 @@ public class DataPostController {
         return new ResponseEntity<>(itens, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/new-data", method = RequestMethod.GET)
-    public String getDataPostForm() {
-        return "dataPostForm";
-    }
-
+    /**
+     * SAVE Data
+     */
     @RequestMapping(value = "/new-data", method = RequestMethod.POST)
     public String saveDataPost(@Valid DataPostRequest dataPostRequest, BindingResult bindingResult) {
         if (bindingResult != null && bindingResult.hasErrors()) {
@@ -109,10 +110,26 @@ public class DataPostController {
         return redirectIndexPage();
     }
 
+    /**
+     * DELETE Data
+     */
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public String deleteDataPost(long id) {
         deleteDataPost.execute(id);
         return redirectIndexPage();
+    }
+
+    /**
+     * REDIRECT Route
+     */
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String index() {
+        return redirectIndexPage();
+    }
+
+    @RequestMapping(value = "/new-data", method = RequestMethod.GET)
+    public String getDataPostForm() {
+        return "dataPostForm";
     }
 
     private static String redirectIndexPage() {
