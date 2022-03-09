@@ -3,6 +3,7 @@ package com.angelozero.gibao.app.usecase;
 import com.angelozero.gibao.app.config.exception.RedisServiceException;
 import com.angelozero.gibao.app.domain.DataPost;
 import com.angelozero.gibao.app.usecase.enums.RedisInfo;
+import com.angelozero.gibao.app.usecase.redis.RedisService;
 import com.angelozero.gibao.app.util.MessagesUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package com.angelozero.gibao.app.usecase;
+package com.angelozero.gibao.app.usecase.datapost;
 
 import com.angelozero.gibao.app.config.error.Error;
 import com.angelozero.gibao.app.config.exception.DataPostServiceException;

@@ -11,7 +11,7 @@ import java.util.List;
 public class PropertiesConfig {
 
     @Value("${thread.time.sleep.minutes}")
-    private Long oneMinute;
+    private Long minutes;
 
     @Value("${pokemon.first.season}")
     private List<String> pokemonList;

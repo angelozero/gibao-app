@@ -1,4 +1,4 @@
-package com.angelozero.gibao.app.usecase;
+package com.angelozero.gibao.app.usecase.pokemon;
 
 import com.angelozero.gibao.app.config.PropertiesConfig;
 import com.angelozero.gibao.app.config.error.Error;
@@ -15,7 +15,7 @@ import java.util.Random;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class GetPokemonByName {
+public class GetPokemonByRandomName {
 
     private final PropertiesConfig propertiesConfig;
     private final PokemonApi pokemonApi;

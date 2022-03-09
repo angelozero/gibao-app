@@ -2,7 +2,11 @@ package com.angelozero.gibao.front.controller;
 
 
 import com.angelozero.gibao.app.domain.DataPost;
-import com.angelozero.gibao.app.usecase.*;
+import com.angelozero.gibao.app.usecase.datapost.DeleteDataPost;
+import com.angelozero.gibao.app.usecase.datapost.FindDataPost;
+import com.angelozero.gibao.app.usecase.datapost.GetRandomExcuse;
+import com.angelozero.gibao.app.usecase.datapost.SaveDataPost;
+import com.angelozero.gibao.app.usecase.pokemon.GetPokemonByRandomNumber;
 import com.angelozero.gibao.front.controller.mapper.DataPostRequestMapper;
 import com.angelozero.gibao.front.controller.rest.DataPostRequest;
 
@@ -34,7 +38,7 @@ public class DataPostController {
     private final SaveDataPost saveDataPost;
     private final DeleteDataPost deleteDataPost;
     private final FindDataPost findDataPost;
-    private final GetPokemonByNumber getPokemonByNumber;
+    private final GetPokemonByRandomNumber getPokemonByRandomNumber;
     private final GetRandomExcuse getRandomExcuse;
 
 
@@ -44,7 +48,7 @@ public class DataPostController {
     @RequestMapping(value = "/data", method = RequestMethod.GET)
     public ModelAndView getDataPost() {
         ModelAndView modelAndView = new ModelAndView("infoDataPostView");
-        modelAndView.addObject("pokemon", getPokemonByNumber.execute());
+        modelAndView.addObject("pokemon", getPokemonByRandomNumber.execute());
         modelAndView.addObject("description", getRandomExcuse.execute());
         return modelAndView;
     }
@@ -52,7 +56,7 @@ public class DataPostController {
     @RequestMapping(value = "/data/json", method = RequestMethod.GET)
     public ResponseEntity<Map<String, Object>> getDataPostJson() {
         Map<String, Object> itens = new HashMap<>();
-        itens.put("pokemon", getPokemonByNumber.execute());
+        itens.put("pokemon", getPokemonByRandomNumber.execute());
         itens.put("description", getRandomExcuse.execute());
         return new ResponseEntity<>(itens, HttpStatus.OK);
     }
@@ -64,7 +68,7 @@ public class DataPostController {
     public ModelAndView getDataPostList() {
         List<DataPostResponse> dataPostResponseList = DataPostRequestMapper.toDataPostResponseList(findDataPost.execute());
         ModelAndView modelAndView = new ModelAndView("infoDataPostListView");
-        modelAndView.addObject("pokemon", getPokemonByNumber.execute());
+        modelAndView.addObject("pokemon", getPokemonByRandomNumber.execute());
         modelAndView.addObject("infoDataPostList", dataPostResponseList);
         return modelAndView;
     }
@@ -73,7 +77,7 @@ public class DataPostController {
     public ResponseEntity<Map<String, Object>> getDataPostListJson() {
         List<DataPostResponse> dataPostResponseList = DataPostRequestMapper.toDataPostResponseList(findDataPost.execute());
         Map<String, Object> itens = new HashMap<>();
-        itens.put("pokemon", getPokemonByNumber.execute());
+        itens.put("pokemon", getPokemonByRandomNumber.execute());
         itens.put("dataPostList", dataPostResponseList);
         itens.put("description", getRandomExcuse.execute());
         return new ResponseEntity<>(itens, HttpStatus.OK);

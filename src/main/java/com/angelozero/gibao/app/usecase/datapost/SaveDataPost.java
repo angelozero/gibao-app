@@ -1,9 +1,10 @@
-package com.angelozero.gibao.app.usecase;
+package com.angelozero.gibao.app.usecase.datapost;
 
 import com.angelozero.gibao.app.config.error.Error;
 import com.angelozero.gibao.app.config.exception.DataPostServiceException;
 import com.angelozero.gibao.app.domain.DataPost;
 import com.angelozero.gibao.app.gateway.db.DataPostGateway;
+import com.angelozero.gibao.app.usecase.redis.RedisService;
 import com.angelozero.gibao.app.usecase.enums.RedisInfo;
 import com.angelozero.gibao.app.util.MessagesUtil;
 import lombok.AllArgsConstructor;
