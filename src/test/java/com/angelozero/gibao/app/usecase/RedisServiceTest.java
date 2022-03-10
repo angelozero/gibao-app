@@ -85,12 +85,12 @@ public class RedisServiceTest {
 
     @Test
     public void shouldThrowAnExceptionWhenDeleteAData() {
-
-        RedisService<String> redisService = new RedisService<String>(null);
+        Mockito.when(template.delete(anyString())).thenThrow(new RuntimeException("Error Redis Test"));
+        RedisService<String> redisService = new RedisService<String>(template);
         RedisServiceException exception = assertThrows(RedisServiceException.class, () -> redisService.delete(RedisInfo.HASH_KEY_DATA_POST));
 
         assertNotNull(exception);
-        assertEquals(MessagesUtil.join(MessagesUtil.REDIS_SERVICE_ERRO_TO_DELETE, StringUtils.EMPTY), exception.getError().getMessage());
+        assertEquals(MessagesUtil.join(MessagesUtil.REDIS_SERVICE_ERRO_TO_DELETE, "Error Redis Test"), exception.getError().getMessage());
         assertNotNull(exception.getError().getIdentifier());
     }
 
