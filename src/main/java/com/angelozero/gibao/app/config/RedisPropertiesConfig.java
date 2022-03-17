@@ -8,12 +8,12 @@ import java.util.List;
 
 @Getter
 @Configuration
-public class PropertiesConfig {
+public class RedisPropertiesConfig {
 
-    @Value("${thread.time.sleep.minutes}")
-    private Long minutes;
+    @Value("${redis.port}")
+    private Integer redisPort;
 
-    @Value("${pokemon.first.season}")
-    private List<String> pokemonList;
+    @Value("${redis.host}")
+    private String host;
 
 }

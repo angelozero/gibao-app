@@ -5,13 +5,15 @@ import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 import com.angelozero.gibao.app.config.exception.DataPostServiceException;
 import com.angelozero.gibao.app.domain.DataPost;
 import com.angelozero.gibao.app.gateway.db.DataPostGateway;
+import com.angelozero.gibao.app.usecase.datapost.DeleteDataPostThread;
+import com.angelozero.gibao.app.usecase.datapost.SaveDataPost;
+import com.angelozero.gibao.app.usecase.datapost.ValidateDataPost;
 import com.angelozero.gibao.app.usecase.enums.RedisInfo;
+import com.angelozero.gibao.app.usecase.redis.RedisService;
 import com.angelozero.gibao.app.util.MessagesUtil;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
-
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;

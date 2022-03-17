@@ -1,4 +1,4 @@
-package com.angelozero.gibao.app.usecase;
+package com.angelozero.gibao.app.usecase.pokemon;
 
 import com.angelozero.gibao.app.config.error.Error;
 import com.angelozero.gibao.app.config.exception.PokemonApiException;
@@ -14,7 +14,7 @@ import java.util.Random;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class GetPokemonByNumber {
+public class GetPokemonByRandomNumber {
 
     public static final int FIRST_SEASON = 150;
     private final PokemonApi pokemonApi;
@@ -33,7 +33,7 @@ public class GetPokemonByNumber {
                     .status(HttpStatus.BAD_REQUEST)
                     .identifier(pokemonRandomNumber)
                     .message(MessagesUtil.join(MessagesUtil.GET_POKEMON_BY_NUMBER_ERROR, ex.getMessage()))
-                    .build(), ex);
+                    .build());
         }
     }
 }

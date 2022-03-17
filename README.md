@@ -150,11 +150,36 @@ Where
 - `-p 6379:6379` -- is the port where's gonna run the container
 - `redis` --------- is the name of the Redis Image
 
+Going inside the Redis container using the CLI ( Command Line Interface )
+  - `docker exec -it redis-data-base redis-cli`
+
+Set a key with value
+  - `set my-name "angelo zero"`
+
+Get the key value
+  - `get my-name` must input `"angelo zero"`
+
+Set a key with expiration time ( 10 seconds )
+  - `set name-and-temp "angelo zero 10 seconds" EX 10`
+
+Before 10 second if you type get nametemp you should receive the value test-time
+  - `get name-and-temp` must input ( before 10 seconds ) `"angelo zero 10 seconds"`
+  - `get name-and-temp` must input ( after 10 seconds ) `(nil)`
+
+Check if a key exists
+  - `exists my-name` - the output must be
+    - if `(integer) 1` this mean `true`
+    - else `(integer) 0` this mean `false`
+
+Delete a key
+  - `del my-name` must input `(integer) 1`
+
+---
 ---
 
 ### Redis
 
-Going inside the Redis container using the CLI ( Command Line Interface )
+Going inside the Redis container using the CLI ( Command Line Interface on Docker )
 - `docker exec -it redis-data-base redis-cli`
 
 Set a key with value
@@ -180,6 +205,29 @@ Delete a key
 
 Get all Keys
 - `KEYS *`
+
+Cleaning all data from Redis
+- `FLUSHALL`
+
+---
+---
+
+### Redis instaled by brew ( the project is using Redis localy )
+
+Installing Redis on Mac by Brew
+- `brew install redis`
+
+Stop Redis Service ( With Redis instaled by brew )
+- `brew services stop redis`
+
+Start Redis Service ( With Redis instaled by brew )
+- `brew services start redis`
+
+Restart Redis Service ( With Redis instaled by brew )
+- `brew services restart redis`
+
+---
+---
 
 ### Backend
 
@@ -238,18 +286,65 @@ Maven dependency - [pom.xml](https://github.com/angelozero/gibao-app/blob/master
 
 
 ---
+
+## Unit and Integration Tests
+
+### Fixture
+ - Falar sobre fixture
+
+ - WIremock com Feing
+  - https://www.programmersought.com/article/5355949210/
+
+- Stubbing com Wiremock
+  - Match URL 
+    - http://one.wiremock.org/stubbing.html
+
+- Explicar com codigo da classe SaveDataPostIntegrationTest
+
+
+- Problemas que tive 
+  - https://www.youtube.com/watch?v=pNg72FknNco -  JUNIT4
+  - Erro - {"message":"No such image: bsideup/moby-ryuk:0.2.2"}
+    - https://github.com/testcontainers/testcontainers-java/issues/3574 - 89Items
+    - java.lang.NoClassDefFoundError: org/testcontainers/containers/wait/LogMessageWaitStrategy 
+        - ```xml
+                <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers</artifactId>
+                <version>1.10.1</version>
+            </dependency>
+          ```
+    - [main] DEBUG org.testcontainers.utility.TestcontainersConfiguration - Testcontainers configuration overrides will be loaded from file .../.testcontainers.properties
+        - https://www.testcontainers.org/features/configuration/
+
+### Testcontainers
+![Testcontainer](https://d33wubrfki0l68.cloudfront.net/a661dbbe55be3e9cb77889f24835a44c6daf53c2/ce0aa/logo.png)
+- Integration tests using [Testcontainers](https://www.testcontainers.org/)
+
+### Wiremock
+![How it works](https://image.slidesharecdn.com/resiliencetestingwithwiremock-160322164036/95/resilience-testing-with-wiremock-and-spock-9-638.jpg)
+- [Wiremock](http://wiremock.org/)
+- [Introducion to Wiremock](https://www.baeldung.com/introduction-to-wiremock)
+
+---
 ## First BETA 0.0.1 preview!
 ![Excuse](https://s3.gifyu.com/images/ezgif.com-gif-makerad94f6de2a1f6698.gif)
 
 ---
 
-*"Wanna fly, compadre? Let's fly."* - **Octane**
+*Next Steps/Features*
+  - 08 - Collections
+  - 09 - New Java features ( 9 to 11 )
+  - 10 - Desing Patterns
+  - 11 - Some Refactors .... 
+
+[comment]: <> (*"Wanna fly, compadre? Let's fly."* - **Octane**)
  
  ![Octane](https://pa1.narvii.com/7219/04dd0e9ac40347ac391d9ba6323f6b822f182831r1-256-256_hq.gif)
 
-*"I’m not afraid-- I’ll never be."* - **Wraith**
+[comment]: <> (*"I’m not afraid-- I’ll never be."* - **Wraith**)
 
-![Wraith](https://i.pinimg.com/originals/97/9a/6a/979a6af7254269512e331b7f0abc1256.gif)
+[comment]: <> (![Wraith]&#40;https://i.pinimg.com/originals/97/9a/6a/979a6af7254269512e331b7f0abc1256.gif&#41;)
 
 [comment]: <> ( ![Wraith]&#40;https://64.media.tumblr.com/dfdf88c6295f4534e1b8e25b41b06b87/tumblr_przfnw4o471seajk2_400.png&#41;)
 
@@ -258,5 +353,8 @@ Maven dependency - [pom.xml](https://github.com/angelozero/gibao-app/blob/master
 [comment]: <> ( ![Lifeline]&#40;https://64.media.tumblr.com/97e8abc9981caa9112a345f5c751db73/tumblr_przfnw2Nmo1seajk2_400.png&#41;)
 
 [comment]: <> ( ![Bangalore]&#40;https://64.media.tumblr.com/cd94a364139ea43ba9fab89bb03bb6c3/tumblr_przfnwprJW1seajk2_400.png&#41;)
+
+
+
  
 ---

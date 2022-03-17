@@ -6,7 +6,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 @Configuration
@@ -15,17 +14,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     // url's that don't need authentication
     private static final String[] AUTH_LIST = {
+            "/gibao-app",
             "/",
-            "/post",
+            "/data",
             "/json",
             "/list",
             "/{id}",
-            "/post/json",
-            "/post/list",
-            "/post/list/json",
-            "/posts/{id}",
-            "/post/{id}/json",
-            "/new-post",
+            "/data/json",
+            "/data/list",
+            "/data/list/json",
+            "/data/{id}",
+            "/data/{id}/json",
+            "/new-data",
             "/save",
             "/delete",
 
@@ -33,12 +33,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf().disable().authorizeRequests()
-                .antMatchers(AUTH_LIST).permitAll()
-                .anyRequest().authenticated()
-                .and().formLogin().permitAll()
-                .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
-//        httpSecurity.authorizeRequests().antMatchers("/").permitAll();
+//        httpSecurity.csrf().disable().authorizeRequests()
+//                .antMatchers(AUTH_LIST).permitAll()
+//                .anyRequest().authenticated()
+//                .and().formLogin().permitAll()
+//                .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+        httpSecurity.authorizeRequests().antMatchers("/**").permitAll();
     }
 
     @Override

@@ -1,8 +1,9 @@
-package com.angelozero.gibao.app.usecase;
+package com.angelozero.gibao.app.usecase.datapost;
 
 import com.angelozero.gibao.app.config.error.Error;
 import com.angelozero.gibao.app.config.exception.DataPostServiceException;
 import com.angelozero.gibao.app.domain.DataPost;
+import com.angelozero.gibao.app.usecase.datapost.FindDataPost;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

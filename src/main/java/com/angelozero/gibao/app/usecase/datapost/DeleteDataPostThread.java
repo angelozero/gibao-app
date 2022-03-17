@@ -1,4 +1,4 @@
-package com.angelozero.gibao.app.usecase;
+package com.angelozero.gibao.app.usecase.datapost;
 
 import com.angelozero.gibao.app.config.PropertiesConfig;
 import com.angelozero.gibao.app.config.error.Error;
@@ -34,8 +34,8 @@ public class DeleteDataPostThread {
 
     private void delete(Long id) {
         try {
-            log.info(MessagesUtil.DELETE_DATA_POST_THREAD_INFO_START_THREAD, propertiesConfig.getOneMinute());
-            Thread.sleep(propertiesConfig.getOneMinute());
+            log.info(MessagesUtil.DELETE_DATA_POST_THREAD_INFO_START_THREAD, propertiesConfig.getMinutes());
+            Thread.sleep(propertiesConfig.getMinutes());
 
             if (findDataPost.execute(id) != null) {
                 deleteDataPost.execute(id);
@@ -48,7 +48,7 @@ public class DeleteDataPostThread {
                     .message(MessagesUtil.join(MessagesUtil.DELETE_DATA_POST_THREAD_ERROR, ex.getMessage()))
                     .identifier(ex)
                     .status(HttpStatus.BAD_REQUEST)
-                    .build(), ex);
+                    .build());
 
         }
     }

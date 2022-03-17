@@ -4,9 +4,9 @@ import com.angelozero.gibao.app.config.error.Error;
 import lombok.Getter;
 
 @Getter
-public class DataPostServiceException extends AppException {
+public class JsonReaderIntegrationTestException extends AppException {
 
-    public DataPostServiceException(Error error) {
+    public JsonReaderIntegrationTestException(Error error) {
         super(error);
     }
 }

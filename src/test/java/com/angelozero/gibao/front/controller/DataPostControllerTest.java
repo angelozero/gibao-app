@@ -3,7 +3,11 @@ package com.angelozero.gibao.front.controller;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 import com.angelozero.gibao.app.domain.DataPost;
-import com.angelozero.gibao.app.usecase.*;
+import com.angelozero.gibao.app.usecase.datapost.DeleteDataPost;
+import com.angelozero.gibao.app.usecase.datapost.FindDataPost;
+import com.angelozero.gibao.app.usecase.datapost.GetRandomExcuse;
+import com.angelozero.gibao.app.usecase.datapost.SaveDataPost;
+import com.angelozero.gibao.app.usecase.pokemon.GetPokemonByRandomNumber;
 import com.angelozero.gibao.front.controller.rest.DataPostRequest;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -23,7 +27,7 @@ public class DataPostControllerTest {
     private final SaveDataPost saveDataPost = Mockito.mock(SaveDataPost.class);
     private final DeleteDataPost deleteDataPost = Mockito.mock(DeleteDataPost.class);
     private final FindDataPost findDataPost = Mockito.mock(FindDataPost.class);
-    private final GetPokemonByNumber getPokemonByNumber = Mockito.mock(GetPokemonByNumber.class);
+    private final GetPokemonByRandomNumber getPokemonByRandomNumber = Mockito.mock(GetPokemonByRandomNumber.class);
     private final GetRandomExcuse getRandomExcuse = Mockito.mock(GetRandomExcuse.class);
 
     @BeforeClass
@@ -33,19 +37,19 @@ public class DataPostControllerTest {
 
     @Test
     public void shouldCallHomeWithSuccess() {
-        DataPostController controller = new DataPostController(saveDataPost, deleteDataPost, findDataPost, getPokemonByNumber, getRandomExcuse);
+        DataPostController controller = new DataPostController(saveDataPost, deleteDataPost, findDataPost, getPokemonByRandomNumber, getRandomExcuse);
 
-        assertEquals("redirect:/post", controller.index());
+        assertEquals("redirect:/gibao-app/data", controller.index());
     }
 
     @Test
     public void shouldCallDataPostWithSuccess() {
         List<DataPost> dataPostMock = Fixture.from(DataPost.class).gimme(1, "valid DataPost");
 
-        Mockito.when(getPokemonByNumber.execute()).thenReturn("pokemon test");
+        Mockito.when(getPokemonByRandomNumber.execute()).thenReturn("pokemon test");
         Mockito.when(getRandomExcuse.execute()).thenReturn(dataPostMock.get(0).getDescription());
 
-        DataPostController controller = new DataPostController(saveDataPost, deleteDataPost, findDataPost, getPokemonByNumber, getRandomExcuse);
+        DataPostController controller = new DataPostController(saveDataPost, deleteDataPost, findDataPost, getPokemonByRandomNumber, getRandomExcuse);
         ModelAndView modelAndView = controller.getDataPost();
 
         assertNotNull(modelAndView);
@@ -57,10 +61,10 @@ public class DataPostControllerTest {
     public void shouldCallDataPostJsonWithSuccess() {
         List<DataPost> dataPostMock = Fixture.from(DataPost.class).gimme(1, "valid DataPost");
 
-        Mockito.when(getPokemonByNumber.execute()).thenReturn("pokemon test");
+        Mockito.when(getPokemonByRandomNumber.execute()).thenReturn("pokemon test");
         Mockito.when(getRandomExcuse.execute()).thenReturn(dataPostMock.get(0).getDescription());
 
-        DataPostController controller = new DataPostController(saveDataPost, deleteDataPost, findDataPost, getPokemonByNumber, getRandomExcuse);
+        DataPostController controller = new DataPostController(saveDataPost, deleteDataPost, findDataPost, getPokemonByRandomNumber, getRandomExcuse);
         ResponseEntity<Map<String, Object>> response = controller.getDataPostJson();
 
         assertNotNull(response);
@@ -73,11 +77,11 @@ public class DataPostControllerTest {
     public void shouldCallDataPostListWithSuccess() {
         List<DataPost> dataPostMock = Fixture.from(DataPost.class).gimme(1, "valid DataPost");
 
-        Mockito.when(getPokemonByNumber.execute()).thenReturn("pokemon test");
+        Mockito.when(getPokemonByRandomNumber.execute()).thenReturn("pokemon test");
         Mockito.when(getRandomExcuse.execute()).thenReturn(dataPostMock.get(0).getDescription());
         Mockito.when(findDataPost.execute()).thenReturn(dataPostMock);
 
-        DataPostController controller = new DataPostController(saveDataPost, deleteDataPost, findDataPost, getPokemonByNumber, getRandomExcuse);
+        DataPostController controller = new DataPostController(saveDataPost, deleteDataPost, findDataPost, getPokemonByRandomNumber, getRandomExcuse);
         ModelAndView modelAndView = controller.getDataPostList();
 
         assertNotNull(modelAndView);
@@ -89,11 +93,11 @@ public class DataPostControllerTest {
     public void shouldCallDataPostListJsonWithSuccess() {
         List<DataPost> dataPostMock = Fixture.from(DataPost.class).gimme(1, "valid DataPost");
 
-        Mockito.when(getPokemonByNumber.execute()).thenReturn("pokemon test");
+        Mockito.when(getPokemonByRandomNumber.execute()).thenReturn("pokemon test");
         Mockito.when(getRandomExcuse.execute()).thenReturn(dataPostMock.get(0).getDescription());
         Mockito.when(findDataPost.execute()).thenReturn(dataPostMock);
 
-        DataPostController controller = new DataPostController(saveDataPost, deleteDataPost, findDataPost, getPokemonByNumber, getRandomExcuse);
+        DataPostController controller = new DataPostController(saveDataPost, deleteDataPost, findDataPost, getPokemonByRandomNumber, getRandomExcuse);
         ResponseEntity<Map<String, Object>> response = controller.getDataPostListJson();
 
         assertNotNull(response);
@@ -109,7 +113,7 @@ public class DataPostControllerTest {
 
         Mockito.when(findDataPost.execute(ID)).thenReturn(dataPostMock);
 
-        DataPostController controller = new DataPostController(saveDataPost, deleteDataPost, findDataPost, getPokemonByNumber, getRandomExcuse);
+        DataPostController controller = new DataPostController(saveDataPost, deleteDataPost, findDataPost, getPokemonByRandomNumber, getRandomExcuse);
         ModelAndView modelAndView = controller.getDataPostDetail(ID);
 
         assertNotNull(modelAndView);
@@ -122,7 +126,7 @@ public class DataPostControllerTest {
 
         Mockito.when(findDataPost.execute(ID)).thenReturn(dataPostMock);
 
-        DataPostController controller = new DataPostController(saveDataPost, deleteDataPost, findDataPost, getPokemonByNumber, getRandomExcuse);
+        DataPostController controller = new DataPostController(saveDataPost, deleteDataPost, findDataPost, getPokemonByRandomNumber, getRandomExcuse);
         ResponseEntity<Map<String, Object>> response = controller.getDataPostDetailJson(ID);
 
         assertNotNull(response);
@@ -132,7 +136,7 @@ public class DataPostControllerTest {
 
     @Test
     public void shouldCallDataPostFormWithSuccess() {
-        DataPostController controller = new DataPostController(saveDataPost, deleteDataPost, findDataPost, getPokemonByNumber, getRandomExcuse);
+        DataPostController controller = new DataPostController(saveDataPost, deleteDataPost, findDataPost, getPokemonByRandomNumber, getRandomExcuse);
 
         assertEquals("dataPostForm", controller.getDataPostForm());
     }
@@ -140,9 +144,9 @@ public class DataPostControllerTest {
     @Test
     public void shouldCallSaveDataPostWithSuccessNullBidingResult() {
         DataPostRequest dataPostRequest = Fixture.from(DataPostRequest.class).gimme("valid DataPostRequest");
-        DataPostController controller = new DataPostController(saveDataPost, deleteDataPost, findDataPost, getPokemonByNumber, getRandomExcuse);
+        DataPostController controller = new DataPostController(saveDataPost, deleteDataPost, findDataPost, getPokemonByRandomNumber, getRandomExcuse);
 
-        assertEquals("redirect:/post", controller.saveDataPost(dataPostRequest, null));
+        assertEquals("redirect:/gibao-app/data", controller.saveDataPost(dataPostRequest, null));
     }
 
     @Test
@@ -151,9 +155,9 @@ public class DataPostControllerTest {
         BindingResult bindingResultMock = Mockito.mock(BindingResult.class);
 
         Mockito.when(bindingResultMock.hasErrors()).thenReturn(Boolean.TRUE);
-        DataPostController controller = new DataPostController(saveDataPost, deleteDataPost, findDataPost, getPokemonByNumber, getRandomExcuse);
+        DataPostController controller = new DataPostController(saveDataPost, deleteDataPost, findDataPost, getPokemonByRandomNumber, getRandomExcuse);
 
-        assertEquals("redirect:/new-post", controller.saveDataPost(dataPostRequest, bindingResultMock));
+        assertEquals("redirect:/gibao-app/new-data", controller.saveDataPost(dataPostRequest, bindingResultMock));
     }
 
     @Test
@@ -163,18 +167,18 @@ public class DataPostControllerTest {
 
         Mockito.when(bindingResultMock.hasErrors()).thenReturn(Boolean.FALSE);
         Mockito.doNothing().when(saveDataPost).execute(Mockito.any(DataPost.class));
-        DataPostController controller = new DataPostController(saveDataPost, deleteDataPost, findDataPost, getPokemonByNumber, getRandomExcuse);
+        DataPostController controller = new DataPostController(saveDataPost, deleteDataPost, findDataPost, getPokemonByRandomNumber, getRandomExcuse);
 
-        assertEquals("redirect:/post", controller.saveDataPost(dataPostRequest, bindingResultMock));
+        assertEquals("redirect:/gibao-app/data", controller.saveDataPost(dataPostRequest, bindingResultMock));
     }
 
     @Test
     public void shouldCallDeleteDataPostWithSuccess() {
         Mockito.doNothing().when(deleteDataPost).execute(ID);
 
-        DataPostController controller = new DataPostController(saveDataPost, deleteDataPost, findDataPost, getPokemonByNumber, getRandomExcuse);
+        DataPostController controller = new DataPostController(saveDataPost, deleteDataPost, findDataPost, getPokemonByRandomNumber, getRandomExcuse);
 
-        assertEquals("redirect:/post", controller.deleteDataPost(ID));
+        assertEquals("redirect:/gibao-app/data", controller.deleteDataPost(ID));
     }
 
 }

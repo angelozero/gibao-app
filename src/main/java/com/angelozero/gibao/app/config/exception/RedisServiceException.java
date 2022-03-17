@@ -4,16 +4,10 @@ import com.angelozero.gibao.app.config.error.Error;
 import lombok.Getter;
 
 @Getter
-public class RedisServiceException extends RuntimeException {
-
-    private final Error error;
-
-    public RedisServiceException(Error error, Exception e) {
-        this.error = error;
-    }
+public class RedisServiceException extends AppException {
 
     public RedisServiceException(Error error) {
-        this.error = error;
+        super(error);
     }
 }
 

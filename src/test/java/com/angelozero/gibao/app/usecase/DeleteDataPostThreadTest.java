@@ -4,11 +4,13 @@ import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 import com.angelozero.gibao.app.config.PropertiesConfig;
 import com.angelozero.gibao.app.domain.DataPost;
+import com.angelozero.gibao.app.usecase.datapost.DeleteDataPost;
+import com.angelozero.gibao.app.usecase.datapost.DeleteDataPostThread;
+import com.angelozero.gibao.app.usecase.datapost.FindDataPost;
+import com.angelozero.gibao.app.usecase.datapost.ValidateDataPost;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
-
-import java.util.Collections;
 
 import static org.mockito.ArgumentMatchers.anyLong;
 
@@ -30,7 +32,7 @@ public class DeleteDataPostThreadTest {
 
         DataPost dataPostMock = Fixture.from(DataPost.class).gimme("valid DataPost");
 
-        Mockito.when(propertiesConfig.getOneMinute()).thenReturn(1L);
+        Mockito.when(propertiesConfig.getMinutes()).thenReturn(1L);
         Mockito.doNothing().when(validateDataPost).execute(dataPostMock);
         Mockito.doNothing().when(deleteDataPost).execute(dataPostMock.getId());
         Mockito.when(findDataPost.execute(anyLong())).thenReturn(null);
@@ -48,7 +50,7 @@ public class DeleteDataPostThreadTest {
         DataPost dataPostMock = Fixture.from(DataPost.class).gimme("valid DataPost");
         dataPostMock.setSecretUser(Boolean.TRUE);
 
-        Mockito.when(propertiesConfig.getOneMinute()).thenReturn(1L);
+        Mockito.when(propertiesConfig.getMinutes()).thenReturn(1L);
         Mockito.doNothing().when(validateDataPost).execute(dataPostMock);
         Mockito.doNothing().when(deleteDataPost).execute(dataPostMock.getId());
         Mockito.when(findDataPost.execute(anyLong())).thenReturn(null);
@@ -65,7 +67,7 @@ public class DeleteDataPostThreadTest {
 
         DataPost dataPostMock = Fixture.from(DataPost.class).gimme("valid DataPost without SecretUser");
 
-        Mockito.when(propertiesConfig.getOneMinute()).thenReturn(1L);
+        Mockito.when(propertiesConfig.getMinutes()).thenReturn(1L);
         Mockito.doNothing().when(validateDataPost).execute(dataPostMock);
         Mockito.doNothing().when(deleteDataPost).execute(dataPostMock.getId());
         Mockito.when(findDataPost.execute(anyLong())).thenReturn(null);
@@ -80,7 +82,7 @@ public class DeleteDataPostThreadTest {
     @Test
     public void shouldDeleteAPostDataInAThreadWhithNullPostDataWithSuccess() throws InterruptedException {
 
-        Mockito.when(propertiesConfig.getOneMinute()).thenReturn(1L);
+        Mockito.when(propertiesConfig.getMinutes()).thenReturn(1L);
         Mockito.doNothing().when(validateDataPost).execute(null);
         Mockito.when(findDataPost.execute(anyLong())).thenReturn(null);
 
