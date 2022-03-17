@@ -332,13 +332,19 @@ Maven dependency - [pom.xml](https://github.com/angelozero/gibao-app/blob/master
 
 ---
 
-*"Wanna fly, compadre? Let's fly."* - **Octane**
+*Next Steps/Features*
+  - 08 - Collections
+  - 09 - New Java features ( 9 to 11 )
+  - 10 - Desing Patterns
+  - 11 - Some Refactors .... 
+
+[comment]: <> (*"Wanna fly, compadre? Let's fly."* - **Octane**)
  
  ![Octane](https://pa1.narvii.com/7219/04dd0e9ac40347ac391d9ba6323f6b822f182831r1-256-256_hq.gif)
 
-*"I’m not afraid-- I’ll never be."* - **Wraith**
+[comment]: <> (*"I’m not afraid-- I’ll never be."* - **Wraith**)
 
-![Wraith](https://i.pinimg.com/originals/97/9a/6a/979a6af7254269512e331b7f0abc1256.gif)
+[comment]: <> (![Wraith]&#40;https://i.pinimg.com/originals/97/9a/6a/979a6af7254269512e331b7f0abc1256.gif&#41;)
 
 [comment]: <> ( ![Wraith]&#40;https://64.media.tumblr.com/dfdf88c6295f4534e1b8e25b41b06b87/tumblr_przfnw4o471seajk2_400.png&#41;)
 
