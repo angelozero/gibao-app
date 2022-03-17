@@ -10,16 +10,31 @@ import com.angelozero.gibao.app.usecase.datapost.FindDataPost;
 import com.angelozero.gibao.app.usecase.datapost.ValidateDataPost;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.mockito.ArgumentMatchers.anyLong;
 
+@RunWith(MockitoJUnitRunner.class)
 public class DeleteDataPostThreadTest {
 
-    private final PropertiesConfig propertiesConfig = Mockito.mock(PropertiesConfig.class);
-    private final DeleteDataPost deleteDataPost = Mockito.mock(DeleteDataPost.class);
-    private final ValidateDataPost validateDataPost = Mockito.mock(ValidateDataPost.class);
-    private final FindDataPost findDataPost = Mockito.mock(FindDataPost.class);
+    @Mock
+    private PropertiesConfig propertiesConfig;
+
+    @Mock
+    private DeleteDataPost deleteDataPost;
+
+    @Mock
+    private ValidateDataPost validateDataPost;
+
+    @Mock
+    private FindDataPost findDataPost;
+
+    @InjectMocks
+    DeleteDataPostThread deleteDataPostThread;
 
     @BeforeClass
     public static void setup() {
@@ -28,65 +43,58 @@ public class DeleteDataPostThreadTest {
 
 
     @Test
-    public void shouldDeleteAPostDataInAThreadWithSuccess() throws InterruptedException {
+    public void shouldDeleteAPostDataInAThreadWithSuccess() {
 
         DataPost dataPostMock = Fixture.from(DataPost.class).gimme("valid DataPost");
 
-        Mockito.when(propertiesConfig.getMinutes()).thenReturn(1L);
+        Mockito.lenient().when(propertiesConfig.getMinutes()).thenReturn(1L);
         Mockito.doNothing().when(validateDataPost).execute(dataPostMock);
-        Mockito.doNothing().when(deleteDataPost).execute(dataPostMock.getId());
-        Mockito.when(findDataPost.execute(anyLong())).thenReturn(null);
+        Mockito.lenient().doNothing().when(deleteDataPost).execute(dataPostMock.getId());
+        Mockito.lenient().when(findDataPost.execute(anyLong())).thenReturn(null);
 
-        DeleteDataPostThread deleteDataPostThread = new DeleteDataPostThread(propertiesConfig, deleteDataPost, validateDataPost, findDataPost);
         deleteDataPostThread.execute(dataPostMock);
 
         Mockito.verify(validateDataPost, Mockito.times(1)).execute(dataPostMock);
-
     }
 
     @Test
-    public void shouldDeleteAPostDataInAThreadTrueSecretUserWithSuccess() throws InterruptedException {
+    public void shouldDeleteAPostDataInAThreadTrueSecretUserWithSuccess() {
 
         DataPost dataPostMock = Fixture.from(DataPost.class).gimme("valid DataPost");
         dataPostMock.setSecretUser(Boolean.TRUE);
 
-        Mockito.when(propertiesConfig.getMinutes()).thenReturn(1L);
+        Mockito.lenient().when(propertiesConfig.getMinutes()).thenReturn(1L);
         Mockito.doNothing().when(validateDataPost).execute(dataPostMock);
-        Mockito.doNothing().when(deleteDataPost).execute(dataPostMock.getId());
-        Mockito.when(findDataPost.execute(anyLong())).thenReturn(null);
+        Mockito.lenient().doNothing().when(deleteDataPost).execute(dataPostMock.getId());
+        Mockito.lenient().when(findDataPost.execute(anyLong())).thenReturn(null);
 
-        DeleteDataPostThread deleteDataPostThread = new DeleteDataPostThread(propertiesConfig, deleteDataPost, validateDataPost, findDataPost);
         deleteDataPostThread.execute(dataPostMock);
 
         Mockito.verify(validateDataPost, Mockito.times(1)).execute(dataPostMock);
-
     }
 
     @Test
-    public void shouldDeleteAPostDataInAThreadWhithoutSecretUserWithSuccess() throws InterruptedException {
+    public void shouldDeleteAPostDataInAThreadWhithoutSecretUserWithSuccess() {
 
         DataPost dataPostMock = Fixture.from(DataPost.class).gimme("valid DataPost without SecretUser");
 
-        Mockito.when(propertiesConfig.getMinutes()).thenReturn(1L);
+        Mockito.lenient().when(propertiesConfig.getMinutes()).thenReturn(1L);
         Mockito.doNothing().when(validateDataPost).execute(dataPostMock);
-        Mockito.doNothing().when(deleteDataPost).execute(dataPostMock.getId());
-        Mockito.when(findDataPost.execute(anyLong())).thenReturn(null);
+        Mockito.lenient().doNothing().when(deleteDataPost).execute(dataPostMock.getId());
+        Mockito.lenient().when(findDataPost.execute(anyLong())).thenReturn(null);
 
-        DeleteDataPostThread deleteDataPostThread = new DeleteDataPostThread(propertiesConfig, deleteDataPost, validateDataPost, findDataPost);
         deleteDataPostThread.execute(dataPostMock);
 
         Mockito.verify(validateDataPost, Mockito.times(1)).execute(dataPostMock);
-
     }
 
     @Test
-    public void shouldDeleteAPostDataInAThreadWhithNullPostDataWithSuccess() throws InterruptedException {
+    public void shouldDeleteAPostDataInAThreadWhithNullPostDataWithSuccess() {
 
-        Mockito.when(propertiesConfig.getMinutes()).thenReturn(1L);
+        Mockito.lenient().when(propertiesConfig.getMinutes()).thenReturn(1L);
         Mockito.doNothing().when(validateDataPost).execute(null);
-        Mockito.when(findDataPost.execute(anyLong())).thenReturn(null);
+        Mockito.lenient().when(findDataPost.execute(anyLong())).thenReturn(null);
 
-        DeleteDataPostThread deleteDataPostThread = new DeleteDataPostThread(propertiesConfig, deleteDataPost, validateDataPost, findDataPost);
         deleteDataPostThread.execute(null);
 
         Mockito.verify(validateDataPost, Mockito.times(1)).execute(null);

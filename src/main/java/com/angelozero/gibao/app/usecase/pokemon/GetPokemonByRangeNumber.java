@@ -15,23 +15,25 @@ import java.util.Random;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class GetPokemonByRandomName {
+public class GetPokemonByRangeNumber {
 
     private final PokemonPropertiesConfig pokemonPropertiesConfig;
     private final PokemonApi pokemonApi;
 
     public String execute() {
-        try {
-            String pokemonRandomName = pokemonPropertiesConfig.getFirstSeasonList().get(new Random().nextInt(pokemonPropertiesConfig.getFirstSeasonList().size()));
-            String pokemonName = pokemonApi.getImageByName(pokemonRandomName).getSprites().getOther().getOfficialArtWork().getFrontDefault();
+        int pokemonRandomNumber = new Random().nextInt(pokemonPropertiesConfig.getFirstSeasonCount()) + 1;
 
-            log.info(MessagesUtil.GET_POKEMON_BY_NAME_SUCCESS, pokemonName);
-            return pokemonName;
+        try {
+            String pokemon = pokemonApi.getImageByNumber(pokemonRandomNumber).getSprites().getOther().getOfficialArtWork().getFrontDefault();
+
+            log.info(MessagesUtil.GET_POKEMON_BY_NUMBER_SUCCESS, pokemonRandomNumber);
+            return pokemon;
 
         } catch (Exception ex) {
             throw new PokemonApiException(Error.builder()
                     .status(HttpStatus.BAD_REQUEST)
-                    .message(MessagesUtil.join(MessagesUtil.GET_POKEMON_BY_NAME_ERROR, ex.getMessage()))
+                    .identifier(pokemonRandomNumber)
+                    .message(MessagesUtil.join(MessagesUtil.GET_POKEMON_BY_NUMBER_ERROR, ex.getMessage()))
                     .build());
         }
     }

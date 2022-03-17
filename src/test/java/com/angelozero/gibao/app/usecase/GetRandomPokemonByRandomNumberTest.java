@@ -6,16 +6,32 @@ import com.angelozero.gibao.app.config.exception.PokemonApiException;
 import com.angelozero.gibao.app.domain.Pokemon;
 import com.angelozero.gibao.app.gateway.api.PokemonApi;
 import com.angelozero.gibao.app.usecase.pokemon.GetPokemonByRandomNumber;
+import com.angelozero.gibao.app.config.PokemonPropertiesConfig;
 import com.angelozero.gibao.app.util.MessagesUtil;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@RunWith(MockitoJUnitRunner.class)
 public class GetRandomPokemonByRandomNumberTest {
 
-    private final PokemonApi pokemonApi = Mockito.mock(PokemonApi.class);
+    public static final int FIRST_SEASON_COUNT = 150;
+
+    @Mock
+    private PokemonPropertiesConfig pokemonPropertiesConfig;
+
+    @Mock
+    private PokemonApi pokemonApi;
+
+    @InjectMocks
+    private GetPokemonByRandomNumber getPokemonByRandomNumber;
+
 
     @BeforeClass
     public static void setup() {
@@ -27,9 +43,8 @@ public class GetRandomPokemonByRandomNumberTest {
 
         Pokemon pokemonMock = Fixture.from(Pokemon.class).gimme("valid Pokemon");
 
+        Mockito.when(pokemonPropertiesConfig.getFirstSeasonCount()).thenReturn(FIRST_SEASON_COUNT);
         Mockito.when(pokemonApi.getImageByNumber(Mockito.anyInt())).thenReturn(pokemonMock);
-
-        GetPokemonByRandomNumber getPokemonByRandomNumber = new GetPokemonByRandomNumber(pokemonApi);
 
         String pokemon = getPokemonByRandomNumber.execute();
 
@@ -39,9 +54,9 @@ public class GetRandomPokemonByRandomNumberTest {
 
     @Test
     public void shoulThrowAnExceptionWhenGetPokemonByName() {
-        Mockito.when(pokemonApi.getImageByNumber(Mockito.anyInt())).thenThrow(new RuntimeException("Error to get pokemon by number test"));
 
-        GetPokemonByRandomNumber getPokemonByRandomNumber = new GetPokemonByRandomNumber(pokemonApi);
+        Mockito.when(pokemonPropertiesConfig.getFirstSeasonCount()).thenReturn(FIRST_SEASON_COUNT);
+        Mockito.when(pokemonApi.getImageByNumber(Mockito.anyInt())).thenThrow(new RuntimeException("Error to get pokemon by number test"));
 
         PokemonApiException exception = assertThrows(PokemonApiException.class, getPokemonByRandomNumber::execute);
 

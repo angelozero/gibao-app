@@ -8,9 +8,12 @@ import java.util.List;
 
 @Getter
 @Configuration
-public class PropertiesConfig {
+public class PokemonPropertiesConfig {
 
-    @Value("${thread.time.sleep.minutes}")
-    private Long minutes;
+    @Value("${pokemon.first.season.names}")
+    private List<String> firstSeasonList;
+
+    @Value("${pokemon.first.season.count}")
+    private Integer firstSeasonCount;
 
 }

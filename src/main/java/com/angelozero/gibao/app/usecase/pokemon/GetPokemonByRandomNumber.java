@@ -1,5 +1,6 @@
 package com.angelozero.gibao.app.usecase.pokemon;
 
+import com.angelozero.gibao.app.config.PokemonPropertiesConfig;
 import com.angelozero.gibao.app.config.error.Error;
 import com.angelozero.gibao.app.config.exception.PokemonApiException;
 import com.angelozero.gibao.app.gateway.api.PokemonApi;
@@ -16,11 +17,11 @@ import java.util.Random;
 @AllArgsConstructor
 public class GetPokemonByRandomNumber {
 
-    public static final int FIRST_SEASON = 150;
+    private final PokemonPropertiesConfig pokemonPropertiesConfig;
     private final PokemonApi pokemonApi;
 
     public String execute() {
-        int pokemonRandomNumber = new Random().nextInt(FIRST_SEASON) + 1;
+        int pokemonRandomNumber = new Random().nextInt(pokemonPropertiesConfig.getFirstSeasonCount()) + 1;
 
         try {
             String pokemon = pokemonApi.getImageByNumber(pokemonRandomNumber).getSprites().getOther().getOfficialArtWork().getFrontDefault();

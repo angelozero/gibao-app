@@ -13,17 +13,32 @@ import com.angelozero.gibao.app.usecase.redis.RedisService;
 import com.angelozero.gibao.app.util.MessagesUtil;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 
+@RunWith(MockitoJUnitRunner.class)
 public class SaveDataPostTest {
 
-    private final DataPostGateway dataPostGateway = Mockito.mock(DataPostGateway.class);
-    private final ValidateDataPost validateDataPost = Mockito.mock(ValidateDataPost.class);
-    private final DeleteDataPostThread deleteDataPostThread = Mockito.mock(DeleteDataPostThread.class);
-    private final RedisService redisService = Mockito.mock(RedisService.class);
+    @Mock
+    private DataPostGateway dataPostGateway;
+
+    @Mock
+    private ValidateDataPost validateDataPost;
+
+    @Mock
+    private DeleteDataPostThread deleteDataPostThread;
+
+    @Mock
+    private RedisService redisService;
+
+    @InjectMocks
+    SaveDataPost saveDataPost;
 
     @BeforeClass
     public static void setup() {
@@ -40,7 +55,6 @@ public class SaveDataPostTest {
         Mockito.when(dataPostGateway.save(any(DataPost.class))).thenReturn(dataPostMock);
         Mockito.doNothing().when(deleteDataPostThread).execute(any(DataPost.class));
 
-        SaveDataPost saveDataPost = new SaveDataPost(dataPostGateway, validateDataPost, deleteDataPostThread, redisService);
         saveDataPost.execute(dataPostMock);
 
         Mockito.verify(dataPostGateway, Mockito.times(1)).save(any(DataPost.class));
@@ -54,9 +68,8 @@ public class SaveDataPostTest {
 
         Mockito.doNothing().when(validateDataPost).execute(any(DataPost.class));
         Mockito.when(dataPostGateway.save(any(DataPost.class))).thenThrow(new RuntimeException("Error to save data post test"));
-        Mockito.doNothing().when(deleteDataPostThread).execute(any(DataPost.class));
+        Mockito.lenient().doNothing().when(deleteDataPostThread).execute(any(DataPost.class));
 
-        SaveDataPost saveDataPost = new SaveDataPost(dataPostGateway, validateDataPost, deleteDataPostThread, redisService);
         DataPostServiceException exception = assertThrows(DataPostServiceException.class, () -> saveDataPost.execute(dataPostMock));
 
         assertNotNull(exception);
@@ -73,7 +86,6 @@ public class SaveDataPostTest {
         Mockito.when(dataPostGateway.save(any(DataPost.class))).thenReturn(dataPostMock);
         Mockito.doThrow(new RuntimeException("Error to save data post test")).when(deleteDataPostThread).execute(any(DataPost.class));
 
-        SaveDataPost saveDataPost = new SaveDataPost(dataPostGateway, validateDataPost, deleteDataPostThread, redisService);
         DataPostServiceException exception = assertThrows(DataPostServiceException.class, () -> saveDataPost.execute(dataPostMock));
 
         assertNotNull(exception);

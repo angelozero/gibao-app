@@ -11,18 +11,32 @@ import com.angelozero.gibao.app.usecase.redis.RedisService;
 import com.angelozero.gibao.app.util.MessagesUtil;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@RunWith(MockitoJUnitRunner.class)
 public class DeleteDataPostTest {
 
-    private final DataPostGateway dataPostGateway = Mockito.mock(DataPostGateway.class);
-    private final FindDataPost findDataPost = Mockito.mock(FindDataPost.class);
-    private final RedisService redisService = Mockito.mock(RedisService.class);
+    @Mock
+    private DataPostGateway dataPostGateway;
+
+    @Mock
+    private FindDataPost findDataPost;
+
+    @Mock
+    private RedisService redisService;
+
+    @InjectMocks
+    DeleteDataPost deleteDataPost;
 
     @BeforeClass
     public static void setup() {
@@ -39,12 +53,9 @@ public class DeleteDataPostTest {
 
         Mockito.when(redisService.findAll(Mockito.any())).thenReturn(Collections.emptyList());
 
-
-        DeleteDataPost deleteDataPost = new DeleteDataPost(dataPostGateway, findDataPost, redisService);
         deleteDataPost.execute(id);
 
         Mockito.verify(dataPostGateway, Mockito.times(1)).deleteById(id);
-
     }
 
     @Test
@@ -52,14 +63,12 @@ public class DeleteDataPostTest {
 
         Long id = new Random().nextLong();
         Mockito.when(findDataPost.execute(id)).thenReturn(null);
-        Mockito.doNothing().when(dataPostGateway).deleteById(id);
+        Mockito.lenient().doNothing().when(dataPostGateway).deleteById(id);
         Mockito.when(redisService.findAll(Mockito.any())).thenReturn(Collections.emptyList());
 
-        DeleteDataPost deleteDataPost = new DeleteDataPost(dataPostGateway, findDataPost, redisService);
         deleteDataPost.execute(id);
 
         Mockito.verify(dataPostGateway, Mockito.times(0)).deleteById(id);
-
     }
 
     @Test
@@ -67,10 +76,9 @@ public class DeleteDataPostTest {
 
         Long id = new Random().nextLong();
         Mockito.when(findDataPost.execute(id)).thenThrow(new RuntimeException("Fail to delete a post data test"));
-        Mockito.doNothing().when(dataPostGateway).deleteById(id);
-        Mockito.when(redisService.findAll(Mockito.any())).thenReturn(Collections.emptyList());
+        Mockito.lenient().doNothing().when(dataPostGateway).deleteById(id);
+        Mockito.lenient().when(redisService.findAll(Mockito.any())).thenReturn(Collections.emptyList());
 
-        DeleteDataPost deleteDataPost = new DeleteDataPost(dataPostGateway, findDataPost, redisService);
         DataPostServiceException exception = assertThrows(DataPostServiceException.class, () -> deleteDataPost.execute(id));
 
         Mockito.verify(dataPostGateway, Mockito.times(0)).deleteById(id);
@@ -78,7 +86,6 @@ public class DeleteDataPostTest {
         assertEquals(MessagesUtil.join(MessagesUtil.DELETE_DATA_POST_ERROR, "Fail to delete a post data test"), exception.getError().getMessage());
         assertNotNull(exception.getError().getIdentifier());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getError().getStatus());
-
     }
 
     @Test
@@ -87,10 +94,9 @@ public class DeleteDataPostTest {
         Long id = new Random().nextLong();
         DataPost dataPostMock = Fixture.from(DataPost.class).gimme("valid DataPost");
         Mockito.when(findDataPost.execute(id)).thenReturn(dataPostMock);
-        Mockito.when(redisService.findAll(Mockito.any())).thenReturn(Collections.emptyList());
+        Mockito.lenient().when(redisService.findAll(Mockito.any())).thenReturn(Collections.emptyList());
         Mockito.doThrow(new RuntimeException("Fail to delete a post data gateway test")).when(dataPostGateway).deleteById(id);
 
-        DeleteDataPost deleteDataPost = new DeleteDataPost(dataPostGateway, findDataPost, redisService);
         DataPostServiceException exception = assertThrows(DataPostServiceException.class, () -> deleteDataPost.execute(id));
 
         Mockito.verify(dataPostGateway, Mockito.times(1)).deleteById(id);
@@ -100,5 +106,4 @@ public class DeleteDataPostTest {
         assertEquals(HttpStatus.BAD_REQUEST, exception.getError().getStatus());
 
     }
-
 }
