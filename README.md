@@ -4,10 +4,16 @@
 
 ## 1 - Postgres
 
-### Enlisting the available databases
+# Download PostgresSql
+  - [download version 9.6.24*](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)
+
+# Init Setup
+  - Setup to user [gibas](https://www.guru99.com/postgresql-create-alter-add-user.html)
+
+### Listing the available databases
  - You can use the \l command to get a list of all available databases.
 
-### Enlisting the available tables in the current database
+### Listing the available tables in the current database
 - The next command does this for you 
 - ```\dt ```
 

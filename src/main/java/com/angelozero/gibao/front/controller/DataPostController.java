@@ -49,7 +49,7 @@ public class DataPostController {
 
     @RequestMapping(value = "/test/json", method = RequestMethod.GET)
     public ResponseEntity<List<String>> getDataPostTestJson() {
-        return new ResponseEntity<>(getPokemonByRangeNumber.execute(150, 150), HttpStatus.OK);
+        return new ResponseEntity<>(getPokemonByRangeNumber.execute(0, 151), HttpStatus.OK);
     }
 
     /**
