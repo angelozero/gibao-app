@@ -15,14 +15,9 @@ import java.util.concurrent.Future;
 @Async
 public class GetPokemonByNumberAsync {
 
-    private static PokemonApi pokemonApi;
+    private final PokemonApi pokemonApi;
 
-    public Future<String> executeAsync(int pokemonNumber) {
-        return CompletableFuture.supplyAsync(getPokemonName(pokemonNumber));
-    }
-
-    private static String getPokemonName(int pokemonNumber) {
-        return pokemonApi.getImageByNumber(pokemonNumber).getSprites().getOther().getOfficialArtWork().getFrontDefault();
-
+    public String executeAsync(int pokemonNumber) {
+        return CompletableFuture.supplyAsync(() -> pokemonApi.getImageByNumber(pokemonNumber).getSprites().getOther().getOfficialArtWork().getFrontDefault()).join();
     }
 }

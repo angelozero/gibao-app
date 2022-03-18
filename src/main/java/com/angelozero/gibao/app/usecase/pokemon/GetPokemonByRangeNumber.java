@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -30,10 +31,14 @@ public class GetPokemonByRangeNumber {
         validadteRange(from, to);
 
         try {
-            List<CompletableFuture<Future<String>>> pokemons = IntStream.range(0, 5).boxed().map(pokemonNumber -> CompletableFuture.supplyAsync(getPokemonByNumberAsync.executeAsync(pokemonNumber))).collect(Collectors.toList());
-
-            log.info(MessagesUtil.GET_POKEMONS_BY_RANGER_NUMBER_SUCCESS, pokemons);
-            return pokemons.stream().map(CompletableFuture::join).collect(Collectors.toList());
+            return IntStream.range(from, to + 1)
+                    .boxed()
+                    .map(pokemonNumber -> CompletableFuture.supplyAsync(() -> getPokemonByNumberAsync.executeAsync(pokemonNumber)))
+                    .collect(Collectors.toList())
+                    .stream()
+                    .map(CompletableFuture::join)
+                    .distinct()
+                    .collect(Collectors.toList());
 
         } catch (Exception ex) {
             throw new PokemonApiException(Error.builder()
@@ -45,7 +50,11 @@ public class GetPokemonByRangeNumber {
     }
 
     private void validadteRange(int from, int to) {
-        if (from > pokemonPropertiesConfig.getSeasonCount() || to > pokemonPropertiesConfig.getSeasonCount() || to > from) {
+        if (from == 0) {
+            from = 1;
+        }
+
+        if (from > pokemonPropertiesConfig.getSeasonCount() || to > pokemonPropertiesConfig.getSeasonCount() || to < from) {
             throw generateException(from, to);
         }
     }
@@ -56,23 +65,5 @@ public class GetPokemonByRangeNumber {
                 .identifier(List.of(from, to))
                 .message(MessagesUtil.GET_POKEMONS_BY_RANGE_NUMBER_ERROR)
                 .build());
-    }
-
-    /**
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        List<CompletableFuture<Future<String>>> teste = IntStream.range(0, 5).boxed().map(pokemonNumber -> CompletableFuture.supplyAsync(GetPokemonByRangeNumber::getPokemonByNumberAsync)).collect(Collectors.toList());
-        teste.stream().map(CompletableFuture::join).collect(Collectors.toList()).forEach(System.out::println);
-
-    }
-
-    public static Future<String> getPokemonByNumberAsync() {
-        return CompletableFuture.supplyAsync(GetPokemonByRangeNumber::getName);
-    }
-
-    private static String getName() {
-        return "Resultado ok";
     }
 }

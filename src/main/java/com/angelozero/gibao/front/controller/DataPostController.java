@@ -7,6 +7,7 @@ import com.angelozero.gibao.app.usecase.datapost.FindDataPost;
 import com.angelozero.gibao.app.usecase.datapost.GetRandomExcuse;
 import com.angelozero.gibao.app.usecase.datapost.SaveDataPost;
 import com.angelozero.gibao.app.usecase.pokemon.GetPokemonByRandomNumber;
+import com.angelozero.gibao.app.usecase.pokemon.GetPokemonByRangeNumber;
 import com.angelozero.gibao.front.controller.mapper.DataPostRequestMapper;
 import com.angelozero.gibao.front.controller.rest.DataPostRequest;
 
@@ -40,7 +41,16 @@ public class DataPostController {
     private final FindDataPost findDataPost;
     private final GetPokemonByRandomNumber getPokemonByRandomNumber;
     private final GetRandomExcuse getRandomExcuse;
+    private final GetPokemonByRangeNumber getPokemonByRangeNumber;
 
+    /**
+     * Test
+     */
+
+    @RequestMapping(value = "/test/json", method = RequestMethod.GET)
+    public ResponseEntity<List<String>> getDataPostTestJson() {
+        return new ResponseEntity<>(getPokemonByRangeNumber.execute(150, 150), HttpStatus.OK);
+    }
 
     /**
      * GET Data
