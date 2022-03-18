@@ -7,7 +7,6 @@ import com.angelozero.gibao.app.gateway.api.PokemonApi;
 import com.angelozero.gibao.app.util.MessagesUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.Range;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +14,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -25,22 +23,23 @@ import java.util.stream.IntStream;
 public class GetPokemonByRangeNumber {
 
     private final PokemonPropertiesConfig pokemonPropertiesConfig;
-    private final PokemonApi pokemonApi;
+    private final GetPokemonByNumberAsync getPokemonByNumberAsync;
 
-    public String execute(int from, int to) {
-        int pokemonRandomNumber = new Random().nextInt(pokemonPropertiesConfig.getSeasonCount()) + 1;
+    public List<String> execute(int from, int to) {
+
+        validadteRange(from, to);
 
         try {
-            String pokemon = pokemonApi.getImageByNumber(pokemonRandomNumber).getSprites().getOther().getOfficialArtWork().getFrontDefault();
+            List<CompletableFuture<Future<String>>> pokemons = IntStream.range(0, 5).boxed().map(pokemonNumber -> CompletableFuture.supplyAsync(getPokemonByNumberAsync.executeAsync(pokemonNumber))).collect(Collectors.toList());
 
-            log.info(MessagesUtil.GET_POKEMON_BY_NUMBER_SUCCESS, pokemonRandomNumber);
-            return pokemon;
+            log.info(MessagesUtil.GET_POKEMONS_BY_RANGER_NUMBER_SUCCESS, pokemons);
+            return pokemons.stream().map(CompletableFuture::join).collect(Collectors.toList());
 
         } catch (Exception ex) {
             throw new PokemonApiException(Error.builder()
                     .status(HttpStatus.BAD_REQUEST)
-                    .identifier(pokemonRandomNumber)
-                    .message(MessagesUtil.join(MessagesUtil.GET_POKEMON_BY_NUMBER_ERROR, ex.getMessage()))
+                    .identifier(List.of(from, to))
+                    .message(MessagesUtil.join(MessagesUtil.GET_POKEMONS_BY_RANGE_NUMBER_ERROR, ex.getMessage()))
                     .build());
         }
     }
@@ -55,10 +54,14 @@ public class GetPokemonByRangeNumber {
         return new PokemonApiException(Error.builder()
                 .status(HttpStatus.BAD_REQUEST)
                 .identifier(List.of(from, to))
-                .message(MessagesUtil.GET_POKEMON_BY_RANGE_NUMBER_ERROR)
+                .message(MessagesUtil.GET_POKEMONS_BY_RANGE_NUMBER_ERROR)
                 .build());
     }
 
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         List<CompletableFuture<Future<String>>> teste = IntStream.range(0, 5).boxed().map(pokemonNumber -> CompletableFuture.supplyAsync(GetPokemonByRangeNumber::getPokemonByNumberAsync)).collect(Collectors.toList());
         teste.stream().map(CompletableFuture::join).collect(Collectors.toList()).forEach(System.out::println);
