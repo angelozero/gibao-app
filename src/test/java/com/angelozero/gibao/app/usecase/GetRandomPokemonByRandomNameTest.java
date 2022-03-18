@@ -44,7 +44,7 @@ public class GetRandomPokemonByRandomNameTest {
 
         Pokemon pokemonMock = Fixture.from(Pokemon.class).gimme("valid Pokemon");
 
-        Mockito.when(pokemonPropertiesConfig.getFirstSeasonList()).thenReturn(Collections.singletonList(PIKACHU));
+        Mockito.when(pokemonPropertiesConfig.getSeasonNamesList()).thenReturn(Collections.singletonList(PIKACHU));
         Mockito.when(pokemonApi.getImageByName(PIKACHU)).thenReturn(pokemonMock);
 
         String pokemon = getPokemonByRandomName.execute();
@@ -55,7 +55,7 @@ public class GetRandomPokemonByRandomNameTest {
 
     @Test
     public void shoulThrowAnExceptionWhenGetPokemonByName() {
-        Mockito.when(pokemonPropertiesConfig.getFirstSeasonList()).thenReturn(Collections.singletonList(PIKACHU));
+        Mockito.when(pokemonPropertiesConfig.getSeasonNamesList()).thenReturn(Collections.singletonList(PIKACHU));
         Mockito.when(pokemonApi.getImageByName(Mockito.anyString())).thenThrow(new RuntimeException("Error to get pokemon by name test"));
 
         PokemonApiException exception = assertThrows(PokemonApiException.class, getPokemonByRandomName::execute);

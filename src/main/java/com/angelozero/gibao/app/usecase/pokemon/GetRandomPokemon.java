@@ -35,6 +35,6 @@ public class GetRandomPokemon {
     }
 
     private int getRandomNumber() {
-        return new Random().nextInt(pokemonPropertiesConfig.getFirstSeasonCount()) + 1;
+        return new Random().nextInt(pokemonPropertiesConfig.getSeasonCount()) + 1;
     }
 }

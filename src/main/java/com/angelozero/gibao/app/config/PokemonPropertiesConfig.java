@@ -11,9 +11,9 @@ import java.util.List;
 public class PokemonPropertiesConfig {
 
     @Value("${pokemon.first.season.names}")
-    private List<String> firstSeasonList;
+    private List<String> seasonNamesList;
 
     @Value("${pokemon.first.season.count}")
-    private Integer firstSeasonCount;
+    private Integer seasonCount;
 
 }

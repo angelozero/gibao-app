@@ -22,7 +22,7 @@ public class GetPokemonByRandomName {
 
     public String execute() {
         try {
-            String pokemonRandomName = pokemonPropertiesConfig.getFirstSeasonList().get(new Random().nextInt(pokemonPropertiesConfig.getFirstSeasonList().size()));
+            String pokemonRandomName = pokemonPropertiesConfig.getSeasonNamesList().get(new Random().nextInt(pokemonPropertiesConfig.getSeasonNamesList().size()));
             String pokemonName = pokemonApi.getImageByName(pokemonRandomName).getSprites().getOther().getOfficialArtWork().getFrontDefault();
 
             log.info(MessagesUtil.GET_POKEMON_BY_NAME_SUCCESS, pokemonName);

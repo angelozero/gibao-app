@@ -21,7 +21,7 @@ public class GetPokemonByRandomNumber {
     private final PokemonApi pokemonApi;
 
     public String execute() {
-        int pokemonRandomNumber = new Random().nextInt(pokemonPropertiesConfig.getFirstSeasonCount()) + 1;
+        int pokemonRandomNumber = new Random().nextInt(pokemonPropertiesConfig.getSeasonCount()) + 1;
 
         try {
             String pokemon = pokemonApi.getImageByNumber(pokemonRandomNumber).getSprites().getOther().getOfficialArtWork().getFrontDefault();

@@ -38,6 +38,9 @@ public class MessagesUtil {
     public static final String GET_POKEMON_BY_NUMBER_SUCCESS = "Success to get pokemon by number - {}";
     public static final String GET_POKEMON_BY_NUMBER_ERROR = "Error to get pokemon by number";
 
+    //GetPokemonByRangeNumber
+    public static final String GET_POKEMON_BY_RANGE_NUMBER_ERROR = "Error to get pokemon by range number";
+
     //RedisService
     public static final String REDIS_SERVICE_ERRO_TO_FIND_ALL = "Error to find all data in Redis";
     public static final String REDIS_SERVICE_SUCCESS_TO_FIND_ALL = "Success to find all data in Redis {}";

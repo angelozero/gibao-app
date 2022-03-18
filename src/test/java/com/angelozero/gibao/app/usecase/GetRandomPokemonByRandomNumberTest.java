@@ -43,7 +43,7 @@ public class GetRandomPokemonByRandomNumberTest {
 
         Pokemon pokemonMock = Fixture.from(Pokemon.class).gimme("valid Pokemon");
 
-        Mockito.when(pokemonPropertiesConfig.getFirstSeasonCount()).thenReturn(FIRST_SEASON_COUNT);
+        Mockito.when(pokemonPropertiesConfig.getSeasonCount()).thenReturn(FIRST_SEASON_COUNT);
         Mockito.when(pokemonApi.getImageByNumber(Mockito.anyInt())).thenReturn(pokemonMock);
 
         String pokemon = getPokemonByRandomNumber.execute();
@@ -55,7 +55,7 @@ public class GetRandomPokemonByRandomNumberTest {
     @Test
     public void shoulThrowAnExceptionWhenGetPokemonByName() {
 
-        Mockito.when(pokemonPropertiesConfig.getFirstSeasonCount()).thenReturn(FIRST_SEASON_COUNT);
+        Mockito.when(pokemonPropertiesConfig.getSeasonCount()).thenReturn(FIRST_SEASON_COUNT);
         Mockito.when(pokemonApi.getImageByNumber(Mockito.anyInt())).thenThrow(new RuntimeException("Error to get pokemon by number test"));
 
         PokemonApiException exception = assertThrows(PokemonApiException.class, getPokemonByRandomNumber::execute);
