@@ -17,7 +17,7 @@ import java.util.stream.IntStream;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class GetPokemonByRangeNumber {
+public class GetPokemonsByRangeNumber {
 
     private final PokemonPropertiesConfig pokemonPropertiesConfig;
     private final GetPokemonByNumberAsync getPokemonByNumberAsync;

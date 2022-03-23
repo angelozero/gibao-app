@@ -339,7 +339,9 @@ Maven dependency - [pom.xml](https://github.com/angelozero/gibao-app/blob/master
 ---
 
 *Next Steps/Features*
-  - 08 - Collections
+  - 08 - Completable Future
+      - Refac methods to use junit jupter
+      - Test GetPokemonByNumberAsync class
   - 09 - New Java features ( 9 to 11 )
   - 10 - Desing Patterns
   - 11 - Some Refactors .... 

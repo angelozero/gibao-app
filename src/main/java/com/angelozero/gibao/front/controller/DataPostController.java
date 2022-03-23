@@ -7,7 +7,7 @@ import com.angelozero.gibao.app.usecase.datapost.FindDataPost;
 import com.angelozero.gibao.app.usecase.datapost.GetRandomExcuse;
 import com.angelozero.gibao.app.usecase.datapost.SaveDataPost;
 import com.angelozero.gibao.app.usecase.pokemon.GetPokemonByRandomNumber;
-import com.angelozero.gibao.app.usecase.pokemon.GetPokemonByRangeNumber;
+import com.angelozero.gibao.app.usecase.pokemon.GetPokemonsByRangeNumber;
 import com.angelozero.gibao.front.controller.mapper.DataPostRequestMapper;
 import com.angelozero.gibao.front.controller.rest.DataPostRequest;
 
@@ -19,9 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -41,21 +39,12 @@ public class DataPostController {
     private final FindDataPost findDataPost;
     private final GetPokemonByRandomNumber getPokemonByRandomNumber;
     private final GetRandomExcuse getRandomExcuse;
-    private final GetPokemonByRangeNumber getPokemonByRangeNumber;
-
-    /**
-     * Test
-     */
-
-    @RequestMapping(value = "/test/json", method = RequestMethod.GET)
-    public ResponseEntity<List<String>> getDataPostTestJson() {
-        return new ResponseEntity<>(getPokemonByRangeNumber.execute(0, 151), HttpStatus.OK);
-    }
+    private final GetPokemonsByRangeNumber getPokemonsByRangeNumber;
 
     /**
      * GET Data
      */
-    @RequestMapping(value = "/data", method = RequestMethod.GET)
+    @GetMapping("/data")
     public ModelAndView getDataPost() {
         ModelAndView modelAndView = new ModelAndView("infoDataPostView");
         modelAndView.addObject("pokemon", getPokemonByRandomNumber.execute());
@@ -63,7 +52,7 @@ public class DataPostController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/data/json", method = RequestMethod.GET)
+    @GetMapping("/data/json")
     public ResponseEntity<Map<String, Object>> getDataPostJson() {
         Map<String, Object> itens = new HashMap<>();
         itens.put("pokemon", getPokemonByRandomNumber.execute());
@@ -74,7 +63,7 @@ public class DataPostController {
     /**
      * GET Data List
      */
-    @RequestMapping(value = "/data/list", method = RequestMethod.GET)
+    @GetMapping("/data/list")
     public ModelAndView getDataPostList() {
         List<DataPostResponse> dataPostResponseList = DataPostRequestMapper.toDataPostResponseList(findDataPost.execute());
         ModelAndView modelAndView = new ModelAndView("infoDataPostListView");
@@ -83,7 +72,7 @@ public class DataPostController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/data/list/json", method = RequestMethod.GET)
+    @GetMapping("/data/list/json")
     public ResponseEntity<Map<String, Object>> getDataPostListJson() {
         List<DataPostResponse> dataPostResponseList = DataPostRequestMapper.toDataPostResponseList(findDataPost.execute());
         Map<String, Object> itens = new HashMap<>();
@@ -96,14 +85,14 @@ public class DataPostController {
     /**
      * GET Data by ID
      */
-    @RequestMapping(value = "/data/{id}", method = RequestMethod.GET)
+    @RequestMapping("/data/{id}")
     public ModelAndView getDataPostDetail(@PathVariable("id") long id) {
         ModelAndView mv = new ModelAndView("infoDataPostDetailView");
         DataPostResponse dataPostResponse = DataPostRequestMapper.toDataPostResponse(findDataPost.execute(id));
         return mv.addObject("infoDataPost", dataPostResponse);
     }
 
-    @RequestMapping(value = "/data/{id}/json", method = RequestMethod.GET)
+    @GetMapping("/data/{id}/json")
     public ResponseEntity<Map<String, Object>> getDataPostDetailJson(@PathVariable("id") long id) {
         Map<String, Object> itens = new HashMap<>();
         DataPostResponse dataPostResponse = DataPostRequestMapper.toDataPostResponse(findDataPost.execute(id));
@@ -114,7 +103,7 @@ public class DataPostController {
     /**
      * SAVE Data
      */
-    @RequestMapping(value = "/new-data", method = RequestMethod.POST)
+    @PostMapping("/new-data")
     public String saveDataPost(@Valid DataPostRequest dataPostRequest, BindingResult bindingResult) {
         if (bindingResult != null && bindingResult.hasErrors()) {
             return "redirect:/gibao-app/new-data";
@@ -127,21 +116,30 @@ public class DataPostController {
     /**
      * DELETE Data
      */
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @PostMapping("/delete")
     public String deleteDataPost(long id) {
         deleteDataPost.execute(id);
         return redirectIndexPage();
     }
 
     /**
+     * Async
+     */
+
+    @GetMapping("/async/json")
+    public ResponseEntity<List<String>> getDataPostAsyncJson(@RequestParam int to, @RequestParam int from) {
+        return new ResponseEntity<>(getPokemonsByRangeNumber.execute(to, from), HttpStatus.OK);
+    }
+
+    /**
      * REDIRECT Route
      */
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @GetMapping("/")
     public String index() {
         return redirectIndexPage();
     }
 
-    @RequestMapping(value = "/new-data", method = RequestMethod.GET)
+    @GetMapping("/new-data")
     public String getDataPostForm() {
         return "dataPostForm";
     }
