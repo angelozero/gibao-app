@@ -311,17 +311,18 @@ Maven dependency - [pom.xml](https://github.com/angelozero/gibao-app/blob/master
 - Problemas que tive 
   - https://www.youtube.com/watch?v=pNg72FknNco -  JUNIT4
   - Erro - {"message":"No such image: bsideup/moby-ryuk:0.2.2"}
-    - https://github.com/testcontainers/testcontainers-java/issues/3574 - 89Items
-    - java.lang.NoClassDefFoundError: org/testcontainers/containers/wait/LogMessageWaitStrategy 
-        - ```xml
-                <dependency>
-                <groupId>org.testcontainers</groupId>
-                <artifactId>testcontainers</artifactId>
-                <version>1.10.1</version>
-            </dependency>
-          ```
-    - [main] DEBUG org.testcontainers.utility.TestcontainersConfiguration - Testcontainers configuration overrides will be loaded from file .../.testcontainers.properties
-        - https://www.testcontainers.org/features/configuration/
+    - Solução `docker pull quay.io/testcontainers/ryuk:0.2.2` [fórum com sulução](https://github.com/testcontainers/testcontainers-java/issues/3574)
+  - Erro - java.lang.NoClassDefFoundError: org/testcontainers/containers/wait/LogMessageWaitStrategy 
+      - Solução - adicionar dependência abaixo
+      - ```xml
+              <dependency>
+              <groupId>org.testcontainers</groupId>
+              <artifactId>testcontainers</artifactId>
+              <version>1.10.1</version>
+          </dependency>
+        ```
+      - [main] DEBUG org.testcontainers.utility.TestcontainersConfiguration - Testcontainers configuration overrides will be loaded from file .../.testcontainers.properties
+          - https://www.testcontainers.org/features/configuration/
 
 ### Testcontainers
 ![Testcontainer](https://d33wubrfki0l68.cloudfront.net/a661dbbe55be3e9cb77889f24835a44c6daf53c2/ce0aa/logo.png)

@@ -10,13 +10,12 @@ import com.angelozero.gibao.app.usecase.datapost.SaveDataPost;
 import com.angelozero.gibao.app.usecase.pokemon.GetPokemonByRandomNumber;
 import com.angelozero.gibao.app.usecase.pokemon.GetPokemonsByRangeNumber;
 import com.angelozero.gibao.front.controller.rest.DataPostRequest;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoSettings;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,10 +23,17 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyInt;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
-public class DataPostControllerTest {
+@MockitoSettings
+class DataPostControllerTest {
 
     private static final long ID = 1L;
 
@@ -52,25 +58,26 @@ public class DataPostControllerTest {
     @InjectMocks
     private DataPostController controller;
 
-    @BeforeClass
-    public static void setup() {
-
+    @BeforeAll
+    static void setup() {
         FixtureFactoryLoader.loadTemplates("com.angelozero.gibao.template");
     }
 
     @Test
-    public void shouldCallHomeWithSuccess() {
+    @DisplayName("Should call home with success")
+    void shouldCallHomeWithSuccess() {
 
         assertEquals("redirect:/gibao-app/data", controller.index());
     }
 
     @Test
-    public void shouldCallDataPostWithSuccess() {
+    @DisplayName("Should call data post with success")
+    void shouldCallDataPostWithSuccess() {
 
         List<DataPost> dataPostMock = Fixture.from(DataPost.class).gimme(1, "valid DataPost");
 
-        Mockito.when(getPokemonByRandomNumber.execute()).thenReturn("pokemon test");
-        Mockito.when(getRandomExcuse.execute()).thenReturn(dataPostMock.get(0).getDescription());
+        when(getPokemonByRandomNumber.execute()).thenReturn("pokemon test");
+        when(getRandomExcuse.execute()).thenReturn(dataPostMock.get(0).getDescription());
 
         ModelAndView modelAndView = controller.getDataPost();
 
@@ -80,12 +87,13 @@ public class DataPostControllerTest {
     }
 
     @Test
-    public void shouldCallDataPostJsonWithSuccess() {
+    @DisplayName("Should call data post json with success")
+    void shouldCallDataPostJsonWithSuccess() {
 
         List<DataPost> dataPostMock = Fixture.from(DataPost.class).gimme(1, "valid DataPost");
 
-        Mockito.when(getPokemonByRandomNumber.execute()).thenReturn("pokemon test");
-        Mockito.when(getRandomExcuse.execute()).thenReturn(dataPostMock.get(0).getDescription());
+        when(getPokemonByRandomNumber.execute()).thenReturn("pokemon test");
+        when(getRandomExcuse.execute()).thenReturn(dataPostMock.get(0).getDescription());
 
         ResponseEntity<Map<String, Object>> response = controller.getDataPostJson();
 
@@ -96,13 +104,14 @@ public class DataPostControllerTest {
     }
 
     @Test
-    public void shouldCallDataPostListWithSuccess() {
+    @DisplayName("Should call data post list with success")
+    void shouldCallDataPostListWithSuccess() {
 
         List<DataPost> dataPostMock = Fixture.from(DataPost.class).gimme(1, "valid DataPost");
 
-        Mockito.when(getPokemonByRandomNumber.execute()).thenReturn("pokemon test");
-        Mockito.lenient().when(getRandomExcuse.execute()).thenReturn(dataPostMock.get(0).getDescription());
-        Mockito.when(findDataPost.execute()).thenReturn(dataPostMock);
+        when(getPokemonByRandomNumber.execute()).thenReturn("pokemon test");
+        lenient().when(getRandomExcuse.execute()).thenReturn(dataPostMock.get(0).getDescription());
+        when(findDataPost.execute()).thenReturn(dataPostMock);
 
         ModelAndView modelAndView = controller.getDataPostList();
 
@@ -112,13 +121,14 @@ public class DataPostControllerTest {
     }
 
     @Test
-    public void shouldCallDataPostListJsonWithSuccess() {
+    @DisplayName("Should call data post list json with success")
+    void shouldCallDataPostListJsonWithSuccess() {
 
         List<DataPost> dataPostMock = Fixture.from(DataPost.class).gimme(1, "valid DataPost");
 
-        Mockito.when(getPokemonByRandomNumber.execute()).thenReturn("pokemon test");
-        Mockito.when(getRandomExcuse.execute()).thenReturn(dataPostMock.get(0).getDescription());
-        Mockito.when(findDataPost.execute()).thenReturn(dataPostMock);
+        when(getPokemonByRandomNumber.execute()).thenReturn("pokemon test");
+        when(getRandomExcuse.execute()).thenReturn(dataPostMock.get(0).getDescription());
+        when(findDataPost.execute()).thenReturn(dataPostMock);
 
         ResponseEntity<Map<String, Object>> response = controller.getDataPostListJson();
 
@@ -130,11 +140,12 @@ public class DataPostControllerTest {
     }
 
     @Test
-    public void shouldCallDataPostDetailWithSuccess() {
+    @DisplayName("Should call data post detail with success")
+    void shouldCallDataPostDetailWithSuccess() {
 
         DataPost dataPostMock = Fixture.from(DataPost.class).gimme("valid DataPost");
 
-        Mockito.when(findDataPost.execute(ID)).thenReturn(dataPostMock);
+        when(findDataPost.execute(ID)).thenReturn(dataPostMock);
 
         ModelAndView modelAndView = controller.getDataPostDetail(ID);
 
@@ -143,11 +154,12 @@ public class DataPostControllerTest {
     }
 
     @Test
-    public void shouldCallDataPostDetailJsonWithSuccess() {
+    @DisplayName("Should call data post detail json with success")
+    void shouldCallDataPostDetailJsonWithSuccess() {
 
         DataPost dataPostMock = Fixture.from(DataPost.class).gimme("valid DataPost");
 
-        Mockito.when(findDataPost.execute(ID)).thenReturn(dataPostMock);
+        when(findDataPost.execute(ID)).thenReturn(dataPostMock);
 
         ResponseEntity<Map<String, Object>> response = controller.getDataPostDetailJson(ID);
 
@@ -157,13 +169,15 @@ public class DataPostControllerTest {
     }
 
     @Test
-    public void shouldCallDataPostFormWithSuccess() {
+    @DisplayName("Should call data post form with success")
+    void shouldCallDataPostFormWithSuccess() {
 
         assertEquals("dataPostForm", controller.getDataPostForm());
     }
 
     @Test
-    public void shouldCallSaveDataPostWithSuccessNullBidingResult() {
+    @DisplayName("Should call data post with success null binding result")
+    void shouldCallSaveDataPostWithSuccessNullBidingResult() {
 
         DataPostRequest dataPostRequest = Fixture.from(DataPostRequest.class).gimme("valid DataPostRequest");
 
@@ -171,40 +185,44 @@ public class DataPostControllerTest {
     }
 
     @Test
-    public void shouldCallSaveDataPostWithSuccessErrorBidingResult() {
+    @DisplayName("Should call save data post with success error biding result")
+    void shouldCallSaveDataPostWithSuccessErrorBidingResult() {
 
         DataPostRequest dataPostRequest = Fixture.from(DataPostRequest.class).gimme("valid DataPostRequest");
-        BindingResult bindingResultMock = Mockito.mock(BindingResult.class);
+        BindingResult bindingResultMock = mock(BindingResult.class);
 
-        Mockito.when(bindingResultMock.hasErrors()).thenReturn(Boolean.TRUE);
+        when(bindingResultMock.hasErrors()).thenReturn(Boolean.TRUE);
 
         assertEquals("redirect:/gibao-app/new-data", controller.saveDataPost(dataPostRequest, bindingResultMock));
     }
 
     @Test
-    public void shouldCallSaveDataPostWithSuccess() {
+    @DisplayName("Should call save data post with success")
+    void shouldCallSaveDataPostWithSuccess() {
 
         DataPostRequest dataPostRequest = Fixture.from(DataPostRequest.class).gimme("valid DataPostRequest");
-        BindingResult bindingResultMock = Mockito.mock(BindingResult.class);
+        BindingResult bindingResultMock = mock(BindingResult.class);
 
-        Mockito.when(bindingResultMock.hasErrors()).thenReturn(Boolean.FALSE);
-        Mockito.doNothing().when(saveDataPost).execute(Mockito.any(DataPost.class));
+        when(bindingResultMock.hasErrors()).thenReturn(Boolean.FALSE);
+        doNothing().when(saveDataPost).execute(any(DataPost.class));
 
         assertEquals("redirect:/gibao-app/data", controller.saveDataPost(dataPostRequest, bindingResultMock));
     }
 
     @Test
-    public void shouldCallDeleteDataPostWithSuccess() {
+    @DisplayName("Should call delete data post with success")
+    void shouldCallDeleteDataPostWithSuccess() {
 
-        Mockito.doNothing().when(deleteDataPost).execute(ID);
+        doNothing().when(deleteDataPost).execute(ID);
 
         assertEquals("redirect:/gibao-app/data", controller.deleteDataPost(ID));
     }
 
     @Test
-    public void shouldCallAsyncApiPokemon() {
+    @DisplayName("Should call async with success")
+    void shouldCallAsyncApiPokemon() {
 
-        Mockito.when(getPokemonsByRangeNumber.execute(Mockito.anyInt(), Mockito.anyInt())).thenReturn(List.of("Success"));
+        when(getPokemonsByRangeNumber.execute(anyInt(), anyInt())).thenReturn(List.of("Success"));
 
         assertEquals(List.of("Success"), controller.getDataPostAsyncJson(1, 10).getBody());
     }

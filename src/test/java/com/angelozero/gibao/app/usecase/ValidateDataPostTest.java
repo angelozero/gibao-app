@@ -6,29 +6,33 @@ import com.angelozero.gibao.app.config.exception.DataPostServiceException;
 import com.angelozero.gibao.app.domain.DataPost;
 import com.angelozero.gibao.app.usecase.datapost.ValidateDataPost;
 import com.angelozero.gibao.app.util.MessagesUtil;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoSettings;
 import org.springframework.http.HttpStatus;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@RunWith(MockitoJUnitRunner.class)
-public class ValidateDataPostTest {
+@MockitoSettings
+class ValidateDataPostTest {
 
-    @BeforeClass
-    public static void setup() {
+    @BeforeAll
+    static void setup() {
         FixtureFactoryLoader.loadTemplates("com.angelozero.gibao.template");
     }
 
     @InjectMocks
-    ValidateDataPost validateDataPost;
+    private ValidateDataPost validateDataPost;
 
 
     @Test
-    public void shouldSetSecretUserWithSuccess() {
+    @DisplayName("Should set a secret user with success")
+    void shouldSetSecretUserWithSuccess() {
 
         DataPost dataPostMock = Fixture.from(DataPost.class).gimme("valid DataPost without SecretUser");
         assertNull(dataPostMock.getSecretUser());
@@ -39,7 +43,8 @@ public class ValidateDataPostTest {
     }
 
     @Test
-    public void shouldThrownAnExceptionToValidateADataPostWithoutAuthor() {
+    @DisplayName("Should thrown an exception when validate a data post without author")
+    void shouldThrownAnExceptionToValidateADataPostWithoutAuthor() {
 
         DataPost dataPostMock = Fixture.from(DataPost.class).gimme("valid DataPost without Author");
 
@@ -52,7 +57,8 @@ public class ValidateDataPostTest {
     }
 
     @Test
-    public void shouldThrownAnExceptionToValidateANullDataPost() {
+    @DisplayName("Should thrown an exception when validate a null data post")
+    void shouldThrownAnExceptionToValidateANullDataPost() {
 
         DataPostServiceException exception = assertThrows(DataPostServiceException.class, () -> validateDataPost.execute(null));
 

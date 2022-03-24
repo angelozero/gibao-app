@@ -5,24 +5,26 @@ import com.angelozero.gibao.app.domain.DataPost;
 import com.angelozero.gibao.app.usecase.enums.RedisInfo;
 import com.angelozero.gibao.app.usecase.redis.RedisService;
 import com.angelozero.gibao.app.util.MessagesUtil;
-import org.apache.commons.lang3.StringUtils;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoSettings;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 
-@RunWith(MockitoJUnitRunner.class)
-public class RedisServiceTest {
+@MockitoSettings
+class RedisServiceTest {
 
     @Mock
     private RedisTemplate template;
@@ -31,10 +33,11 @@ public class RedisServiceTest {
     private HashOperations hashOperations;
 
     @InjectMocks
-    RedisService<String> redisService;
+    private RedisService<String> redisService;
 
     @Test
-    public void shouldFindAllValuesInRedisWithSuccess() {
+    @DisplayName("Should find all values in redis with success")
+    void shouldFindAllValuesInRedisWithSuccess() {
 
         Mockito.when(template.opsForHash()).thenReturn(hashOperations);
         Mockito.when(hashOperations.values(RedisInfo.HASH_KEY_DATA_POST.getKey())).thenReturn(Collections.singletonList("test valid redis list"));
@@ -47,7 +50,8 @@ public class RedisServiceTest {
     }
 
     @Test
-    public void shouldThrowAnExceptionWhenFindAll() {
+    @DisplayName("Should thrown an exception when find all values in redis")
+    void shouldThrowAnExceptionWhenFindAll() {
 
         Mockito.when(template.opsForHash()).thenThrow(new RuntimeException("Error find all - Redis"));
 
@@ -59,7 +63,9 @@ public class RedisServiceTest {
     }
 
     @Test
-    public void shouldFindAValueInRedisWithSuccess() {
+    @DisplayName("Should find a value in redis with success")
+    void shouldFindAValueInRedisWithSuccess() {
+
         Mockito.when(template.opsForHash()).thenReturn(hashOperations);
         Mockito.when(hashOperations.get(DataPost.REDIS_HASH, RedisInfo.HASH_KEY_DATA_POST.getKey())).thenReturn(("test valid redis"));
 
@@ -71,7 +77,8 @@ public class RedisServiceTest {
     }
 
     @Test
-    public void shouldThrowAnExceptionWhenFindAData() {
+    @DisplayName("Should thrown an exception when find a data in redis")
+    void shouldThrowAnExceptionWhenFindAData() {
 
         Mockito.when(template.opsForHash()).thenThrow(new RuntimeException("Error find data - Redis"));
 
@@ -83,7 +90,8 @@ public class RedisServiceTest {
     }
 
     @Test
-    public void shouldDeleteRedisCacheSuccess() {
+    @DisplayName("Should delete redis cache with success")
+    void shouldDeleteRedisCacheSuccess() {
 
         Mockito.lenient().when(template.delete(RedisInfo.HASH_KEY_DATA_POST)).thenReturn(Boolean.TRUE);
 
@@ -93,7 +101,8 @@ public class RedisServiceTest {
     }
 
     @Test
-    public void shouldThrowAnExceptionWhenDeleteAData() {
+    @DisplayName("Should thrown an exception when delete redis data")
+    void shouldThrowAnExceptionWhenDeleteAData() {
 
         Mockito.when(template.delete(anyString())).thenThrow(new RuntimeException("Error Redis Test"));
 
@@ -105,7 +114,8 @@ public class RedisServiceTest {
     }
 
     @Test
-    public void shouldSaveRedisCacheSuccess() {
+    @DisplayName("Should save redis data with success")
+    void shouldSaveRedisCacheSuccess() {
 
         Mockito.when(template.opsForHash()).thenReturn(hashOperations);
         Mockito.doNothing().when(hashOperations).put(anyString(), anyString(), anyString());
@@ -116,7 +126,8 @@ public class RedisServiceTest {
     }
 
     @Test
-    public void shouldThrowAnExceptionWhenSaveAData() {
+    @DisplayName("Should thrown an exception when save redis data")
+    void shouldThrowAnExceptionWhenSaveAData() {
 
         Mockito.when(template.opsForHash()).thenThrow(new RuntimeException("Error save data - Redis"));
 

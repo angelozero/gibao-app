@@ -9,20 +9,23 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.when;
 
 @MockitoSettings
-public class GetPokemonsByRangeNumberTest {
+class GetPokemonsByRangeNumberTest {
 
-    public static final int SEASON_COUNT = 151;
+    static final int SEASON_COUNT = 151;
 
     private static final int FROM = 0;
     private static final int TO = 3;
@@ -46,12 +49,12 @@ public class GetPokemonsByRangeNumberTest {
 
     @Test
     @DisplayName("Should execute with success async call to get pokemon list")
-    public void shouldGetAListOfPokemonsAsyncWIthSuccess() {
+    void shouldGetAListOfPokemonsAsyncWIthSuccess() {
 
-        Mockito.when(pokemonPropertiesConfig.getSeasonCount()).thenReturn(SEASON_COUNT);
-        Mockito.when(getPokemonByNumberAsync.executeAsync(1)).thenReturn(CompletableFuture.completedFuture("pikachu"));
-        Mockito.when(getPokemonByNumberAsync.executeAsync(2)).thenReturn(CompletableFuture.completedFuture("charmander"));
-        Mockito.when(getPokemonByNumberAsync.executeAsync(3)).thenReturn(CompletableFuture.completedFuture("squirtle"));
+        when(pokemonPropertiesConfig.getSeasonCount()).thenReturn(SEASON_COUNT);
+        when(getPokemonByNumberAsync.executeAsync(1)).thenReturn(CompletableFuture.completedFuture("pikachu"));
+        when(getPokemonByNumberAsync.executeAsync(2)).thenReturn(CompletableFuture.completedFuture("charmander"));
+        when(getPokemonByNumberAsync.executeAsync(3)).thenReturn(CompletableFuture.completedFuture("squirtle"));
 
         List<String> listOfPokemons = getPokemonsByRangeNumber.execute(FROM, TO);
 
@@ -65,10 +68,10 @@ public class GetPokemonsByRangeNumberTest {
 
     @Test
     @DisplayName("Should throw an error when executing an async call to get pokemon list")
-    public void shouldGenerateAnExceptionToGetThePokemonAsyncList() {
+    void shouldGenerateAnExceptionToGetThePokemonAsyncList() {
 
-        Mockito.when(pokemonPropertiesConfig.getSeasonCount()).thenReturn(SEASON_COUNT);
-        Mockito.when(getPokemonByNumberAsync.executeAsync(anyInt())).thenThrow(new RuntimeException("Error to execute async call"));
+        when(pokemonPropertiesConfig.getSeasonCount()).thenReturn(SEASON_COUNT);
+        when(getPokemonByNumberAsync.executeAsync(anyInt())).thenThrow(new RuntimeException("Error to execute async call"));
 
         PokemonApiException exception = assertThrows(PokemonApiException.class, () -> getPokemonsByRangeNumber.execute(FROM, TO));
 
@@ -81,9 +84,9 @@ public class GetPokemonsByRangeNumberTest {
 
     @Test
     @DisplayName("Should throw an error when call the service with FROM bigger than SEASON_COUNT")
-    public void shouldGenerateAnExceptionToGetThePokemonAsyncListWithFromBiggerThanSeasonCount() {
+    void shouldGenerateAnExceptionToGetThePokemonAsyncListWithFromBiggerThanSeasonCount() {
 
-        Mockito.when(pokemonPropertiesConfig.getSeasonCount()).thenReturn(SEASON_COUNT);
+        when(pokemonPropertiesConfig.getSeasonCount()).thenReturn(SEASON_COUNT);
 
         PokemonApiException exception = assertThrows(PokemonApiException.class, () -> getPokemonsByRangeNumber.execute(FROM_ERROR_SEASON_COUNT, TO));
 
@@ -96,9 +99,9 @@ public class GetPokemonsByRangeNumberTest {
 
     @Test
     @DisplayName("Should throw an error when call the service with TO bigger than SEASON_COUNT")
-    public void shouldGenerateAnExceptionToGetThePokemonAsyncListWithToBiggerThanSeasonCount() {
+    void shouldGenerateAnExceptionToGetThePokemonAsyncListWithToBiggerThanSeasonCount() {
 
-        Mockito.when(pokemonPropertiesConfig.getSeasonCount()).thenReturn(SEASON_COUNT);
+        when(pokemonPropertiesConfig.getSeasonCount()).thenReturn(SEASON_COUNT);
 
         PokemonApiException exception = assertThrows(PokemonApiException.class, () -> getPokemonsByRangeNumber.execute(FROM, TO_ERROR_SEASON_COUNT));
 
@@ -111,9 +114,9 @@ public class GetPokemonsByRangeNumberTest {
 
     @Test
     @DisplayName("Should throw an error when call the service with FROM bigger than TO")
-    public void shouldGenerateAnExceptionToGetThePokemonAsyncListWithFromBiggerThanTo() {
+    void shouldGenerateAnExceptionToGetThePokemonAsyncListWithFromBiggerThanTo() {
 
-        Mockito.when(pokemonPropertiesConfig.getSeasonCount()).thenReturn(SEASON_COUNT);
+        when(pokemonPropertiesConfig.getSeasonCount()).thenReturn(SEASON_COUNT);
 
         PokemonApiException exception = assertThrows(PokemonApiException.class, () -> getPokemonsByRangeNumber.execute(FROM_ERROR, TO_ERROR));
 

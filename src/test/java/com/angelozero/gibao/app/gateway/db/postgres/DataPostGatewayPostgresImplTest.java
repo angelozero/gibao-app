@@ -5,31 +5,44 @@ import br.com.six2six.fixturefactory.loader.FixtureFactoryLoader;
 import com.angelozero.gibao.app.domain.DataPost;
 import com.angelozero.gibao.app.gateway.db.postgres.model.DataPostModel;
 import com.angelozero.gibao.app.gateway.db.repository.DataPostJPARepository;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoSettings;
 
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.*;
 
-public class DataPostGatewayPostgresImplTest {
+@MockitoSettings
+class DataPostGatewayPostgresImplTest {
 
-    private final DataPostJPARepository dataPostJPARepository = Mockito.mock(DataPostJPARepository.class);
+    @Mock
+    private DataPostJPARepository dataPostJPARepository;
 
-    @BeforeClass
-    public static void setup() {
+    @InjectMocks
+    private DataPostGatewayPostgresImpl dataPostGatewayPostgresImpl;
+
+    @BeforeAll
+    static void setup() {
         FixtureFactoryLoader.loadTemplates("com.angelozero.gibao.template");
     }
 
     @Test
-    public void shouldSaveAPostDataWithSuccess() {
+    @DisplayName("Should save a post data with success")
+    void shouldSaveAPostDataWithSuccess() {
+
         DataPost dataPostMock = Fixture.from(DataPost.class).gimme("valid DataPost");
         DataPostModel dataPostModelMock = Fixture.from(DataPostModel.class).gimme("valid DataPostModel");
 
-        Mockito.when(dataPostJPARepository.save(Mockito.any(DataPostModel.class))).thenReturn(dataPostModelMock);
-        DataPostGatewayPostgresImpl dataPostGatewayPostgresImpl = new DataPostGatewayPostgresImpl(dataPostJPARepository);
+        when(dataPostJPARepository.save(any(DataPostModel.class))).thenReturn(dataPostModelMock);
 
         DataPost dataPost = dataPostGatewayPostgresImpl.save(dataPostMock);
 
@@ -37,22 +50,24 @@ public class DataPostGatewayPostgresImplTest {
     }
 
     @Test
-    public void shouldDeleteWithSuccessAPostDataWithSuccess() {
+    @DisplayName("Should delete a post data with success")
+    void shouldDeleteWithSuccessAPostDataWithSuccess() {
+
         Long id = new Random().nextLong();
-        Mockito.doNothing().when(dataPostJPARepository).deleteById(id);
-        DataPostGatewayPostgresImpl dataPostGatewayPostgresImpl = new DataPostGatewayPostgresImpl(dataPostJPARepository);
+        doNothing().when(dataPostJPARepository).deleteById(id);
 
         dataPostGatewayPostgresImpl.deleteById(id);
 
-        Mockito.verify(dataPostJPARepository, Mockito.times(1)).deleteById(id);
+        verify(dataPostJPARepository, times(1)).deleteById(id);
     }
 
     @Test
-    public void shouldFindAllPostDataWithSuccess() {
+    @DisplayName("Should final all posts data with success")
+    void shouldFindAllPostDataWithSuccess() {
+
         List<DataPostModel> dataPostModelList = Fixture.from(DataPostModel.class).gimme(3, "valid DataPostModel");
 
-        Mockito.when(dataPostJPARepository.findAll()).thenReturn(dataPostModelList);
-        DataPostGatewayPostgresImpl dataPostGatewayPostgresImpl = new DataPostGatewayPostgresImpl(dataPostJPARepository);
+        when(dataPostJPARepository.findAll()).thenReturn(dataPostModelList);
 
         List<DataPost> dataPostList = dataPostGatewayPostgresImpl.findAll();
 
