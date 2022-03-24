@@ -339,6 +339,10 @@ Maven dependency - [pom.xml](https://github.com/angelozero/gibao-app/blob/master
 ---
 
 *Next Steps/Features*
+  - To study  
+    - Data Structure
+    - Hash Map ( why is god and when it's not god to use)
+    - Index in database
   - 08 - Completable Future
       - Refac methods to use junit jupter
       - Test GetPokemonByNumberAsync class
