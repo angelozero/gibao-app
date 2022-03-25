@@ -344,12 +344,16 @@ Maven dependency - [pom.xml](https://github.com/angelozero/gibao-app/blob/master
     - Data Structure
     - Hash Map ( why is god and when it's not god to use)
     - Index in database
+    
+   
+
   - 08 - Completable Future
       - Refac methods to use junit jupter
       - Test GetPokemonByNumberAsync class
   - 09 - New Java features ( 9 to 11 )
   - 10 - Desing Patterns
-  - 11 - Some Refactors .... 
+  - 11 - Some Refactors
+    - break apart two controllers to give response and json
 
 [comment]: <> (*"Wanna fly, compadre? Let's fly."* - **Octane**)
  
