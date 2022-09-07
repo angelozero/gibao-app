@@ -233,7 +233,6 @@ Restart Redis Service ( With Redis instaled by brew )
 - `brew services restart redis`
 
 ---
----
 
 ### Backend
 
@@ -295,6 +294,37 @@ Maven dependency - [pom.xml](https://github.com/angelozero/gibao-app/blob/master
 
 ## Unit and Integration Tests
 
+
+
+### Testcontainers
+![Testcontainer](https://d33wubrfki0l68.cloudfront.net/a661dbbe55be3e9cb77889f24835a44c6daf53c2/ce0aa/logo.png)
+- Integration tests using [Testcontainers](https://www.testcontainers.org/)
+
+### Wiremock
+![How it works](https://image.slidesharecdn.com/resiliencetestingwithwiremock-160322164036/95/resilience-testing-with-wiremock-and-spock-9-638.jpg)
+- [Wiremock](http://wiremock.org/)
+- [Introducion to Wiremock](https://www.baeldung.com/introduction-to-wiremock)
+
+---
+## First BETA 0.0.1 preview!
+![Excuse](https://s3.gifyu.com/images/ezgif.com-gif-makerad94f6de2a1f6698.gif)
+
+---
+
+*Next Steps/Features*
+  - 07 - To study  
+    - Data Structure
+    - Hash Map ( why is god and when it's not god to use)
+    - Index in database
+
+  - 08 - Completable Future
+      - Refac methods to use junit jupter
+      - Test GetPokemonByNumberAsync class
+  - 09 - New Java features ( 9 to 11 )
+  - 10 - Desing Patterns
+  - 11 - Some Refactors
+    - break apart two controllers to give response and json
+
 ### Fixture
  - Falar sobre fixture
 
@@ -323,41 +353,18 @@ Maven dependency - [pom.xml](https://github.com/angelozero/gibao-app/blob/master
         ```
       - [main] DEBUG org.testcontainers.utility.TestcontainersConfiguration - Testcontainers configuration overrides will be loaded from file .../.testcontainers.properties
           - https://www.testcontainers.org/features/configuration/
-
-### Testcontainers
-![Testcontainer](https://d33wubrfki0l68.cloudfront.net/a661dbbe55be3e9cb77889f24835a44c6daf53c2/ce0aa/logo.png)
-- Integration tests using [Testcontainers](https://www.testcontainers.org/)
-
-### Wiremock
-![How it works](https://image.slidesharecdn.com/resiliencetestingwithwiremock-160322164036/95/resilience-testing-with-wiremock-and-spock-9-638.jpg)
-- [Wiremock](http://wiremock.org/)
-- [Introducion to Wiremock](https://www.baeldung.com/introduction-to-wiremock)
-
----
-## First BETA 0.0.1 preview!
-![Excuse](https://s3.gifyu.com/images/ezgif.com-gif-makerad94f6de2a1f6698.gif)
-
----
-
-*Next Steps/Features*
-  - To study  
-    - Data Structure
-    - Hash Map ( why is god and when it's not god to use)
-    - Index in database
-    
-   
-
-  - 08 - Completable Future
-      - Refac methods to use junit jupter
-      - Test GetPokemonByNumberAsync class
-  - 09 - New Java features ( 9 to 11 )
-  - 10 - Desing Patterns
-  - 11 - Some Refactors
-    - break apart two controllers to give response and json
+  - Erro NoSuchElement / Erro ao rodar testes integrados
+    - Ao instalar o Docker verificar a opçao `Use gRPC FUSE for file sharing`, ela deve estar desmarcada
+      ![docker](https://i.stack.imgur.com/9BfIu.png)
+    -  Se caso nao conseguir desmarcar ir ate o arquivo fonte. 
+    - [link para solução aqui](https://github.com/docker/for-mac/issues/6467)
+    ```java
+    Right now, if you need to work around this, you should be able to open "/Users/YOUR_USER/Library/Group Containers/group.com.docker/settings.json" and add "useGrpcfuse": false to the file before starting docker desktop. (i agree this is not a great workaround)
+      ```
 
 [comment]: <> (*"Wanna fly, compadre? Let's fly."* - **Octane**)
  
- ![Octane](https://pa1.narvii.com/7219/04dd0e9ac40347ac391d9ba6323f6b822f182831r1-256-256_hq.gif)
+[comment]: ![Octane](https://pa1.narvii.com/7219/04dd0e9ac40347ac391d9ba6323f6b822f182831r1-256-256_hq.gif)
 
 [comment]: <> (*"I’m not afraid-- I’ll never be."* - **Wraith**)
 
