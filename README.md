@@ -354,6 +354,7 @@ Maven dependency - [pom.xml](https://github.com/angelozero/gibao-app/blob/master
       - [main] DEBUG org.testcontainers.utility.TestcontainersConfiguration - Testcontainers configuration overrides will be loaded from file .../.testcontainers.properties
           - https://www.testcontainers.org/features/configuration/
   - Erro NoSuchElement / Erro ao rodar testes integrados
+    - [Erro com ryuk 2.0](https://stackoverflow.com/questions/67401489/java-lang-illegalstateexception-could-not-connect-to-ryuk-at-localhost49167)
     - Ao instalar o Docker verificar a opçao `Use gRPC FUSE for file sharing`, ela deve estar desmarcada
       ![docker](https://i.stack.imgur.com/9BfIu.png)
     -  Se caso nao conseguir desmarcar ir ate o arquivo fonte. 
